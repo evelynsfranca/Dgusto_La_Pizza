@@ -1,15 +1,62 @@
-import Head from 'next/head'
-import useSWR from 'swr'
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
-function ApiUsers() {
-  const { data, error } = useSWR('http://localhost:8080/api/users', fetch)
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <div>hello {data}!</div>
-}
 
 export default function Home() {
+
+  const [token, setToken] = useState('');
+  const [showUsers, setShowUsers] = useState(false);
+  const [users, setUsers] = useState([{
+    id: "",
+    name: "",
+    email: ""
+  }]);
+
+  async function req() {
+    
+    const res = await fetch('http://localhost:8080/login', {
+    method: "POST",  
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: "admin", password: "user"
+      })
+    })
+    .then(res => res)
+    .then(data => data)
+    .catch(e => console.warn(e));
+
+  const x = await res;
+
+    if(x) {
+      setToken(x.headers.get("Authorization"))
+    }
+  }
+
+  async function showUsersRequest() {
+
+    const data = await fetch('http://localhost:8080/api/admin/users', {
+      method: "GET",  
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+      })
+      .then(res => res.json())
+      .then(data => data)
+      .catch(e => console.warn(e));
+  
+      if(data) {
+        setUsers(data.content);
+        setShowUsers(true)
+        console.log(data.content)
+      }
+  
+  }
+
+  useEffect(() => req(), [])
   
   return (
     <div className="container">
@@ -27,10 +74,18 @@ export default function Home() {
           Get started by editing <code>pages/index.js</code>
         </p>
 
-        <div className="grid">
-          
-          <ApiUsers/>
+      {showUsers && users && (
+        <div style={{ display: 'flex', flexDirection: 'column' }} >    
+          {users.map((user, i) => {
+            return <div className="grid" style={{ display: 'flex', flexDirection: 'column' }} key={i}>
+              <a>{user.name}</a><br/>
+              <a>{user.email}</a><br/>
+            </div>
+          })}      
         </div>
+      )}
+
+        <button onClick={showUsersRequest}/>
       </main>
 
       <footer>
