@@ -21,7 +21,7 @@ export default function Home() {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      username: "admin", password: "user"
+      username: "admin", password: "admin"
       })
     })
     .then(res => res)
