@@ -1,103 +1,37 @@
-import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import Navbar from '../components/Navbar';
 
 
+function ApiAccount({ token }) {
+  if(!token) return <></>
+
+  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+      
+  const { data, error } = useSWR(['http://localhost:8080/api/account', token], fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return data.authorities.includes("ROLE_ADMIN") ? <>ADM</> : <>USER</>
+}
 
 export default function Home() {
 
   const [token, setToken] = useState('');
-  const [showUsers, setShowUsers] = useState(false);
-  const [users, setUsers] = useState([{
-    id: "",
-    name: "",
-    email: ""
-  }]);
 
-  async function req() {
-    
-    const res = await fetch('http://localhost:8080/login', {
-    method: "POST",  
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      username: "admin", password: "user"
-      })
-    })
-    .then(res => res)
-    .then(data => data)
-    .catch(e => console.warn(e));
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
 
-  const x = await res;
-
-    if(x) {
-      setToken(x.headers.get("Authorization"))
-    }
-  }
-
-  async function showUsersRequest() {
-
-    const data = await fetch('http://localhost:8080/api/admin/users', {
-      method: "GET",  
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-      })
-      .then(res => res.json())
-      .then(data => data)
-      .catch(e => console.warn(e));
-  
-      if(data) {
-        setUsers(data.content);
-        setShowUsers(true)
-        console.log(data.content)
-      }
-  
-  }
-
-  useEffect(() => req(), [])
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
   
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-      {showUsers && users && (
-        <div style={{ display: 'flex', flexDirection: 'column' }} >    
-          {users.map((user, i) => {
-            return <div className="grid" style={{ display: 'flex', flexDirection: 'column' }} key={i}>
-              <a>{user.name}</a><br/>
-              <a>{user.email}</a><br/>
-            </div>
-          })}      
-        </div>
-      )}
-
-        <button onClick={showUsersRequest}/>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
-        </a>
-      </footer>
+    <> 
+      <Navbar />
+      <ApiAccount token={token} />
 
       <style jsx>{`
         .container {
@@ -244,6 +178,6 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
+    </>
   )
 }
