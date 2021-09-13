@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class UserToSaveDTO implements Serializable {
+public class SignUpDTO implements Serializable {
 
     private String name;
 
@@ -15,6 +15,5 @@ public class UserToSaveDTO implements Serializable {
 
     private String username;
 
-    private String password;    
-
+    private String password;
 }
