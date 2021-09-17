@@ -24,31 +24,41 @@ public class Address implements Serializable {
     private Long id;
 
     @NotBlank
+    @Column(name = "zip_code")
     private String zipCode;
 
     @NotBlank
+    @Column(name = "street")
     private String street;
 
     @NotBlank
+    @Column(name = "number")
     private String number;
 
     @NotBlank
+    @Column(name = "complement")
     private String complement;
 
     @NotBlank
+    @Column(name = "neighborhood")
     private String neighborhood;
 
     @NotBlank
+    @Column(name = "city")
     private String city;
 
     @NotBlank
+    @Column(name = "state")
     private String state;
 
     @NotBlank
+    @Column(name = "country")
     private String country;
 
+    @Column(name = "reference")
     private String reference;
 
+    @Column(name = "main_address")
     @Builder.Default
     private Boolean mainAddress = true;
 

@@ -7,12 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -30,14 +25,18 @@ public class Phone implements Serializable {
     private Long id;
 
     @NotBlank
+    @Column(name = "area_code")
     private String areaCode;
 
     @NotBlank
+    @Column(name = "number")
     private String number;
 
     @NotBlank
+    @Column(name = "type")
     private PhoneType type;
 
+    @Column(name = "main_phone")
     @Builder.Default
     private Boolean mainPhone = true;
 

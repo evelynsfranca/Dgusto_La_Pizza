@@ -41,17 +41,19 @@ public class User implements Serializable {
     private Long id;
 
     @NotEmpty
-    @Column(unique = true)
+    @Column(name = "username", unique = true)
     private String username;
 
     @NotEmpty
+    @Column(name = "name")
     private String name;
 
     @NotEmpty
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotEmpty
+    @Column(name = "password")
     private String password;
 
     @OneToOne(mappedBy = "user")

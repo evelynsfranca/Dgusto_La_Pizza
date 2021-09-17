@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT product.id, product.name, product.description, product.value, product.productType FROM product WHERE productType = 'PIZZA_FLAVOR' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'PIZZA_FLAVOR' ORDER BY id \n-- #pageable\n", nativeQuery = true)
     Page<Product> findAllPizzaFlavors(Pageable pageable);
 
-    @Query(value = "SELECT  product.id, product.name, product.description, product.value, product.productType FROM product WHERE productType = 'PIZZA_SIZE' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'PIZZA_SIZE' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
     Page<Product> findAllPizzaSizes(Pageable pageable);
 
-    @Query(value = "SELECT  product.id, product.name, product.description, product.value, product.productType FROM product WHERE productType = 'DRINK' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'DRINK' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
     Page<Product> findAllDrinks(Pageable pageable);
 
-    @Query(value = "SELECT  product.id, product.name, product.description, product.value, product.productType FROM product WHERE productType = 'OTHER' ", nativeQuery = true)
+    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'OTHER' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
     Page<Product> findAllOthers(Pageable pageable);
 }

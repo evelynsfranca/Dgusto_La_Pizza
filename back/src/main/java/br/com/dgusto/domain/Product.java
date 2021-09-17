@@ -6,12 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -30,17 +25,22 @@ public class Product implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
     private String description;
 
     @NotNull
+    @Column(name = "value")
     private BigDecimal value;
 
     @NotNull
+    @Column(name = "stock_quantity")
     private Integer stockQuantity;
 
     @NotNull
+    @Column(name = "product_type")
     private ProductType productType;
 
     @OneToMany(mappedBy = "product")
