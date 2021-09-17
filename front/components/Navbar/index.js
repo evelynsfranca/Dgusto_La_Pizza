@@ -19,7 +19,7 @@ export const Navbar = () => {
         <a href="https://wa.me/+5541999999999" target="_blank" className={style.bannerCard}>
           <span className={style.bannerCardText}>Peça hoje mesmo!</span>
           <span className={style.bannerCardPhone}> 
-            <FontAwesomeIcon icon={faPhone} rotation={90} size={20} />
+            <FontAwesomeIcon icon={faPhone} rotation={90} />
             (41) 99999-9999
           </span>
           <span className={style.bannerCardTextGreen}>Estamos abertos</span>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
 import logo from '../../../../images/logo.png';
+import { API_URL } from '../../../../utils/constants';
 
 function ApiUserDetail({ token }) {
 
@@ -18,7 +19,7 @@ function ApiUserDetail({ token }) {
       .then(res => res.json())
       .catch(e => console.warn(e))
       
-  const { data, error } = useSWR([`http://3.130.86.83:8080/api/admin/users/${id}`, token], fetcher)
+  const { data, error } = useSWR([`${API_URL}/admin/users/${id}`, token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>

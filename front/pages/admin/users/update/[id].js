@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import logo from '../../../../images/logo.png';
+import { API_URL } from '../../../../utils/constants';
 
 
 export default function UserUpdate() {
@@ -24,7 +25,7 @@ export default function UserUpdate() {
   });
 
   async function handleUpdateUser() {
-    const res = await fetch('http://3.130.86.83:8080/api/admin/users', {
+    const res = await fetch(`${API_URL}/admin/users`, {
     method: "PUT",  
     headers: {
       "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useState } from "react";
 import logo from '../images/logo.png';
 import pizzaImage from '../images/pizza-01.jpg';
+import { API_LOGIN_URL } from '../utils/constants';
 
 
 export default function Login() {
@@ -18,7 +19,7 @@ export default function Login() {
   })
 
   async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
+    const res = await fetch(`${API_LOGIN_URL}`, {
     method: "POST",  
     headers: {
       "Content-Type": "application/json"

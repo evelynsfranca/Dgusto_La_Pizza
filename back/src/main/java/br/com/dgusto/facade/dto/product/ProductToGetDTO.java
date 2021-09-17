@@ -1,5 +1,6 @@
 package br.com.dgusto.facade.dto.product;
 
+import br.com.dgusto.domain.enumeration.PizzaCategory;
 import br.com.dgusto.domain.enumeration.ProductType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,6 @@ public class ProductToGetDTO implements Serializable {
     private Integer stockQuantity;
 
     private ProductType productType;
+
+    private PizzaCategory pizzaCategory;
 }

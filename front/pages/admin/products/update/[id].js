@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import logo from '../../../../images/logo.png';
+import { API_URL } from '../../../../utils/constants';
 
 
 export default function ProductUpdate() {
@@ -24,7 +25,7 @@ export default function ProductUpdate() {
   });
 
   async function handleUpdateProduct() {
-    const res = await fetch('http://3.130.86.83:8080/api/admin/products', {
+    const res = await fetch(`${API_URL}/admin/products`, {
     method: "PUT",  
     headers: {
       "Content-Type": "application/json",

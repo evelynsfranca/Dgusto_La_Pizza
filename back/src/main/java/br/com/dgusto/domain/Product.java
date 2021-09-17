@@ -1,12 +1,21 @@
 package br.com.dgusto.domain;
 
+import br.com.dgusto.domain.enumeration.PizzaCategory;
 import br.com.dgusto.domain.enumeration.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -40,8 +49,13 @@ public class Product implements Serializable {
     private Integer stockQuantity;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "product_type")
     private ProductType productType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pizza_category")
+    private PizzaCategory pizzaCategory;
 
     @OneToMany(mappedBy = "product")
     private Set<RequestProduct> requests;
