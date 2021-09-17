@@ -1,56 +1,58 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import { useEffect, useState } from "react";
+import useSWR from 'swr';
+import logo from '../../../../images/logo.png';
+
+function ApiUserDetail({ token }) {
+
+  if(!token) return <></>
+
+  const router =  useRouter();
+
+  const { id } = router.query;
+
+  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+      
+  const { data, error } = useSWR([`http://3.130.86.83:8080/api/admin/users/${id}`, token], fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <>
+    <ul style={{ display: 'flex', flexDirection: 'column', listStyle: 'none', width: '100%' }}>
+        <li style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
+            <span>{data.id}</span>
+            <span>{data.name}</span>
+            <span>{data.description}</span>
+            <span>{data.value}</span>
+            <span>{data.stockQuantity}</span>
+        </li>
+    </ul>
+  </>
+}
 
 
-export default function Login() {
+export default function UserDetail() {
 
-  const router = useRouter();
-  const [login, setLogin] = useState({
-    username: '',
-    password: ''
-  })
+  const [token, setToken] = useState('');
 
-  async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
-    method: "POST",  
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(login)
-    })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
-    .catch(e => console.warn(e));
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
 
-    const response = await res;
-
-    if(response) {
-      router.push('/admin/products/list')
-    }
-
-  }
-
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
 
   return (
     <div className="container">
       <Head>
-        <title>Login</title>
+        <title>UserDetail</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} layout="fill" objectFit="cover" />
-      </div>
 
       <main>
         <div className="card">
@@ -60,37 +62,9 @@ export default function Login() {
             </a>
           </Link>
 
-          <h1 className="title">Login</h1>
+          <h1 className="title">ApiUserDetail</h1>
 
-          <p className="form">
-            <label>
-              Email
-              <input 
-                type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
-              />
-            </label>
-            
-            <label>
-              Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
-
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
-            </label>
-            <button className="button" onClick={handleLogin}>LOGIN</button>
-          </p>
+          <ApiUserDetail token={token} />
 
         </div>
       </main>
@@ -98,7 +72,7 @@ export default function Login() {
       <style jsx>{`
         .container {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
 
           height: 100vh;
           width: 100vw;
@@ -135,8 +109,7 @@ export default function Login() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          margin-top: -80px;
+          margin-top: 30px;
           height: 100%;
           width: 50vw;
         }

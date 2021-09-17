@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static br.com.dgusto.domain.enumeration.SecurityConstants.SIGN_UP_URL;
+import static br.com.dgusto.domain.constants.SecurityConstants.SIGN_UP_URL;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -32,7 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .antMatchers("/api/user/**").hasRole("USER")
+            .antMatchers("/api/client/**").hasRole("CLIENT")
             .antMatchers("/api/manager/**").hasRole("MANAGER")
+            .antMatchers("/api/**").permitAll()
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService))

@@ -1,16 +1,13 @@
 package br.com.dgusto.service;
 
 import br.com.dgusto.domain.User;
-import br.com.dgusto.facade.dto.LoginDTO;
 import br.com.dgusto.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,17 +57,6 @@ public class UserServiceImpl implements UserService {
             .orElseThrow();
 
         userRepository.delete(user);
-    }
-
-    @Override
-    public User login(User user) {
-        BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
-        User entity = userRepository.findByUsername(user.getUsername());
-        if(crypt.matches(user.getPassword(), entity.getPassword())) {
-            return entity;
-        } else {
-            return null;
-        }
     }
 
     private String encodePassword(String password) {

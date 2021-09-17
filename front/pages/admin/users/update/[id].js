@@ -1,56 +1,84 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import { useEffect, useState } from "react";
+import logo from '../../../../images/logo.png';
 
 
-export default function Login() {
+export default function UserUpdate() {
 
-  const router = useRouter();
-  const [login, setLogin] = useState({
-    username: '',
-    password: ''
-  })
+  const router =  useRouter();
 
-  async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
-    method: "POST",  
+  const { id } = router.query;
+
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState({
+    id,
+    name: '',
+    description: '',
+    value: 0,
+    stockQuantity: '',
+    userType: ''
+    
+  });
+
+  async function handleUpdateUser() {
+    const res = await fetch('http://3.130.86.83:8080/api/admin/users', {
+    method: "PUT",  
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": token
     },
-    body: JSON.stringify(login)
+    body: JSON.stringify(user) 
     })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
+    .then(res => res.json())
     .catch(e => console.warn(e));
 
     const response = await res;
 
     if(response) {
-      router.push('/admin/products/list')
+      router.push('/admin/users/list')
     }
+  }
+  
+  async function handleGetUser() {
+    const res = await fetch(`http://3.130.86.83:8080/api/admin/users/${id}`, {
+    method: "GET",  
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token
+    }
+    })
+    .then(res => res.json())
+    .catch(e => console.warn(e));
 
+    const response = await res;
+
+    if(response) {
+      setUser(response)
+    }
   }
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
+
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
+
+  useEffect(() => {
+    if(id && token) {
+      handleGetUser();
+    }
+  }, [id, token]);
 
   return (
     <div className="container">
       <Head>
-        <title>Login</title>
+        <title>UserUpdate</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} layout="fill" objectFit="cover" />
-      </div>
 
       <main>
         <div className="card">
@@ -60,36 +88,52 @@ export default function Login() {
             </a>
           </Link>
 
-          <h1 className="title">Login</h1>
+          <h1 className="title">ApiUserUpdate</h1>
+
 
           <p className="form">
             <label>
-              Email
+              Nome
               <input 
                 type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
+                value={user.name} 
+                onChange={name => setUser({ ...user, name: name.target.value })} 
+              />
+            </label>
+            <label>
+              Descrição
+              <input 
+                type="text" 
+                value={user.description} 
+                onChange={description => setUser({ ...user, description: description.target.value })} 
+              />
+            </label>
+            <label>
+              Valor
+              <input 
+                type="number" 
+                value={user.value} 
+                onChange={value => setUser({ ...user, value: value.target.value })} 
+              />
+            </label>
+            <label>
+              Quantidade em estoque
+              <input 
+                type="number" 
+                value={user.stockQuantity} 
+                onChange={stockQuantity => setUser({ ...user, stockQuantity: stockQuantity.target.value })} 
+              />
+            </label>
+            <label>
+              Tipo
+              <input 
+                type="text" 
+                value={user.userType} 
+                onChange={userType => setUser({ ...user, userType: userType.target.value })} 
               />
             </label>
             
-            <label>
-              Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
-
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
-            </label>
-            <button className="button" onClick={handleLogin}>LOGIN</button>
+            <button className="button" onClick={handleUpdateUser}>SALVAR</button>
           </p>
 
         </div>

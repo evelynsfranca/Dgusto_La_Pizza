@@ -3,11 +3,8 @@ package br.com.dgusto.facade.mapper;
 import br.com.dgusto.domain.Authority;
 import br.com.dgusto.domain.User;
 import br.com.dgusto.facade.dto.LoginDTO;
+import br.com.dgusto.facade.dto.SignupDTO;
 import br.com.dgusto.facade.dto.user.UserDTO;
-import br.com.dgusto.facade.dto.user.UserToGetAllDTO;
-import br.com.dgusto.facade.dto.user.UserToGetDTO;
-import br.com.dgusto.facade.dto.user.UserToSaveDTO;
-import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -16,19 +13,14 @@ import java.util.stream.Collectors;
 
 @Mapper(
     componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-public interface UserMapper {
+public interface AccountMapper {
 
     UserDTO toDto(User entity);
+    User toLoginEntity(LoginDTO dto);
 
-    User toSaveEntity(UserToSaveDTO dto);
-
-    User toUpdateEntity(UserToUpdateDTO dto);
-
-    UserToGetDTO toGetDto(User entity);
-
-    UserToGetAllDTO toGetAllDto(User entity);
+    SignupDTO toSignupDto(User user);
 
     default Set<String> stringsFromAuthorities(Set<Authority> authorities) {
         return authorities.stream().map(Authority::getName)

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static br.com.dgusto.domain.enumeration.SecurityConstants.*;
+import static br.com.dgusto.domain.constants.SecurityConstants.HEADER_STRING;
+import static br.com.dgusto.domain.constants.SecurityConstants.SECRET;
+import static br.com.dgusto.domain.constants.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

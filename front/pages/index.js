@@ -10,7 +10,7 @@ function ApiAccount({ token }) {
       .then(res => res.json())
       .catch(e => console.warn(e))
       
-  const { data, error } = useSWR(['http://localhost:8080/api/account', token], fetcher)
+  const { data, error } = useSWR(['http://3.130.86.83:8080/api/account', token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>

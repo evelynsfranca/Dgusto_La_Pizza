@@ -1,56 +1,46 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import { useEffect, useState } from "react";
+import useSWR from 'swr';
+import logo from '../../../images/logo.png';
+
+function ApiProducts({ token }) {
+
+  if(!token) return <></>
+
+  const router =  useRouter();
+
+  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+      
+  const { data, error } = useSWR(['http://3.130.86.83:8080/api/admin/products', token], fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return <>{data.content}</>
+}
 
 
-export default function Login() {
+export default function Product() {
 
-  const router = useRouter();
-  const [login, setLogin] = useState({
-    username: '',
-    password: ''
-  })
+  const [token, setToken] = useState('');
 
-  async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
-    method: "POST",  
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(login)
-    })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
-    .catch(e => console.warn(e));
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
 
-    const response = await res;
-
-    if(response) {
-      router.push('/admin/products/list')
-    }
-
-  }
-
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
 
   return (
     <div className="container">
       <Head>
-        <title>Login</title>
+        <title>Products</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} layout="fill" objectFit="cover" />
-      </div>
 
       <main>
         <div className="card">
@@ -59,38 +49,9 @@ export default function Login() {
               <Image src={logo} width={150} height={120} />
             </a>
           </Link>
+          <ApiProducts token={token} />
 
-          <h1 className="title">Login</h1>
-
-          <p className="form">
-            <label>
-              Email
-              <input 
-                type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
-              />
-            </label>
-            
-            <label>
-              Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
-
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
-            </label>
-            <button className="button" onClick={handleLogin}>LOGIN</button>
-          </p>
+          <h1 className="title">Products</h1>
 
         </div>
       </main>

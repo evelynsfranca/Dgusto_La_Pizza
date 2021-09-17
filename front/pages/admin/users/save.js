@@ -1,56 +1,57 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import { useEffect, useState } from "react";
+import logo from '../../../images/logo.png';
 
 
-export default function Login() {
+export default function UserList() {
 
-  const router = useRouter();
-  const [login, setLogin] = useState({
+  const router =  useRouter();
+
+  const [token, setToken] = useState('');
+  const [user, setUser] = useState({
+    name: '',
     username: '',
-    password: ''
-  })
+    email: ''
+    
+  });
 
-  async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
+  async function handleUser() {
+    const res = await fetch('http://3.130.86.83:8080/api/admin/users', {
     method: "POST",  
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": token
     },
-    body: JSON.stringify(login)
+    body: JSON.stringify(user) 
     })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
+    .then(res => res.json())
     .catch(e => console.warn(e));
 
     const response = await res;
 
     if(response) {
-      router.push('/admin/products/list')
+      router.push('/admin/users/list')
     }
-
   }
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+
+
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
+
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
 
   return (
     <div className="container">
       <Head>
-        <title>Login</title>
+        <title>UserSave</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} layout="fill" objectFit="cover" />
-      </div>
 
       <main>
         <div className="card">
@@ -60,36 +61,36 @@ export default function Login() {
             </a>
           </Link>
 
-          <h1 className="title">Login</h1>
+          <h1 className="title">ApiUserSave</h1>
+
 
           <p className="form">
             <label>
-              Email
+              Nome
               <input 
                 type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
+                value={user.name} 
+                onChange={name => setUser({ ...user, name: name.target.value })} 
+              />
+            </label>
+            <label>
+              Username
+              <input 
+                type="text" 
+                value={user.username} 
+                onChange={username => setUser({ ...user, username: username.target.value })} 
+              />
+            </label>
+            <label>
+              Email
+              <input 
+                type="number" 
+                value={user.email} 
+                onChange={email => setUser({ ...user, email: email.target.value })} 
               />
             </label>
             
-            <label>
-              Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
-
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
-            </label>
-            <button className="button" onClick={handleLogin}>LOGIN</button>
+            <button className="button" onClick={handleUser}>SALVAR</button>
           </p>
 
         </div>

@@ -1,8 +1,6 @@
 package br.com.dgusto.config;
 
 import br.com.dgusto.domain.User;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static br.com.dgusto.domain.enumeration.SecurityConstants.EXPIRATION_TIME;
-import static br.com.dgusto.domain.enumeration.SecurityConstants.HEADER_STRING;
-import static br.com.dgusto.domain.enumeration.SecurityConstants.SECRET;
-import static br.com.dgusto.domain.enumeration.SecurityConstants.TOKEN_PREFIX;
+import static br.com.dgusto.domain.constants.SecurityConstants.EXPIRATION_TIME;
+import static br.com.dgusto.domain.constants.SecurityConstants.HEADER_STRING;
+import static br.com.dgusto.domain.constants.SecurityConstants.SECRET;
+import static br.com.dgusto.domain.constants.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

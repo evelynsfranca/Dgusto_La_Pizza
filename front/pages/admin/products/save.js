@@ -1,35 +1,36 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import { useEffect, useState } from "react";
+import logo from '../../../images/logo.png';
 
 
-export default function Login() {
+export default function ProductList() {
 
-  const router = useRouter();
-  const [login, setLogin] = useState({
-    username: '',
-    password: ''
-  })
+  const router =  useRouter();
 
-  async function handleLogin() {
-    const res = await fetch('http://3.130.86.83:8080/login', {
+  const [token, setToken] = useState('');
+  const [product, setProduct] = useState({
+    id: '',
+    name: '',
+    description: '',
+    value: 0,
+    stockQuantity: '',
+    productType: ''
+    
+  });
+
+  async function handleProduct() {
+    const res = await fetch('http://3.130.86.83:8080/api/admin/products', {
     method: "POST",  
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": token
     },
-    body: JSON.stringify(login)
+    body: JSON.stringify(product) 
     })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
+    .then(res => res.json())
     .catch(e => console.warn(e));
 
     const response = await res;
@@ -37,20 +38,23 @@ export default function Login() {
     if(response) {
       router.push('/admin/products/list')
     }
-
   }
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
+
+
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')) {
+
+      setToken(localStorage.getItem('token'))
+    }    
+  }, []);
 
   return (
     <div className="container">
       <Head>
-        <title>Login</title>
+        <title>ProductSave</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} layout="fill" objectFit="cover" />
-      </div>
 
       <main>
         <div className="card">
@@ -60,36 +64,52 @@ export default function Login() {
             </a>
           </Link>
 
-          <h1 className="title">Login</h1>
+          <h1 className="title">ApiProductSave</h1>
+
 
           <p className="form">
             <label>
-              Email
+              Nome
               <input 
                 type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
+                value={product.name} 
+                onChange={name => setProduct({ ...product, name: name.target.value })} 
+              />
+            </label>
+            <label>
+              Descrição
+              <input 
+                type="text" 
+                value={product.description} 
+                onChange={description => setProduct({ ...product, description: description.target.value })} 
+              />
+            </label>
+            <label>
+              Valor
+              <input 
+                type="number" 
+                value={product.value} 
+                onChange={value => setProduct({ ...product, value: value.target.value })} 
+              />
+            </label>
+            <label>
+              Quantidade em estoque
+              <input 
+                type="number" 
+                value={product.stockQuantity} 
+                onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })} 
+              />
+            </label>
+            <label>
+              Tipo
+              <input 
+                type="text" 
+                value={product.productType} 
+                onChange={productType => setProduct({ ...product, productType: productType.target.value })} 
               />
             </label>
             
-            <label>
-              Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
-
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
-            </label>
-            <button className="button" onClick={handleLogin}>LOGIN</button>
+            <button className="button" onClick={handleProduct}>SALVAR</button>
           </p>
 
         </div>
