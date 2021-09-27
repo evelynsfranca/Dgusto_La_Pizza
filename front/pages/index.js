@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import Menu from '../components/Menu';
 import Navbar from '../components/Navbar';
+import { API_URL } from '../utils/constants';
 
 
 function ApiAccount({ token }) {
@@ -10,7 +12,7 @@ function ApiAccount({ token }) {
       .then(res => res.json())
       .catch(e => console.warn(e))
       
-  const { data, error } = useSWR(['http://localhost:8080/api/account', token], fetcher)
+  const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -32,6 +34,7 @@ export default function Home() {
     <> 
       <Navbar />
       <ApiAccount token={token} />
+      <Menu />
 
       <style jsx>{`
         .container {

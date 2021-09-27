@@ -15,7 +15,4 @@ public interface UserService {
     Page<User> getAll(Pageable pageable);
 
     void delete(Long id);
-
-    User login(User user);
-
 }

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useState } from "react";
 import logo from '../images/logo.png';
 import pizzaImage from '../images/pizza-01.jpg';
+import { API_LOGIN_URL } from '../utils/constants';
 
 
 export default function Login() {
@@ -18,7 +19,7 @@ export default function Login() {
   })
 
   async function handleLogin() {
-    const res = await fetch('http://localhost:8080/login', {
+    const res = await fetch(`${API_LOGIN_URL}`, {
     method: "POST",  
     headers: {
       "Content-Type": "application/json"
@@ -35,7 +36,7 @@ export default function Login() {
     const response = await res;
 
     if(response) {
-      router.push('/')
+      router.push('/admin/products/list')
     }
 
   }
@@ -49,7 +50,7 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
-        <Image src={pizzaImage} width="100%" height='100%' layout="fill" objectFit="cover" style={{ zIndex: 0, maxWidth: '50%' }} />
+        <Image src={pizzaImage} layout="fill" objectFit="cover" />
       </div>
 
       <main>
