@@ -48,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
                 it.setUnitValue(product.getUnitValue());
                 it.setDescription(product.getDescription());
                 it.setProductType(product.getProductType());
+                it.setProductCategory(product.getProductCategory());
                 it.setStockQuantity(product.getStockQuantity());
                 it.setCreatedBy(userLogin);
                 it.setCreatedDate(LocalDateTime.now());

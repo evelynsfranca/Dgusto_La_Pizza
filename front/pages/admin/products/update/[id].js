@@ -1,7 +1,7 @@
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LayoutAdmin from '../../../../components/layout/admin';
 import { API_URL } from '../../../../utils/constants';
 
@@ -20,13 +20,25 @@ export default function ProductUpdate() {
     unitValue: 0,
     stockQuantity: '',
     productType: {
-      id: ''
+      id: '',
+      name: ''
     },
     productCategory: {
-      id: ''
+      id: '',
+      name: ''
     }
 
   });
+
+  const [productTypes, setProductTypes] = useState([{
+    id: '',
+    name: ''
+  }]);
+
+  const [productCategories, setProductCategories] = useState([{
+    id: '',
+    name: ''
+  }]);
 
   async function handleUpdateProduct() {
     const res = await fetch(`${API_URL}/admin/products`, {
@@ -65,6 +77,43 @@ export default function ProductUpdate() {
     }
   }
 
+  async function handleGetProductTypes() {
+    const res = await fetch(`${API_URL}/admin/product-types`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(res => res.json())
+      .catch(e => console.warn(e));
+
+    const response = await res;
+
+    if (response) {
+      setProductTypes(response.content)
+    }
+  }
+
+  async function handleGetProductCategories() {
+    const res = await fetch(`${API_URL}/admin/product-categories`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(res => res.json())
+      .catch(e => console.warn(e));
+
+    const response = await res;
+
+    if (response) {
+      setProductCategories(response.content)
+    }
+  }
+
+
   useEffect(() => {
     if (typeof window !== undefined && localStorage.getItem('token')) {
 
@@ -73,8 +122,18 @@ export default function ProductUpdate() {
 
     if (id && token) {
       handleGetProduct();
+      handleGetProductCategories();
+      handleGetProductTypes();
     }
   }, [id, token]);
+
+  function selectType(event) {
+    setProduct({ ...product, productType: { ...product.productType, id: event.target.value, name: productTypes.find(it => it.id == event.target.value).name } })
+  }
+
+  function selectCategory(event) {
+    setProduct({ ...product, productCategory: { ...product.productCategory, id:  event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
+  }
 
   return (
     <LayoutAdmin>
@@ -129,20 +188,42 @@ export default function ProductUpdate() {
             />
           </label>
           <label>
-            Tipo
-            <input
-              type="text"
-              value={product.productType || ''}
-              onChange={productType => setProduct({ ...product, productType: { id: productType.target.value } })}
-            />
+            Selecione um Tipo
+            {productTypes?.length && (
+              <select 
+                name="type"
+                value={product?.productType?.id ?? ''} 
+                defaultValue={product?.productType?.id ?? ''}
+                onChange={selectType}
+                onSelect={selectType}
+              >
+              <option value=""></option>
+                {productTypes?.map(type => (
+                  <React.Fragment key={type.id}>
+                    <option value={type.id}>{type.name}</option>
+                  </React.Fragment>
+                ))}
+              </select>
+            )}
           </label>
           <label>
-            Categoria
-            <input
-              type="text"
-              value={product.productCategory || ''}
-              onChange={productCategory => setProduct({ ...product, productCategory: { id: productCategory.target.value } })}
-            />
+            Selecione uma Categoria
+            {productCategories?.length && (
+              <select 
+                name="category"
+                value={product?.productCategory?.id ?? ''} 
+                defaultValue={product?.productCategory?.id ?? ''}
+                onChange={selectCategory}
+                onSelect={selectCategory}
+              >
+              <option value=""></option>
+                {productCategories?.map(category => (
+                  <React.Fragment key={category.id}>
+                    <option value={category.id}>{category.name}</option>
+                  </React.Fragment>
+                ))}
+              </select>
+            )}
           </label>
 
           <button className="button-secondary" onClick={handleUpdateProduct}>SALVAR</button>
