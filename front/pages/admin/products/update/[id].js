@@ -80,7 +80,7 @@ export default function ProductUpdate() {
     <LayoutAdmin>
 
       <Head>
-        <title>Editando do produto</title>
+        <title>Editando produto</title>
       </Head>
 
       <>
@@ -92,7 +92,7 @@ export default function ProductUpdate() {
             </a>
           </Link>
           {' '}
-          Editando do produto
+          Editando produto
         </h1>
 
         <p className="form">

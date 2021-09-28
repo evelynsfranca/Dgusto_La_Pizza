@@ -55,7 +55,7 @@ export default function ProductList() {
     <LayoutAdmin>
 
       <Head>
-        <title>Adicionar novo produto</title>
+        <title>Adicionar Novo Produto</title>
       </Head>
 
       <h1 className="title">
@@ -65,7 +65,7 @@ export default function ProductList() {
           </a>
         </Link>
         {' '}
-        Adicionar novos produtos
+        Adicionar Novo Produto
       </h1>
 
       <p className="form">

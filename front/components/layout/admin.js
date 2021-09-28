@@ -32,6 +32,11 @@ export default function LayoutAdmin({ children }) {
               Lista de Categorias
             </Link>
           </li>
+          <li>
+            <Link href="/">
+              Voltar ao site
+            </Link>
+          </li>
         </ul>
       </nav>
 
