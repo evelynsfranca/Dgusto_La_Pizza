@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import logo from '../../../images/logo.png';
+import logo from '/public/images/logo.png';
 import { API_URL } from '../../../utils/constants';
 
 function ApiUsers({ token }) {
@@ -47,7 +47,7 @@ export default function User() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
           <ApiUsers token={token} />

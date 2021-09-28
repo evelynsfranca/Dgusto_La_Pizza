@@ -1,5 +1,5 @@
 .bannerContainer {
-  background-image: url(../../images/banner.jpg);
+  background-image: url(../../public/images/background.jpg);
   background-position: center;
   box-shadow: 0 3px 4px -4px grey;
 
@@ -95,7 +95,6 @@
   list-style: none;
   margin: 0;
   margin-top: 50px;
-  width: 60%;
   z-index: 1;
 }
 

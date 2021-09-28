@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import logo from '../../../../images/logo.png';
+import logo from '/public/images/logo.png';
 import { API_URL } from '../../../../utils/constants';
 
 
@@ -65,13 +65,12 @@ export default function UserUpdate() {
     if (typeof window !== undefined && localStorage.getItem('token')) {
 
       setToken(localStorage.getItem('token'))
-    }    
-  }, []);
+    } 
 
-  useEffect(() => {
     if(id && token) {
       handleGetUser();
-    }
+    } 
+
   }, [id, token]);
 
   return (
@@ -85,7 +84,7 @@ export default function UserUpdate() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
 

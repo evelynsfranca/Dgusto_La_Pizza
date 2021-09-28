@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import logo from '../../../images/logo.png';
+import logo from '/public/images/logo.png';
 import { API_URL } from '../../../utils/constants';
 
 function ApiProductsList({ token }) {
@@ -64,11 +64,11 @@ export default function ProductList() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
 
-          <h1 className="title">ApiProductsList</h1>
+          <h1 className="title">Listagem de produtos</h1>
           
           <button type="button" onClick={() => router.push('/admin/users/save')}>
             ADICIONAR PRODUTO

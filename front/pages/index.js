@@ -1,39 +1,10 @@
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 import Menu from '../components/Menu';
 import Navbar from '../components/Navbar';
-import { API_URL } from '../utils/constants';
 
-
-function ApiAccount({ token }) {
-  if(!token) return <></>
-
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-      .then(res => res.json())
-      .catch(e => console.warn(e))
-      
-  const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return data.authorities.includes("ROLE_ADMIN") ? <>ADM</> : <>USER</>
-}
-
-export default function Home() {
-
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
-    }    
-  }, []);
-  
+export default function Index() {
   return (
-    <> 
+    <>
       <Navbar />
-      <ApiAccount token={token} />
       <Menu />
 
       <style jsx>{`
