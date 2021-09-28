@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import LayoutAdmin from '../../../components/layout/admin';
 import { API_URL } from '../../../utils/constants';
 
-function ApiUsersList({ token }) {
+function ApiTypesList({ token }) {
 
   if (!token) return <></>
 
@@ -15,7 +15,7 @@ function ApiUsersList({ token }) {
     .then(res => res.json())
     .catch(e => console.warn(e))
 
-  const { data, error } = useSWR([`${API_URL}/admin/users`, token], fetcher)
+  const { data, error } = useSWR([`${API_URL}/admin/product-types`, token], fetcher)
 
   if (error) return <tr rowSpan="4"><td>failed to load</td></tr>
   if (!data) return <tr rowSpan="4"><td>loading...</td></tr>
@@ -27,14 +27,11 @@ function ApiUsersList({ token }) {
           {user.name}
         </td>
         <td>
-          {user.email}
-        </td>
-        <td>
-          <button type="button" className="button-secondary" onClick={() => router.push(`/admin/users/detail/${user.id}`)} title="Visualizar">
+          <button type="button" className="button-secondary" onClick={() => router.push(`/admin/types/detail/${user.id}`)} title="Visualizar">
             Ver
           </button>
           {' '}
-          <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/users/update/${user.id}`)} title="Editar">
+          <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/types/update/${user.id}`)} title="Editar">
             Editar
           </button>
         </td>
@@ -43,8 +40,7 @@ function ApiUsersList({ token }) {
   </>
 }
 
-
-export default function UserList() {
+export default function TypesList() {
 
   const router = useRouter();
   const [token, setToken] = useState('');
@@ -59,27 +55,26 @@ export default function UserList() {
   return (
     <LayoutAdmin>
       <Head>
-        <title>Lista de Usuários</title>
+        <title>Lista de Tipos</title>
       </Head>
 
       <h1 className="title">
-        Lista de Usuários
+        Lista de Tipos
       </h1>
 
-      <button type="button" className="button-primary" onClick={() => router.push('/admin/users/save')}>
-        ADICIONAR USUÁRIO
+      <button type="button" className="button-primary" onClick={() => router.push('/admin/types/save')}>
+        ADICIONAR TIPOS
       </button>
 
       <table>
         <thead>
           <tr>
-            <td>Nome</td>
-            <td>Email</td>
+            <td>Tipos</td>
             <td>Ações</td>
           </tr>
         </thead>
         <tbody>
-          <ApiUsersList token={token} />
+          <ApiTypesList token={token} />
         </tbody>
       </table>
 
