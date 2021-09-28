@@ -62,11 +62,11 @@ export default function ProductList() {
   return (
     <LayoutAdmin>
       <Head>
-        <title>ProductsList</title>
+        <title>Lista de Produtos</title>
       </Head>
 
       <h1 className="title">
-        Lista de produtos
+        Lista de Produtos
       </h1>
 
       <button type="button" className="button-primary" onClick={() => router.push('/admin/products/save')}>
@@ -79,7 +79,7 @@ export default function ProductList() {
             <td>Sabor</td>
             <td>Preço</td>
             <td>Estoque</td>
-            <td></td>
+            <td>Ações</td>
           </tr>
         </thead>
         <tbody>

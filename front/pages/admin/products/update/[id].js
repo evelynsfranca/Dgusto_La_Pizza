@@ -48,7 +48,7 @@ export default function ProductUpdate() {
   }
 
   async function handleGetProduct() {
-    const res = await fetch(`http://3.130.86.83:8080/api/admin/products/${id}`, {
+    const res = await fetch(`${API_URL}/admin/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function ProductUpdate() {
     <LayoutAdmin>
 
       <Head>
-        <title>Editando do produto</title>
+        <title>Editando produto</title>
       </Head>
 
       <>
@@ -92,7 +92,7 @@ export default function ProductUpdate() {
             </a>
           </Link>
           {' '}
-          Editando do produto
+          Editando produto
         </h1>
 
         <p className="form">
@@ -132,7 +132,7 @@ export default function ProductUpdate() {
             Tipo
             <input
               type="text"
-              value={product.productType}
+              value={product.productType || ''}
               onChange={productType => setProduct({ ...product, productType: { id: productType.target.value } })}
             />
           </label>
@@ -140,7 +140,7 @@ export default function ProductUpdate() {
             Categoria
             <input
               type="text"
-              value={product.productType}
+              value={product.productCategory || ''}
               onChange={productCategory => setProduct({ ...product, productCategory: { id: productCategory.target.value } })}
             />
           </label>

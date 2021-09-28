@@ -55,7 +55,7 @@ export default function ProductList() {
     <LayoutAdmin>
 
       <Head>
-        <title>Adicionar novos produtos</title>
+        <title>Adicionar Novo Produto</title>
       </Head>
 
       <h1 className="title">
@@ -65,7 +65,7 @@ export default function ProductList() {
           </a>
         </Link>
         {' '}
-        Adicionar novos produtos
+        Adicionar Novo Produto
       </h1>
 
       <p className="form">
@@ -73,7 +73,6 @@ export default function ProductList() {
           Nome
           <input
             type="text"
-            value={product.name}
             onChange={name => setProduct({ ...product, name: name.target.value })}
           />
         </label>
@@ -81,7 +80,6 @@ export default function ProductList() {
           Descrição
           <input
             type="text"
-            value={product.description}
             onChange={description => setProduct({ ...product, description: description.target.value })}
           />
         </label>
@@ -89,7 +87,6 @@ export default function ProductList() {
           Valor
           <input
             type="number"
-            value={product.unitValue}
             onChange={unitValue => setProduct({ ...product, unitValue: unitValue.target.value })}
           />
         </label>
@@ -97,7 +94,6 @@ export default function ProductList() {
           Quantidade em estoque
           <input
             type="number"
-            value={product.stockQuantity}
             onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
           />
         </label>
@@ -105,15 +101,13 @@ export default function ProductList() {
           Tipo
           <input
             type="text"
-            value={product.productType}
             onChange={productType => setProduct({ ...product, productType: { id: productType.target.value }})}
           />
         </label>
         <label>
-          Tipo
+          Categoria
           <input
             type="text"
-            value={product.productCategory}
             onChange={productCategory => setProduct({ ...product, productCategory: { id: productCategory.target.value }})}
           />
         </label>
