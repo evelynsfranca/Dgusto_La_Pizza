@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import logo from '/public/images/logo.png';
 import { API_URL } from '../../../utils/constants';
+import logo from '/public/images/logo.png';
 
-function ApiProductsList({ token }) {
+function ApiUsersList({ token }) {
 
   if(!token) return <></>
 
@@ -41,7 +41,7 @@ function ApiProductsList({ token }) {
 }
 
 
-export default function ProductList() {
+export default function UserList() {
 
   const router =  useRouter();
   const [token, setToken] = useState('');
@@ -56,7 +56,7 @@ export default function ProductList() {
   return (
     <div className="container">
       <Head>
-        <title>ProductsList</title>
+        <title>UsersList</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -68,13 +68,13 @@ export default function ProductList() {
             </a>
           </Link>
 
-          <h1 className="title">Listagem de produtos</h1>
+          <h1 className="title">Listagem de usuários</h1>
           
           <button type="button" onClick={() => router.push('/admin/users/save')}>
-            ADICIONAR PRODUTO
+            ADICIONAR USUÁRIO
           </button>
 
-          <ApiProductsList token={token} />
+          <ApiUsersList token={token} />
 
         </div>
       </main>
