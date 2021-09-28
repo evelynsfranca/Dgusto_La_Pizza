@@ -1,5 +1,6 @@
 package br.com.dgusto.service;
 
+import br.com.dgusto.domain.Authority;
 import br.com.dgusto.domain.User;
 import br.com.dgusto.facade.vm.SignupVM;
 import br.com.dgusto.repository.UserRepository;
@@ -7,7 +8,9 @@ import br.com.dgusto.security.SecurityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -36,6 +39,13 @@ public class AccountServiceImpl implements AccountService {
         } else {
             return null;
         }
+
+        Authority userAuthority = Authority.builder().name("ROLE_USER").build();
+        Authority clientAuthority = Authority.builder().name("ROLE_CLIENT").build();
+        Set<Authority> authorities = new HashSet<>();
+        authorities.add(userAuthority);
+        authorities.add(clientAuthority);
+        user.setAuthorities(authorities);
 
         return userRepository.save(user);
     }

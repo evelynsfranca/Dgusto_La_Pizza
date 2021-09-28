@@ -14,13 +14,9 @@ public interface ProductService {
 
     Page<Product> getAll(Pageable pageable);
 
-    Page<Product> findAllPizzaFlavors(Pageable pageable);
+    Page<Product> findAllProductCategory(String categoryName, Pageable pageable);
 
-    Page<Product> findAllPizzaSizes(Pageable pageable);
-
-    Page<Product> findAllDrinks(Pageable pageable);
-
-    Page<Product> findAllOthers(Pageable pageable);
+    Page<Product> findAllProductType(String typeName, Pageable pageable);
 
     void delete(Long id);
 }
