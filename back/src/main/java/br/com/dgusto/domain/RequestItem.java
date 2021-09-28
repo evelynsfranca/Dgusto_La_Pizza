@@ -5,18 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "request_products")
+@Table(name = "request_items")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestProduct implements Serializable {
+public class RequestItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +34,12 @@ public class RequestProduct implements Serializable {
     private Integer quantity;
 
     @NotNull
-    @Column(name = "value")
-    private BigDecimal value;
+    @Column(name = "unit_value")
+    private BigDecimal unitValue;
+
+    @NotNull
+    @Column(name = "total_value")
+    private BigDecimal totalValue;
 
     @ManyToOne
     @JoinColumn(name = "request_id")

@@ -1,7 +1,5 @@
 package br.com.dgusto.domain;
 
-import br.com.dgusto.domain.enumeration.PizzaCategory;
-import br.com.dgusto.domain.enumeration.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,16 +7,16 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -41,22 +39,27 @@ public class Product implements Serializable {
     private String description;
 
     @NotNull
-    @Column(name = "value")
-    private BigDecimal value;
+    @Column(name = "unit_value")
+    private BigDecimal unitValue;
 
     @NotNull
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "product_type")
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @NotNull
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @ManyToOne
     private ProductType productType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "pizza_category")
-    private PizzaCategory pizzaCategory;
+    @ManyToOne
+    private ProductCategory productCategory;
 
     @OneToMany(mappedBy = "product")
-    private Set<RequestProduct> requests;
+    private Set<RequestItem> requestItems;
 }
