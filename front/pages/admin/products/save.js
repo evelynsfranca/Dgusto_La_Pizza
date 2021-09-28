@@ -55,7 +55,7 @@ export default function ProductList() {
     <LayoutAdmin>
 
       <Head>
-        <title>Adicionar novos produtos</title>
+        <title>Adicionar novo produto</title>
       </Head>
 
       <h1 className="title">

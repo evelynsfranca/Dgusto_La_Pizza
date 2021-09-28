@@ -19,17 +19,17 @@ export default function LayoutAdmin({ children }) {
         <ul>
           <li>
             <Link href="/admin/products/list">
-              Início
+              Lista de Produtos
             </Link>
           </li>
           <li>
             <Link href="/admin/users/list">
-              Lista Usuários
+              Lista de Usuários
             </Link>
           </li>
           <li>
             <Link href="/admin/categories/list">
-              Lista Categorias
+              Lista de Categorias
             </Link>
           </li>
         </ul>
