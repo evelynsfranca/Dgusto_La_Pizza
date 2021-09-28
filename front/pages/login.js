@@ -20,22 +20,22 @@ export default function Login() {
 
   async function handleLogin() {
     const res = await fetch(`${API_LOGIN_URL}`, {
-    method: "POST",  
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(login)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(login)
     })
-    .then(res => {            
-      let token = res.headers.get("Authorization");
-      localStorage.setItem("token", token);
-      return res
-    })
-    .catch(e => console.warn(e));
+      .then(res => {
+        let token = res.headers.get("Authorization");
+        localStorage.setItem("token", token);
+        return res
+      })
+      .catch(e => console.warn(e));
 
     const response = await res;
 
-    if(response) {
+    if (response) {
       router.push('/admin/products/list')
     }
 
@@ -49,7 +49,7 @@ export default function Login() {
         <title>Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}> 
+      <div className="img" style={{ width: '50%', boxSizing: 'border-box' }}>
         <Image src={pizzaImage} layout="fill" objectFit="cover" />
       </div>
 
@@ -57,7 +57,7 @@ export default function Login() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
 
@@ -66,29 +66,29 @@ export default function Login() {
           <p className="form">
             <label>
               Email
-              <input 
-                type="text" 
-                value={login.username} 
-                onChange={username => setLogin({ ...login, username: username.target.value })} 
+              <input
+                type="text"
+                value={login.username}
+                onChange={username => setLogin({ ...login, username: username.target.value })}
               />
             </label>
-            
+
             <label>
               Senha
-                <input 
-                  type={passwordVisibility ? "text" : "password"}
-                  value={login.password} 
-                  onChange={password => setLogin({ ...login, password: password.target.value })} 
-                />
+              <input
+                type={passwordVisibility ? "text" : "password"}
+                value={login.password}
+                onChange={password => setLogin({ ...login, password: password.target.value })}
+              />
 
-                <span className="icon">
-                  <FontAwesomeIcon 
-                    icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size='5x'
-                    onClick={() => setPasswordVisibility(!passwordVisibility)} 
-                    className="icon"
-                  />
-                </span>
+              <span className="icon">
+                <FontAwesomeIcon
+                  icon={passwordVisibility ? faEyeSlash : faEye}
+                  size='5x'
+                  onClick={() => setPasswordVisibility(!passwordVisibility)}
+                  className="icon"
+                />
+              </span>
             </label>
             <button className="button" onClick={handleLogin}>LOGIN</button>
           </p>

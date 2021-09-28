@@ -1,65 +1,37 @@
-import { useRouter } from 'next/dist/client/router';
-import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from "react";
-import useSWR from 'swr';
 import logo from '/public/images/logo.png';
-import { API_URL } from '../../../utils/constants';
+import Link from 'next/link';
 
-function ApiProducts({ token }) {
-
-  if(!token) return <></>
-
-  const router =  useRouter();
-
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-      .then(res => res.json())
-      .catch(e => console.warn(e))
-      
-  const { data, error } = useSWR([`${API_URL}/admin/products`, token], fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <>{data.content}</>
-}
-
-
-export default function Product() {
-
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
-    }    
-  }, []);
-
+export default function LayoutAdmin({ children }) {
   return (
     <div className="container">
-      <Head>
-        <title>Products</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main>
+
         <div className="card">
-          <Link href="/">
+
+          <Link href="/admin/products/list">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
-          <ApiProducts token={token} />
-          <h1 className="title">Products</h1>
 
+          {children}
         </div>
-      </main>
 
-      <style jsx>{`
+      </main>
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+        }
+
         .container {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
 
           height: 100vh;
           width: 100vw;
@@ -96,8 +68,7 @@ export default function Product() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          margin-top: -80px;
+          margin-top: 30px;
           height: 100%;
           width: 50vw;
         }
@@ -130,13 +101,6 @@ export default function Product() {
           position: relative;
         }
 
-        .icon {
-          position: absolute;
-          top: 50%; 
-          right: 5px;
-          width: 18px;
-        }
-
         input {
           border: 0;
           border-bottom: 1px solid #dadada;
@@ -146,7 +110,7 @@ export default function Product() {
           padding: 10px;
         }
 
-        button {
+        .button-primary {
           background-color: #d91a0d;
           border: 0;
           border-radius: 5px;
@@ -158,11 +122,42 @@ export default function Product() {
           outline: 0;
           opacity: 0.95;
           padding: 15px 40px;
+          margin-bottom: 30px;
         }
 
-        button:hover {
+        .button-primary:hover {
           background-color: #dd190c;
           opacity: 1;
+        }
+
+        .button-secondary {
+          background-color: #34b134;
+          border: 0;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          outline: 0;
+          padding: 10px 15px;
+        }
+
+        .button-secondary:hover {
+          background-color: #34b134;
+          opacity: 0.90;
+        }
+
+        .button-tertiary {
+          background-color: #5d5dff;
+          border: 0;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          outline: 0;
+          padding: 10px 15px;
+        }
+
+        .button-tertiary:hover {
+          background-color: #5d5dff;
+          opacity: 0.90;
         }
 
         .logo {
@@ -175,19 +170,23 @@ export default function Product() {
             flex-direction: column;
           }
         }
-      `}</style>
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+        .btn-back {
+          text-decoration:none;
+          font-size: 140%;
+          line-height: 0;
+          padding: 10px;
+        }
+
+        table thead {
+          font-weight: bold;
+        }
+
+        table td {
+          padding: 6px 15px;
         }
       `}</style>
 
     </div>
-  );
+  )
 }

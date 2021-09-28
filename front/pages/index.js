@@ -4,14 +4,13 @@ import Menu from '../components/Menu';
 import Navbar from '../components/Navbar';
 import { API_URL } from '../utils/constants';
 
-
 function ApiAccount({ token }) {
-  if(!token) return <></>
+  if (!token) return <></>
 
   const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-      .then(res => res.json())
-      .catch(e => console.warn(e))
-      
+    .then(res => res.json())
+    .catch(e => console.warn(e))
+
   const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
 
   if (error) return <div>failed to load</div>
@@ -27,11 +26,11 @@ export default function Home() {
     if (typeof window !== undefined && localStorage.getItem('token')) {
 
       setToken(localStorage.getItem('token'))
-    }    
+    }
   }, []);
-  
+
   return (
-    <> 
+    <>
       <Navbar />
       <ApiAccount token={token} />
       <Menu />

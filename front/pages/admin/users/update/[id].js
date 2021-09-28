@@ -85,7 +85,7 @@ export default function UserUpdate() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
 

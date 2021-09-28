@@ -9,31 +9,31 @@ import { API_URL } from '../../../utils/constants';
 
 export default function UserList() {
 
-  const router =  useRouter();
+  const router = useRouter();
 
   const [token, setToken] = useState('');
   const [user, setUser] = useState({
     name: '',
     username: '',
     email: ''
-    
+
   });
 
   async function handleUser() {
     const res = await fetch(`${API_URL}/admin/users`, {
-    method: "POST",  
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
-    },
-    body: JSON.stringify(user) 
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify(user)
     })
-    .then(res => res.json())
-    .catch(e => console.warn(e));
+      .then(res => res.json())
+      .catch(e => console.warn(e));
 
     const response = await res;
 
-    if(response) {
+    if (response) {
       router.push('/admin/users/list')
     }
   }
@@ -44,7 +44,7 @@ export default function UserList() {
     if (typeof window !== undefined && localStorage.getItem('token')) {
 
       setToken(localStorage.getItem('token'))
-    }    
+    }
   }, []);
 
   return (
@@ -58,39 +58,42 @@ export default function UserList() {
         <div className="card">
           <Link href="/">
             <a className="logo">
-              <Image src={logo} width={150} height={120} />
+              <Image src={logo} width={150} height={137} />
             </a>
           </Link>
 
-          <h1 className="title">ApiUserSave</h1>
+          <h1 className="title">Adicionar novo usuario</h1>
 
+          <Link href="/admin/users/">
+            Voltar
+          </Link>
 
           <p className="form">
             <label>
               Nome
-              <input 
-                type="text" 
-                value={user.name} 
-                onChange={name => setUser({ ...user, name: name.target.value })} 
+              <input
+                type="text"
+                value={user.name}
+                onChange={name => setUser({ ...user, name: name.target.value })}
               />
             </label>
             <label>
               Username
-              <input 
-                type="text" 
-                value={user.username} 
-                onChange={username => setUser({ ...user, username: username.target.value })} 
+              <input
+                type="text"
+                value={user.username}
+                onChange={username => setUser({ ...user, username: username.target.value })}
               />
             </label>
             <label>
               Email
-              <input 
-                type="number" 
-                value={user.email} 
-                onChange={email => setUser({ ...user, email: email.target.value })} 
+              <input
+                type="number"
+                value={user.email}
+                onChange={email => setUser({ ...user, email: email.target.value })}
               />
             </label>
-            
+
             <button className="button" onClick={handleUser}>SALVAR</button>
           </p>
 
