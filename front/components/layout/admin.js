@@ -196,6 +196,53 @@ export default function LayoutAdmin({ children }) {
           opacity: 0.90;
         }
 
+        .button-danger {
+          background-color: #ff2e2e;
+          border: 0;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          outline: 0;
+          padding: 10px 15px;
+        }
+
+        .button-danger:hover {
+          background-color: #ff2e2e;
+          opacity: 0.90;
+        }
+
+        .btn-link {
+          background-color: #eaeaea;
+          border: 0;
+          border-radius: 5px;
+          color: #666;
+          cursor: pointer;
+          outline: 0;
+          padding: 10px 15px;
+          text-decoration: none;
+        }
+
+        .btn-link:hover {
+          background-color: #eaeaea;
+          opacity: 0.90;
+        }
+        
+        .btn-danger {
+          background-color: #ff2e2e;
+          border: 0;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          outline: 0;
+          padding: 10px 15px;
+          text-decoration: none;
+        }
+
+        .btn-danger:hover {
+          background-color: #ff2e2e;
+          opacity: 0.90;
+        }
+
         .logo {
           display: block;
         }
