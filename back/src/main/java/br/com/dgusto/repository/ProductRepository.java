@@ -10,15 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'PIZZA_FLAVOR' ORDER BY id \n-- #pageable\n", nativeQuery = true)
-    Page<Product> findAllPizzaFlavors(Pageable pageable);
+    @Query(value = "SELECT * FROM product p WHERE p.product_category_id = :productCategoryId ORDER BY id \n-- #pageable\n", nativeQuery = true)
+    Page<Product> findAllProductCategory(Long productCategoryId, Pageable pageable);
 
-    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'PIZZA_SIZE' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
-    Page<Product> findAllPizzaSizes(Pageable pageable);
-
-    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'DRINK' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
-    Page<Product> findAllDrinks(Pageable pageable);
-
-    @Query(value = "SELECT * FROM product p WHERE p.product_type = 'OTHER' ORDER BY id \n-- #pageable\n ", nativeQuery = true)
-    Page<Product> findAllOthers(Pageable pageable);
+    @Query(value = "SELECT * FROM product p WHERE p.product_type_id = :productTypeId ORDER BY id \n-- #pageable\n ", nativeQuery = true)
+    Page<Product> findAllProductTypes(Long productTypeId, Pageable pageable);
 }
