@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { API_URL } from '../../../../utils/constants';
 import LayoutAdmin from '../../../../components/layout/admin';
 
-function ApiUserDetail({ token }) {
+function ApiTypeDetail({ token }) {
 
   if (!token) return <></>
 
@@ -18,7 +18,7 @@ function ApiUserDetail({ token }) {
     .then(res => res.json())
     .catch(e => console.warn(e))
 
-  const { data, error } = useSWR([`${API_URL}/admin/users/${id}`, token], fetcher)
+  const { data, error } = useSWR([`${API_URL}/admin/product-types/${id}`, token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -31,15 +31,12 @@ function ApiUserDetail({ token }) {
       <td>
         {data.name}
       </td>
-      <td>
-        {data.email}
-      </td>
     </tr>
   </>
 }
 
 
-export default function UserDetail() {
+export default function TypeDetail() {
 
   const [token, setToken] = useState('');
 
@@ -54,17 +51,17 @@ export default function UserDetail() {
     <LayoutAdmin>
 
       <Head>
-        <title>Detalhes do usuário</title>
+        <title>Detalhes do tipo</title>
       </Head>
 
       <h1 className="title">
-        <Link href="/admin/users/list">
-          <a title="Voltar para listagem de usuario" className="btn-back">
+        <Link href="/admin/types/list">
+          <a title="Voltar para listagem de tipos" className="btn-back">
             &#8249;
           </a>
         </Link>
         {' '}
-        Detalhes do usuário
+        Detalhes do tipo
       </h1>
 
       <table>
@@ -72,11 +69,10 @@ export default function UserDetail() {
           <tr>
             <td>#</td>
             <td>Nome</td>
-            <td>Email</td>
           </tr>
         </thead>
         <tbody>
-          <ApiUserDetail token={token} />
+          <ApiTypeDetail token={token} />
         </tbody>
       </table>
 

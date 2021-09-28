@@ -33,6 +33,11 @@ export default function LayoutAdmin({ children }) {
             </Link>
           </li>
           <li>
+            <Link href="/admin/types/list">
+              Lista de Tipos
+            </Link>
+          </li>
+          <li>
             <Link href="/">
               Voltar ao site
             </Link>
