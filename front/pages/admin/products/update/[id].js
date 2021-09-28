@@ -116,8 +116,8 @@ export default function ProductUpdate() {
             Valor
             <input
               type="number"
-              value={product.value}
-              onChange={value => setProduct({ ...product, value: value.target.value })}
+              value={product.unitValue}
+              onChange={value => setProduct({ ...product, unitValue: value.target.value })}
             />
           </label>
           <label>
