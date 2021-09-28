@@ -5,8 +5,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from "react";
-import logo from '../images/logo.png';
-import pizzaImage from '../images/pizza-01.jpg';
+import logo from '/public/images/logo.png';
+import pizzaImage from '/public/images/pizza-01.jpg';
 import { API_LOGIN_URL } from '../utils/constants';
 
 
@@ -84,7 +84,7 @@ export default function Login() {
                 <span className="icon">
                   <FontAwesomeIcon 
                     icon={passwordVisibility ? faEyeSlash : faEye} 
-                    size={5} 
+                    size='5x'
                     onClick={() => setPasswordVisibility(!passwordVisibility)} 
                     className="icon"
                   />

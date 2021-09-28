@@ -4,36 +4,37 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import logo from '../../../images/logo.png';
+import logo from '/public/images/logo.png';
 import { API_URL } from '../../../utils/constants';
 
 function ApiProductsList({ token }) {
 
-  if(!token) return <></>
+  if (!token) return <></>
 
-  const router =  useRouter();
+  const router = useRouter();
 
   const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-      .then(res => res.json())
-      .catch(e => console.warn(e))
-      
+    .then(res => res.json())
+    .catch(e => console.warn(e))
+
   const { data, error } = useSWR([`${API_URL}/admin/products`, token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
+
   return <>
     <ul style={{ display: 'flex', flexDirection: 'column', listStyle: 'none', width: '100%' }}>
       {data.content.map((product, index) => (
         <li key={index} style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-            <span>{product.name}</span>
-            <span>{product.value}</span>
-            <span>{product.stockQuantity}</span>
-            <button type="button" onClick={() => router.push(`/admin/products/detail/${product.id}`)}>
-              VISUALIZAR
-            </button>
-            <button type="button" onClick={() => router.push(`/admin/products/update/${product.id}`)}>
-              EDITAR
-            </button>
+          <span>{product.name}</span>
+          <span>{product.value}</span>
+          <span>{product.stockQuantity}</span>
+          <button type="button" onClick={() => router.push(`/admin/products/detail/${product.id}`)}>
+            VISUALIZAR
+          </button>
+          <button type="button" onClick={() => router.push(`/admin/products/update/${product.id}`)}>
+            EDITAR
+          </button>
         </li>
       ))}
     </ul>
@@ -43,7 +44,7 @@ function ApiProductsList({ token }) {
 
 export default function ProductList() {
 
-  const router =  useRouter();
+  const router = useRouter();
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -69,7 +70,7 @@ export default function ProductList() {
           </Link>
 
           <h1 className="title">ApiProductsList</h1>
-          
+
           <button type="button" onClick={() => router.push('/admin/products/save')}>
             ADICIONAR PRODUTO
           </button>

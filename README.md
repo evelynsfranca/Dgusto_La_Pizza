@@ -1,13 +1,15 @@
 ## Requisitos:
 
 - JDK 11
-
-<!-- Instalação: https://jdk.java.net/archive/ -->
-<!-- Configurando no windows: adicionar a variável de ambiente JAVA_HOME: https://www.devmedia.com.br/preparacao-do-ambiente-para-desenvolvimento-em-java/25188 -->
+Instalação: https://jdk.java.net/archive/
+Configurando no windows: adicionar a variável de ambiente JAVA_HOME: https://www.devmedia.com.br/preparacao-do-ambiente-para-desenvolvimento-em-java/25188
 
 - Maven
-<!-- Instalação: https://maven.apache.org/index.html -->
-<!-- Configurando no windows: adicionar a variável de ambiente MAVEN_HOME: https://pt.stackoverflow.com/questions/259927/como-configurar-vari%C3%A1veis-de-ambiente-maven-java -->
+Instalação: https://maven.apache.org/index.html
+Configurando no windows: adicionar a variável de ambiente MAVEN_HOME: https://pt.stackoverflow.com/questions/259927/como-configurar-vari%C3%A1veis-de-ambiente-maven-java 
+
+- API Url
+AWS - http://3.130.86.83:8080/
 
 ## Instalação de dependências:
 
@@ -49,4 +51,4 @@ PS: Não esqueça de criar o banco de dados `dgusto` para fazer a importação
 <!-- Insomnia download for Windows: https://insomnia.rest/download  -->
 
 - Para o back-end recomenda-se a utilização da IDE IntelliJ IDEA
-<!-- IntelliJ IDEA download for Windows:https://www.jetbrains.com/pt-br/idea/download  -->
+<!-- IntelliJ IDEA download for Windows: https://www.jetbrains.com/pt-br/idea/download  -->
