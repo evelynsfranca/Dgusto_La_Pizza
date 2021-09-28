@@ -2,11 +2,11 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import useSWR from 'swr';
 import NumberFormat from 'react-number-format';
-
-import { API_URL } from '../../../../utils/constants';
+import useSWR from 'swr';
 import LayoutAdmin from '../../../../components/layout/admin';
+import { API_URL } from '../../../../utils/constants';
+
 
 function ApiProductDetail({ token }) {
 
@@ -36,7 +36,7 @@ function ApiProductDetail({ token }) {
         {data.description}
       </td>
       <td>
-        <NumberFormat value={data.value} displayType={'text'} thousandSeparator={true} prefix={'R$'} />
+        <NumberFormat value={data.unitValue} displayType={'text'} thousandSeparator={true} prefix={'R$'} />
       </td>
       <td>
         {data.stockQuantity}

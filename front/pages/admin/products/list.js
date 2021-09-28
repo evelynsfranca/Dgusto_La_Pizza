@@ -1,10 +1,10 @@
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from "react";
-import useSWR from 'swr';
-import { API_URL } from '../../../utils/constants';
-import LayoutAdmin from '../../../components/layout/admin';
 import NumberFormat from 'react-number-format';
+import useSWR from 'swr';
+import LayoutAdmin from '../../../components/layout/admin';
+import { API_URL } from '../../../utils/constants';
 
 function ApiProductsList({ token }) {
 
@@ -28,7 +28,7 @@ function ApiProductsList({ token }) {
           {product.name}
         </td>
         <td>
-          <NumberFormat value={product.value} displayType={'text'} thousandSeparator={true} prefix={'R$'} />
+          <NumberFormat value={product.unitValue} displayType={'text'} thousandSeparator={true} prefix={'R$'} />
         </td>
         <td>
           {product.stockQuantity}

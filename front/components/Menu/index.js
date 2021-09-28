@@ -6,7 +6,7 @@ export const Menu = () => {
       .then(res => res.json())
       .catch(e => console.warn(e))
       
-  const { data, error } = useSWR(`${API_URL}/products/flavors`, fetcher)
+  const { data, error } = useSWR(`${API_URL}/products`, fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>

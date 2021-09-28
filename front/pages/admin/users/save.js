@@ -3,8 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import logo from '/public/images/logo.png';
 import { API_URL } from '../../../utils/constants';
+import logo from '/public/images/logo.png';
 
 
 export default function UserList() {
@@ -15,7 +15,13 @@ export default function UserList() {
   const [user, setUser] = useState({
     name: '',
     username: '',
-    email: ''
+    email: '',
+    password: '',
+    authorithies: [
+      {
+        name: ''
+      }
+    ]
 
   });
 
@@ -46,6 +52,8 @@ export default function UserList() {
       setToken(localStorage.getItem('token'))
     }
   }, []);
+
+  useEffect(() => console.log(user), [user])
 
   return (
     <div className="container">
@@ -78,6 +86,22 @@ export default function UserList() {
               />
             </label>
             <label>
+              Email
+              <input
+                type="text"
+                value={user.email}
+                onChange={email => setUser({ ...user, email: email.target.value })}
+              />
+            </label>
+            <label>
+              Senha
+              <input
+                type="text"
+                value={user.password}
+                onChange={password => setUser({ ...user, password: password.target.value })}
+              />
+            </label>
+            <label>
               Username
               <input
                 type="text"
@@ -86,11 +110,11 @@ export default function UserList() {
               />
             </label>
             <label>
-              Email
+              Permissões
               <input
-                type="number"
-                value={user.email}
-                onChange={email => setUser({ ...user, email: email.target.value })}
+                type="text"
+                value={user?.authorithies.length ? user?.authorithies[0].name : ''}
+                onChange={authority => setUser({ ...user, authorithies: [{ name: authority.target.value }] })}
               />
             </label>
 
