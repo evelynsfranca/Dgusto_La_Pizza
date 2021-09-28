@@ -163,8 +163,8 @@ export default function ProductList() {
             {productTypes?.length && (
               <select 
                 name="type"
-                value={product.productType.id} 
-                defaultValue={product.productType.id}
+                value={product?.productType?.id ?? ''} 
+                defaultValue={product?.productType?.id ?? ''}
                 onChange={selectType}
                 onSelect={selectType}
               >
@@ -182,8 +182,8 @@ export default function ProductList() {
             {productCategories?.length && (
               <select 
                 name="category"
-                value={product.productCategory.id} 
-                defaultValue={product.productCategory.id}
+                value={product?.productCategory?.id ?? ''} 
+                defaultValue={product?.productCategory?.id ?? ''}
                 onChange={selectCategory}
                 onSelect={selectCategory}
               >

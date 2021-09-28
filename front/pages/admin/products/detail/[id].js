@@ -41,6 +41,12 @@ function ApiProductDetail({ token }) {
       <td>
         {data.stockQuantity}
       </td>
+      <td>
+        {data?.productType?.name ?? ''}
+      </td>
+      <td>
+        {data?.productCategory?.name ?? ''}
+      </td>
     </tr>
   </>
 }
@@ -82,6 +88,8 @@ export default function ProductDetail() {
               <td>Descrição</td>
               <td>Preço</td>
               <td>Estoque</td>
+              <td>Tipo</td>
+              <td>Categoria</td>
             </tr>
           </thead>
           <tbody>
