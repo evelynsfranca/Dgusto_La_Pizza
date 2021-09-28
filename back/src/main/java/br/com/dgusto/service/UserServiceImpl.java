@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         user.setPassword(encodePassword(user.getPassword()));
-        user.setAuthorities(new HashSet<>());
+        user.setAuthorities(user.getAuthorities());
         return userRepository.save(user);
     }
 
@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService {
             .map(it -> {
                 it.setName(user.getName());
                 it.setEmail(user.getEmail());
-                it.setPassword(user.getPassword());
+                it.setPassword(encodePassword(user.getPassword()));
+                it.setAuthorities(user.getAuthorities());
                 return it;
             })
             .map(userRepository::save)

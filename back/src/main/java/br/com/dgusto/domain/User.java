@@ -22,6 +22,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Set;
@@ -33,7 +34,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"authorities"})
-@EqualsAndHashCode(callSuper = false, exclude = {"authorities"})
+@EqualsAndHashCode(callSuper = false, exclude = { "authorities" })
 public class User implements Serializable {
 
     @Id
@@ -41,18 +42,22 @@ public class User implements Serializable {
     private Long id;
 
     @NotEmpty
+    @NotBlank
     @Column(name = "username", unique = true)
     private String username;
 
     @NotEmpty
+    @NotBlank
     @Column(name = "name")
     private String name;
 
     @NotEmpty
+    @NotBlank
     @Column(name = "email", unique = true)
     private String email;
 
     @NotEmpty
+    @NotBlank
     @Column(name = "password")
     private String password;
 

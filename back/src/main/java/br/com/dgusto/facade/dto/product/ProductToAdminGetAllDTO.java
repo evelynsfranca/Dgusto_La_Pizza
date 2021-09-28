@@ -1,7 +1,7 @@
 package br.com.dgusto.facade.dto.product;
 
-import br.com.dgusto.domain.enumeration.PizzaCategory;
-import br.com.dgusto.domain.enumeration.ProductType;
+import br.com.dgusto.facade.dto.productcategory.ProductCategoryDTO;
+import br.com.dgusto.facade.dto.producttype.ProductTypeDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +16,11 @@ public class ProductToAdminGetAllDTO implements Serializable {
 
     private String name;
 
-    private BigDecimal value;
+    private BigDecimal unitValue;
 
     private Integer stockQuantity;
 
-    private ProductType productType;
+    private ProductTypeDTO productType;
 
-    private PizzaCategory pizzaCategory;
+    private ProductCategoryDTO productCategory;
 }

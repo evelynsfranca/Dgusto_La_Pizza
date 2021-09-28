@@ -1,12 +1,13 @@
 package br.com.dgusto.facade.dto.product;
 
-import br.com.dgusto.domain.enumeration.PizzaCategory;
-import br.com.dgusto.domain.enumeration.ProductType;
+import br.com.dgusto.facade.dto.productcategory.ProductCategoryDTO;
+import br.com.dgusto.facade.dto.producttype.ProductTypeDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +19,13 @@ public class ProductToGetAllDTO implements Serializable {
 
     private String description;
 
-    private BigDecimal value;
+    private BigDecimal unitValue;
 
-    private ProductType productType;
+    private ProductTypeDTO productType;
 
-    private PizzaCategory pizzaCategory;
+    private ProductCategoryDTO productCategory;
+
+    private LocalDateTime createdDate;
+
+    private String createdBy;
 }

@@ -6,8 +6,12 @@ import br.com.dgusto.facade.dto.product.ProductToAdminGetAllDTO;
 import br.com.dgusto.facade.dto.product.ProductToGetDTO;
 import br.com.dgusto.facade.dto.product.ProductToSaveDTO;
 import br.com.dgusto.facade.dto.product.ProductToUpdateDTO;
+import br.com.dgusto.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,43 +35,42 @@ public class ProductAdminResource {
         this.productAdminFacade = productAdminFacade;
     }
     @PostMapping("/products")
-    public ProductDTO save(@RequestBody ProductToSaveDTO dto) {
-        return productAdminFacade.save(dto);
+    public ResponseEntity<ProductDTO> save(@RequestBody ProductToSaveDTO dto) {
+        ProductDTO result = productAdminFacade.save(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/products")
-    public ProductDTO update(@RequestBody ProductToUpdateDTO dto) {
-        return productAdminFacade.update(dto);
+    public ResponseEntity<ProductDTO> update(@RequestBody ProductToUpdateDTO dto) {
+        ProductDTO result = productAdminFacade.update(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping("/products/{id}")
-    public ProductToGetDTO get(@PathVariable Long id) {
-        return productAdminFacade.get(id);
+    public ResponseEntity<ProductToGetDTO> get(@PathVariable Long id) {
+        ProductToGetDTO result = productAdminFacade.get(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/products")
-    public Page<ProductToAdminGetAllDTO> getAll(Pageable pageable) {
-        return productAdminFacade.getAll(pageable);
+    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAll(Pageable pageable) {
+        Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products");
+        return ResponseEntity.ok().headers(headers).body(page);
     }
 
-    @GetMapping("/products/flavors")
-    public Page<ProductToAdminGetAllDTO> getAllPizzaFlavors(Pageable pageable) {
-        return productAdminFacade.getAllPizzaFlavors(pageable);
+    @GetMapping("/products/categories/{categoryName}")
+    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName, Pageable pageable) {
+        Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductCategories(categoryName, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/categories");
+        return ResponseEntity.ok().headers(headers).body(page);
     }
 
-    @GetMapping("/products/sizes")
-    public Page<ProductToAdminGetAllDTO> getAllPizzaSizes(Pageable pageable) {
-        return productAdminFacade.getAllPizzaSizes(pageable);
-    }
-
-    @GetMapping("/products/drinks")
-    public Page<ProductToAdminGetAllDTO> getAllDrinks(Pageable pageable) {
-        return productAdminFacade.getAllDrinks(pageable);
-    }
-
-    @GetMapping("/products/others")
-    public Page<ProductToAdminGetAllDTO> getAllOthers(Pageable pageable) {
-        return productAdminFacade.getAllOthers(pageable);
+    @GetMapping("/products/types/{typeName}")
+    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaTypes(@PathVariable String typeName, Pageable pageable) {
+        Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductTypes(typeName, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/types");
+        return ResponseEntity.ok().headers(headers).body(page);
     }
 
     @DeleteMapping("/products/{id}")

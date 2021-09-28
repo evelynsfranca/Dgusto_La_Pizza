@@ -10,29 +10,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "product_type")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee implements Serializable {
+public class ProductType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(name = "identification_number")
-    private String identificationNumber;
-
     @NotNull
-    @OneToOne
-    private User user;
+    @Column(name = "name", unique = true)
+    private String name;
 }

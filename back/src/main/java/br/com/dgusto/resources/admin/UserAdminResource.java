@@ -6,8 +6,12 @@ import br.com.dgusto.facade.dto.user.UserToGetAllDTO;
 import br.com.dgusto.facade.dto.user.UserToGetDTO;
 import br.com.dgusto.facade.dto.user.UserToSaveDTO;
 import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
+import br.com.dgusto.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,23 +36,28 @@ public class UserAdminResource {
         this.userAdminFacade = userAdminFacade;
     }
     @PostMapping("/users")
-    public UserDTO save(@RequestBody UserToSaveDTO dto) {
-        return userAdminFacade.save(dto);
+    public ResponseEntity<UserDTO> save(@RequestBody UserToSaveDTO dto) {
+        UserDTO result = userAdminFacade.save(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
-    public UserDTO update(@RequestBody UserToUpdateDTO dto) {
-        return userAdminFacade.update(dto);
+    public ResponseEntity<UserDTO> update(@RequestBody UserToUpdateDTO dto) {
+        UserDTO result = userAdminFacade.update(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping("/users/{id}")
-    public UserToGetDTO get(@PathVariable Long id) {
-        return userAdminFacade.get(id);
+    public ResponseEntity<UserToGetDTO> get(@PathVariable Long id) {
+        UserToGetDTO result = userAdminFacade.get(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/users")
-    public Page<UserToGetAllDTO> getAll(Pageable pageable) {
-        return userAdminFacade.getAll(pageable);
+    public ResponseEntity<Page<UserToGetAllDTO>> getAll(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users");
+        return ResponseEntity.ok().headers(headers).body(page);
     }
 
     @DeleteMapping("/users/{id}")

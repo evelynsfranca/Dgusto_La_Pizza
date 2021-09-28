@@ -37,26 +37,14 @@ public class ProductFacade {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductToGetAllDTO> getAllPizzaFlavors(Pageable pageable) {
-        return productService.findAllPizzaFlavors(pageable)
+    public Page<ProductToGetAllDTO> getAllProductCategories(String categoryName, Pageable pageable) {
+        return productService.findAllProductCategory(categoryName, pageable)
                 .map(productMapper::toGetAllDto);
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductToGetAllDTO> getAllPizzaSizes(Pageable pageable) {
-        return productService.findAllPizzaSizes(pageable)
-                .map(productMapper::toGetAllDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ProductToGetAllDTO> getAllDrinks(Pageable pageable) {
-        return productService.findAllDrinks(pageable)
-                .map(productMapper::toGetAllDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ProductToGetAllDTO> getAllOthers(Pageable pageable) {
-        return productService.findAllOthers(pageable)
+    public Page<ProductToGetAllDTO> getAllProductTypes(String typeName, Pageable pageable) {
+        return productService.findAllProductType(typeName, pageable)
                 .map(productMapper::toGetAllDto);
     }
 }
