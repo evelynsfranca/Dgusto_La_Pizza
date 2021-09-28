@@ -62,7 +62,7 @@ export default function ProductList() {
   return (
     <LayoutAdmin>
       <Head>
-        <title>ProductsList</title>
+        <title>Lista de produtos</title>
       </Head>
 
       <h1 className="title">
@@ -79,7 +79,7 @@ export default function ProductList() {
             <td>Sabor</td>
             <td>Preço</td>
             <td>Estoque</td>
-            <td></td>
+            <td>Ações</td>
           </tr>
         </thead>
         <tbody>

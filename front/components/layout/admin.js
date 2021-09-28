@@ -3,23 +3,47 @@ import logo from '/public/images/logo.png';
 import Link from 'next/link';
 
 export default function LayoutAdmin({ children }) {
+
   return (
-    <div className="container">
-      <main>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link href="/admin/products/list">
+              <a className="logo">
+                <Image src={logo} width={100} height={87} />
+              </a>
+            </Link>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <Link href="/admin/products/list">
+              Início
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/users/list">
+              Lista Usuários
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/categories/list">
+              Lista Categorias
+            </Link>
+          </li>
+        </ul>
+      </nav>
 
-        <div className="card">
+      <div className="container">
+        <main>
 
-          <Link href="/admin/products/list">
-            <a className="logo">
-              <Image src={logo} width={150} height={137} />
-            </a>
-          </Link>
+          <div className="card">
+            {children}
+          </div>
 
-          {children}
-        </div>
-
-      </main>
-      <style jsx global>{`
+        </main>
+        <style jsx global>{`
         html,
         body {
           padding: 0;
@@ -27,6 +51,8 @@ export default function LayoutAdmin({ children }) {
           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
             sans-serif;
+          overflow-x: hidden;
+          width: 100vw;
         }
 
         .container {
@@ -185,8 +211,39 @@ export default function LayoutAdmin({ children }) {
         table td {
           padding: 6px 15px;
         }
+
+        nav {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-content: center;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        nav ul {
+          list-style:none;
+
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-content: center;
+          justify-content: center;
+          align-items: center;
+        }
+
+        nav ul li a {
+          padding: 10px;
+          text-decoration: none;
+          color: #358b09;
+        }
+
+        nav ul li a:hover {
+          color: #62e61f;
+        }
       `}</style>
 
-    </div>
+      </div>
+    </>
   )
 }
