@@ -54,26 +54,14 @@ public class ProductAdminFacade {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductToAdminGetAllDTO> getAllPizzaFlavors(Pageable pageable) {
-        return productService.findAllPizzaFlavors(pageable)
+    public Page<ProductToAdminGetAllDTO> getAllProductCategories(String categoryName, Pageable pageable) {
+        return productService.findAllProductCategory(categoryName, pageable)
                 .map(productMapper::toAdminGetAllDto);
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductToAdminGetAllDTO> getAllPizzaSizes(Pageable pageable) {
-        return productService.findAllPizzaSizes(pageable)
-                .map(productMapper::toAdminGetAllDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ProductToAdminGetAllDTO> getAllDrinks(Pageable pageable) {
-        return productService.findAllDrinks(pageable)
-                .map(productMapper::toAdminGetAllDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ProductToAdminGetAllDTO> getAllOthers(Pageable pageable) {
-        return productService.findAllOthers(pageable)
+    public Page<ProductToAdminGetAllDTO> getAllProductTypes(String typeName, Pageable pageable) {
+        return productService.findAllProductType(typeName, pageable)
                 .map(productMapper::toAdminGetAllDto);
     }
 
