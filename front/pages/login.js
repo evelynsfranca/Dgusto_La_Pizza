@@ -4,13 +4,19 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from '/public/images/logo.png';
 import pizzaImage from '/public/images/pizza-01.jpg';
 import { API_LOGIN_URL } from '../utils/constants';
 
 
 export default function Login() {
+
+  useEffect(() => {
+    if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
+      router.push('/admin/products/list')
+    }
+  }, []);
 
   const router = useRouter();
   const [login, setLogin] = useState({
@@ -84,7 +90,6 @@ export default function Login() {
               <span className="icon">
                 <FontAwesomeIcon
                   icon={passwordVisibility ? faEyeSlash : faEye}
-                  size='5x'
                   onClick={() => setPasswordVisibility(!passwordVisibility)}
                   className="icon"
                 />

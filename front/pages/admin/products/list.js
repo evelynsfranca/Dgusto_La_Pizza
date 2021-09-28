@@ -5,8 +5,6 @@ import useSWR from 'swr';
 import { API_URL } from '../../../utils/constants';
 import LayoutAdmin from '../../../components/layout/admin';
 import NumberFormat from 'react-number-format';
-import { faEye, faPen } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ApiProductsList({ token }) {
 
@@ -20,8 +18,8 @@ function ApiProductsList({ token }) {
 
   const { data, error } = useSWR([`${API_URL}/admin/products`, token], fetcher)
 
-  if (error) return <tr rowspan="4"><td>failed to load</td></tr>
-  if (!data) return <tr rowspan="4"><td>loading...</td></tr>
+  if (error) return <tr rowSpan="4"><td>failed to load</td></tr>
+  if (!data) return <tr rowSpan="4"><td>loading...</td></tr>
 
   return <>
     {data.content.map((product, index) => (
@@ -37,17 +35,11 @@ function ApiProductsList({ token }) {
         </td>
         <td>
           <button type="button" className="button-secondary" onClick={() => router.push(`/admin/products/detail/${product.id}`)} title="Visualizar">
-            <FontAwesomeIcon
-              icon={faEye}
-              className="icon"
-            />
+            Ver
           </button>
           {' '}
           <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/products/update/${product.id}`)} title="Editar">
-            <FontAwesomeIcon
-              icon={faPen}
-              className="icon"
-            />
+            Editar
           </button>
         </td>
       </tr>

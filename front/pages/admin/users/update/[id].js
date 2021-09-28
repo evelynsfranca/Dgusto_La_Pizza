@@ -65,13 +65,12 @@ export default function UserUpdate() {
     if (typeof window !== undefined && localStorage.getItem('token')) {
 
       setToken(localStorage.getItem('token'))
-    }    
-  }, []);
+    } 
 
-  useEffect(() => {
     if(id && token) {
       handleGetUser();
-    }
+    } 
+
   }, [id, token]);
 
   return (
