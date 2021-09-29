@@ -1,22 +1,41 @@
 import { useRouter } from 'next/dist/client/router';
+import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 import LayoutAdmin from '../../../components/layout/admin';
 import { API_URL } from '../../../utils/constants';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 export default function ProductList() {
 
   const router = useRouter();
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('O Nome é obrigatório'),
+    description: Yup.string()
+      .required('A Descrição é obrigatório'),
+    unitValue: Yup.string()
+      .required('O Valor é obrigatório'),
+    stockQuantity: Yup.string()
+      .required('A Quantidade é obrigatório'),
+    type: Yup.string()
+      .required('O Tipo é obrigatório'),
+    category: Yup.string()
+      .required('A Categoria é obrigatório')
+  });
+  const formOptions = { resolver: yupResolver(validationSchema) };
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { errors } = formState;
+
   const [token, setToken] = useState('');
   const [product, setProduct] = useState({
-    id: '',
     name: '',
     description: '',
     unitValue: 0,
-    stockQuantity: '',
+    stockQuantity: 0,
     productType: {
       id: '',
       name: ''
@@ -61,7 +80,7 @@ export default function ProductList() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token
+        "Authorization": localStorage.getItem('token')
       }
     })
       .then(res => res.json())
@@ -72,6 +91,9 @@ export default function ProductList() {
     if (response) {
       setProductTypes(response.content)
     }
+    else {
+      setProductTypes(response.content = null)
+    }
   }
 
   async function handleGetProductCategories() {
@@ -79,7 +101,7 @@ export default function ProductList() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token
+        "Authorization": localStorage.getItem('token')
       }
     })
       .then(res => res.json())
@@ -90,8 +112,10 @@ export default function ProductList() {
     if (response) {
       setProductCategories(response.content)
     }
+    else {
+      setProductCategories(response.content = null)
+    }
   }
-
 
   useEffect(() => {
     if (typeof window !== undefined && localStorage.getItem('token')) {
@@ -101,17 +125,17 @@ export default function ProductList() {
 
     handleGetProductCategories();
     handleGetProductTypes();
-  }, []);
+  }, [product]);
 
   function selectType(event) {
     setProduct({ ...product, productType: { ...product.productType, id: event.target.value, name: productTypes.find(it => it.id == event.target.value).name } })
   }
 
   function selectCategory(event) {
-    setProduct({ ...product, productCategory: { ...product.productCategory, id:  event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
+    setProduct({ ...product, productCategory: { ...product.productCategory, id: event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
   }
 
-  
+
   return (
     <LayoutAdmin>
 
@@ -129,76 +153,84 @@ export default function ProductList() {
         Adicionar Novo Produto
       </h1>
 
-      <p className="form">
+      <form className="form" onSubmit={handleSubmit(handleProduct)}>
         <label>
           Nome
           <input
             type="text"
+            {...register('name')} className={`form-control ${errors.name ? 'is-invalid' : ''}`}
             onChange={name => setProduct({ ...product, name: name.target.value })}
           />
         </label>
+        <div className="invalid-feedback">{errors.name?.message}</div>
         <label>
           Descrição
           <input
             type="text"
+            {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}
             onChange={description => setProduct({ ...product, description: description.target.value })}
           />
         </label>
+        <div className="invalid-feedback">{errors.description?.message}</div>
         <label>
           Valor
           <input
             type="number"
+            min="0"
+            {...register('unitValue')} className={`form-control ${errors.unitValue ? 'is-invalid' : ''}`}
             onChange={unitValue => setProduct({ ...product, unitValue: unitValue.target.value })}
           />
         </label>
+        <div className="invalid-feedback">{errors.unitValue?.message}</div>
         <label>
           Quantidade em estoque
           <input
             type="number"
+            min="0"
+            {...register('stockQuantity')} className={`form-control ${errors.stockQuantity ? 'is-invalid' : ''}`}
             onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
           />
         </label>
-          <label>
-            Selecione um Tipo
-            {productTypes?.length && (
-              <select 
-                name="type"
-                value={product?.productType?.id ?? ''} 
-                defaultValue={product?.productType?.id ?? ''}
-                onChange={selectType}
-                onSelect={selectType}
-              >
+        <div className="invalid-feedback">{errors.stockQuantity?.message}</div>
+        <label>
+          Selecione um Tipo
+          {productTypes?.length && (
+            <select
+              name="type"
+              {...register('type')} className={`form-control ${errors.type ? 'is-invalid' : ''}`}
+              value={product?.productType?.id ?? ''}
+              defaultValue={product?.productType?.id ?? ''}
+              onChange={selectType}
+            >
               <option value=""></option>
-                {productTypes?.map(type => (
-                  <React.Fragment key={type.id}>
-                    <option value={type.id}>{type.name}</option>
-                  </React.Fragment>
-                ))}
-              </select>
-            )}
-          </label>
-          <label>
-            Selecione uma Categoria
-            {productCategories?.length && (
-              <select 
-                name="category"
-                value={product?.productCategory?.id ?? ''} 
-                defaultValue={product?.productCategory?.id ?? ''}
-                onChange={selectCategory}
-                onSelect={selectCategory}
-              >
+              {productTypes?.map(type => (
+                <option key={type.id} value={type.id}>{type.name}</option>
+              ))}
+            </select>
+          )}
+        </label>
+        <div className="invalid-feedback">{errors.type?.message}</div>
+        <label>
+          Selecione uma Categoria
+          {productCategories?.length && (
+            <select
+              name="category"
+              {...register('category')} className={`form-control ${errors.category ? 'is-invalid' : ''}`}
+              value={product?.productCategory?.id ?? ''}
+              defaultValue={product?.productCategory?.id ?? ''}
+              onChange={selectCategory}
+            >
               <option value=""></option>
-                {productCategories?.map(category => (
-                  <React.Fragment key={category.id}>
-                    <option value={category.id}>{category.name}</option>
-                  </React.Fragment>
-                ))}
-              </select>
-            )}
-          </label>
+              {productCategories?.map(category => (
+                <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
+            </select>
+          )}
+        </label>
+        <div className="invalid-feedback">{errors.category?.message}</div>
 
-        <button className="button-secondary" onClick={handleProduct}>SALVAR</button>
-      </p>
+        <button type="submit" className="button-secondary">SALVAR</button>
+      </form>
 
     </LayoutAdmin>
   );

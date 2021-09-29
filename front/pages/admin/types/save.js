@@ -48,7 +48,7 @@ export default function ProductTypesAdd() {
       </Head>
 
       <h1 className="title">
-        <Link href="/admin/product-types/list">
+        <Link href="/admin/types/list">
           <a title="Voltar para listagem de tipos" className="btn-back">
             &#8249;
           </a>
