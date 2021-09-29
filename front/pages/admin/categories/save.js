@@ -48,7 +48,7 @@ export default function ProductCategoriesAdd() {
       </Head>
 
       <h1 className="title">
-        <Link href="/admin/product-categories/list">
+        <Link href="/admin/categories/list">
           <a title="Voltar para listagem de categorias" className="btn-back">
             &#8249;
           </a>

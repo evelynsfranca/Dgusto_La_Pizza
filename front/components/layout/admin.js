@@ -137,7 +137,7 @@ export default function LayoutAdmin({ children }) {
           position: relative;
         }
 
-        input {
+        input, select {
           border: 0;
           border-bottom: 1px solid #dadada;
           border-radius: 5px;
@@ -298,6 +298,20 @@ export default function LayoutAdmin({ children }) {
         nav ul li a:hover {
           color: #62e61f;
         }
+
+        .invalid-feedback {
+          color: #ff2e2e;
+          font-size: 12px;
+        }
+
+        .invalid-feedback:not(:empty) {
+          margin-bottom: 30px;
+        }
+
+        form input.is-invalid {
+          border: 1px solid #ff2e2e;
+        }
+
       `}</style>
 
       </div>
