@@ -1,6 +1,5 @@
 package br.com.dgusto.facade.dto.user;
 
-import br.com.dgusto.facade.dto.authority.AuthorityToSaveOrUpdateUserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +18,5 @@ public class UserToSaveDTO implements Serializable {
 
     private String password;
 
-    private Set<AuthorityToSaveOrUpdateUserDTO> authorities;
+    private Set<String> authorities;
 }

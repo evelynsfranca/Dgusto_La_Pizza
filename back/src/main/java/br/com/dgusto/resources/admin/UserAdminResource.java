@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -35,6 +34,7 @@ public class UserAdminResource {
     ) {
         this.userAdminFacade = userAdminFacade;
     }
+
     @PostMapping("/users")
     public ResponseEntity<UserDTO> save(@RequestBody UserToSaveDTO dto) {
         UserDTO result = userAdminFacade.save(dto);

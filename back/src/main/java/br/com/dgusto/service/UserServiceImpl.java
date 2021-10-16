@@ -1,29 +1,37 @@
 package br.com.dgusto.service;
 
 import br.com.dgusto.domain.User;
+import br.com.dgusto.repository.AuthorityRepository;
 import br.com.dgusto.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public UserServiceImpl(
-        UserRepository userRepository
+        UserRepository userRepository,
+        AuthorityRepository authorityRepository
     ) {
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
     public User save(User user) {
         user.setPassword(encodePassword(user.getPassword()));
-        user.setAuthorities(user.getAuthorities());
+        user.setAuthorities(
+            user.getAuthorities().stream()
+                .map(it -> authorityRepository.findById(it.getName()).orElseThrow())
+                .collect(Collectors.toSet())
+        );
         return userRepository.save(user);
     }
 
@@ -34,7 +42,11 @@ public class UserServiceImpl implements UserService {
                 it.setName(user.getName());
                 it.setEmail(user.getEmail());
                 it.setPassword(encodePassword(user.getPassword()));
-                it.setAuthorities(user.getAuthorities());
+                it.setAuthorities(
+                    user.getAuthorities().stream()
+                        .map(authority -> authorityRepository.findById(authority.getName()).orElseThrow())
+                        .collect(Collectors.toSet())
+                );
                 return it;
             })
             .map(userRepository::save)
