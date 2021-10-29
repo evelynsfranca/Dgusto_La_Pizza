@@ -60,6 +60,12 @@ public class UserAdminResource {
         return ResponseEntity.ok().headers(headers).body(page);
     }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        userAdminFacade.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
     @GetMapping("/users/admin")
     public ResponseEntity<Page<UserToGetAllDTO>> getAllAdmins(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAllAdmins(pageable);
@@ -79,10 +85,5 @@ public class UserAdminResource {
         Page<UserToGetAllDTO> page = userAdminFacade.getAllEmployees(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/employee");
         return ResponseEntity.ok().headers(headers).body(page);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public void delete(@PathVariable Long id) {
-        userAdminFacade.delete(id);
     }
 }
