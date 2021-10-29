@@ -30,7 +30,7 @@ public class ProductTypeAdminResource {
     private final ProductTypeAdminFacade productTypeAdminFacade;
 
     public ProductTypeAdminResource(
-            ProductTypeAdminFacade productTypeAdminFacade
+        ProductTypeAdminFacade productTypeAdminFacade
     ) {
         this.productTypeAdminFacade = productTypeAdminFacade;
     }
@@ -57,11 +57,12 @@ public class ProductTypeAdminResource {
     public ResponseEntity<Page<ProductTypeToGetAllDTO>> getAll(Pageable pageable) {
         Page<ProductTypeToGetAllDTO> page = productTypeAdminFacade.getAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/product-types");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/product-types/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
         productTypeAdminFacade.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

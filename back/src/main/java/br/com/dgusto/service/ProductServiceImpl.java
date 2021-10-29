@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow();
+            .orElseThrow();
         productRepository.delete(product);
     }
 }

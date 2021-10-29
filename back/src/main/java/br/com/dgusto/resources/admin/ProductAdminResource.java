@@ -30,7 +30,7 @@ public class ProductAdminResource {
     private final ProductAdminFacade productAdminFacade;
 
     public ProductAdminResource(
-            ProductAdminFacade productAdminFacade
+        ProductAdminFacade productAdminFacade
     ) {
         this.productAdminFacade = productAdminFacade;
     }
@@ -56,25 +56,26 @@ public class ProductAdminResource {
     public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAll(Pageable pageable) {
         Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
+        productAdminFacade.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @GetMapping("/products/categories/{categoryName}")
     public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName, Pageable pageable) {
         Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductCategories(categoryName, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/categories");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/products/types/{typeName}")
     public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaTypes(@PathVariable String typeName, Pageable pageable) {
         Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductTypes(typeName, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/types");
-        return ResponseEntity.ok().headers(headers).body(page);
-    }
-
-    @DeleteMapping("/products/{id}")
-    public void delete(@PathVariable Long id) {
-        productAdminFacade.delete(id);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }
