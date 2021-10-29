@@ -53,20 +53,20 @@ public class ProductAdminFacade {
             .map(productMapper::toAdminGetAllDto);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        productService.delete(id);
+    }
+
     @Transactional(readOnly = true)
     public Page<ProductToAdminGetAllDTO> getAllProductCategories(String categoryName, Pageable pageable) {
         return productService.findAllProductCategory(categoryName, pageable)
-                .map(productMapper::toAdminGetAllDto);
+            .map(productMapper::toAdminGetAllDto);
     }
 
     @Transactional(readOnly = true)
     public Page<ProductToAdminGetAllDTO> getAllProductTypes(String typeName, Pageable pageable) {
         return productService.findAllProductType(typeName, pageable)
-                .map(productMapper::toAdminGetAllDto);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        productService.delete(id);
+            .map(productMapper::toAdminGetAllDto);
     }
 }

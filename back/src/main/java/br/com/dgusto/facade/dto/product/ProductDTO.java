@@ -1,6 +1,5 @@
 package br.com.dgusto.facade.dto.product;
 
-import br.com.dgusto.domain.ProductType;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryDTO;
 import br.com.dgusto.facade.dto.producttype.ProductTypeDTO;
 import lombok.Data;

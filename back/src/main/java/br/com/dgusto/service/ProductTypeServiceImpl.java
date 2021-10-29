@@ -11,7 +11,9 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
 
-    public ProductTypeServiceImpl(ProductTypeRepository productTypeRepository) {
+    public ProductTypeServiceImpl(
+        ProductTypeRepository productTypeRepository
+    ) {
         this.productTypeRepository = productTypeRepository;
     }
 
@@ -44,7 +46,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public void delete(Long id) {
         ProductType productType = productTypeRepository.findById(id)
-                .orElseThrow();
+            .orElseThrow();
         productTypeRepository.delete(productType);
     }
 }
