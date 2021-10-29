@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -14,4 +15,8 @@ public class UserToGetDTO implements Serializable {
     private String name;
 
     private String email;
+
+    private String username;
+
+    private Set<String> authorities;
 }

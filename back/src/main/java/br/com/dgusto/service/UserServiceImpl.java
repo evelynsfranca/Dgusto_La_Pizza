@@ -1,29 +1,37 @@
 package br.com.dgusto.service;
 
 import br.com.dgusto.domain.User;
+import br.com.dgusto.repository.AuthorityRepository;
 import br.com.dgusto.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public UserServiceImpl(
-        UserRepository userRepository
+        UserRepository userRepository,
+        AuthorityRepository authorityRepository
     ) {
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
     public User save(User user) {
         user.setPassword(encodePassword(user.getPassword()));
-        user.setAuthorities(user.getAuthorities());
+        user.setAuthorities(
+            user.getAuthorities().stream()
+                .map(it -> authorityRepository.findById(it.getName()).orElseThrow())
+                .collect(Collectors.toSet())
+        );
         return userRepository.save(user);
     }
 
@@ -33,8 +41,11 @@ public class UserServiceImpl implements UserService {
             .map(it -> {
                 it.setName(user.getName());
                 it.setEmail(user.getEmail());
-                it.setPassword(encodePassword(user.getPassword()));
-                it.setAuthorities(user.getAuthorities());
+                it.setAuthorities(
+                    user.getAuthorities().stream()
+                        .map(authority -> authorityRepository.findById(authority.getName()).orElseThrow())
+                        .collect(Collectors.toSet())
+                );
                 return it;
             })
             .map(userRepository::save)
@@ -56,8 +67,23 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user = userRepository.findById(id)
             .orElseThrow();
-
+        user.getAuthorities().forEach(it -> it.getUser().remove(user));
         userRepository.delete(user);
+    }
+
+    @Override
+    public Page<User> getAllAdmins(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_ADMIN", pageable);
+    }
+
+    @Override
+    public Page<User> getAllClients(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_CLIENT", pageable);
+    }
+
+    @Override
+    public Page<User> getAllEmployees(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_EMPLOYEE", pageable);
     }
 
     private String encodePassword(String password) {

@@ -2,7 +2,6 @@ package br.com.dgusto.facade.mapper;
 
 import br.com.dgusto.domain.Authority;
 import br.com.dgusto.domain.User;
-import br.com.dgusto.facade.dto.LoginDTO;
 import br.com.dgusto.facade.dto.user.UserDTO;
 import br.com.dgusto.facade.dto.user.UserToGetAllDTO;
 import br.com.dgusto.facade.dto.user.UserToGetDTO;

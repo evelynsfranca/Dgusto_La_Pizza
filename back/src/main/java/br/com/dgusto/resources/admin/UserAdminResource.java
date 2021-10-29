@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -35,6 +34,7 @@ public class UserAdminResource {
     ) {
         this.userAdminFacade = userAdminFacade;
     }
+
     @PostMapping("/users")
     public ResponseEntity<UserDTO> save(@RequestBody UserToSaveDTO dto) {
         UserDTO result = userAdminFacade.save(dto);
@@ -57,11 +57,33 @@ public class UserAdminResource {
     public ResponseEntity<Page<UserToGetAllDTO>> getAll(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Long> delete(@PathVariable Long id) {
         userAdminFacade.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/admin")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllAdmins(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllAdmins(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/admin");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/client")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllClients(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllClients(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/client");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/employee")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllEmployees(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllEmployees(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/employee");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }
