@@ -15,4 +15,10 @@ public interface UserService {
     Page<User> getAll(Pageable pageable);
 
     void delete(Long id);
+
+    Page<User> getAllAdmins(Pageable pageable);
+
+    Page<User> getAllClients(Pageable pageable);
+
+    Page<User> getAllEmployees(Pageable pageable);
 }

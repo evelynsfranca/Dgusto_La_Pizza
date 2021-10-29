@@ -60,6 +60,27 @@ public class UserAdminResource {
         return ResponseEntity.ok().headers(headers).body(page);
     }
 
+    @GetMapping("/users/admin")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllAdmins(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllAdmins(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/admin");
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @GetMapping("/users/client")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllClients(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllClients(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/client");
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @GetMapping("/users/employee")
+    public ResponseEntity<Page<UserToGetAllDTO>> getAllEmployees(Pageable pageable) {
+        Page<UserToGetAllDTO> page = userAdminFacade.getAllEmployees(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/employee");
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
     @DeleteMapping("/users/{id}")
     public void delete(@PathVariable Long id) {
         userAdminFacade.delete(id);

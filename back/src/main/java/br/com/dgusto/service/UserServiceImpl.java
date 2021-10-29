@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
             .map(it -> {
                 it.setName(user.getName());
                 it.setEmail(user.getEmail());
-                it.setPassword(encodePassword(user.getPassword()));
                 it.setAuthorities(
                     user.getAuthorities().stream()
                         .map(authority -> authorityRepository.findById(authority.getName()).orElseThrow())
@@ -68,8 +67,23 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user = userRepository.findById(id)
             .orElseThrow();
-
+        user.getAuthorities().forEach(it -> it.getUser().remove(user));
         userRepository.delete(user);
+    }
+
+    @Override
+    public Page<User> getAllAdmins(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_ADMIN", pageable);
+    }
+
+    @Override
+    public Page<User> getAllClients(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_CLIENT", pageable);
+    }
+
+    @Override
+    public Page<User> getAllEmployees(Pageable pageable) {
+        return userRepository.findAllByAuthority("ROLE_EMPLOYEE", pageable);
     }
 
     private String encodePassword(String password) {

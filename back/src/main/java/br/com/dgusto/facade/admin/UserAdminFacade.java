@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 public class UserAdminFacade {
 
@@ -52,6 +51,24 @@ public class UserAdminFacade {
     public Page<UserToGetAllDTO> getAll(Pageable pageable) {
         return userService.getAll(pageable)
             .map(userMapper::toGetAllDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserToGetAllDTO> getAllAdmins(Pageable pageable) {
+        return userService.getAllAdmins(pageable)
+                .map(userMapper::toGetAllDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserToGetAllDTO> getAllClients(Pageable pageable) {
+        return userService.getAllClients(pageable)
+                .map(userMapper::toGetAllDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserToGetAllDTO> getAllEmployees(Pageable pageable) {
+        return userService.getAllEmployees(pageable)
+                .map(userMapper::toGetAllDto);
     }
 
     @Transactional
