@@ -57,7 +57,7 @@ public class UserAdminResource {
     public ResponseEntity<Page<UserToGetAllDTO>> getAll(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
@@ -70,20 +70,20 @@ public class UserAdminResource {
     public ResponseEntity<Page<UserToGetAllDTO>> getAllAdmins(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAllAdmins(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/admin");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/users/client")
     public ResponseEntity<Page<UserToGetAllDTO>> getAllClients(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAllClients(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/client");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/users/employee")
     public ResponseEntity<Page<UserToGetAllDTO>> getAllEmployees(Pageable pageable) {
         Page<UserToGetAllDTO> page = userAdminFacade.getAllEmployees(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/users/employee");
-        return ResponseEntity.ok().headers(headers).body(page);
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }
