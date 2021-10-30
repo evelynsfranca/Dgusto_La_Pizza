@@ -8,6 +8,8 @@ public interface AddressService {
 
     Address save(Address address);
 
+    Address get(Long id);
+
     Address clientUpdate(Long clientId, Address address);
 
     Address clientGet(Long clientId, Long addressId);

@@ -44,4 +44,10 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByUserLogin(userLogin)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.client.notFound"));
     }
+
+    @Override
+    public Client findById(Long id) {
+        return clientRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.client.notFound"));
+    }
 }

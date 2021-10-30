@@ -19,12 +19,13 @@ public class RequestAdminFacade {
     private final RequestMapper requestMapper;
 
     public RequestAdminFacade(
-            RequestService requestService,
-            RequestMapper requestMapper
+        RequestService requestService,
+        RequestMapper requestMapper
     ) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
     }
+
     @Transactional
     public RequestDTO update(RequestToAdminUpdateDTO dto) {
         Request entity = requestMapper.toAdminUpdateEntity(dto);

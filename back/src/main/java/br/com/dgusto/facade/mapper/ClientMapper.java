@@ -1,6 +1,7 @@
 package br.com.dgusto.facade.mapper;
 
 import br.com.dgusto.domain.Client;
+import br.com.dgusto.facade.dto.client.ClientToRequestSaveDTO;
 import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import br.com.dgusto.facade.dto.client.ClientDTO;
 import br.com.dgusto.facade.dto.client.ClientToGetDTO;
@@ -27,4 +28,6 @@ public interface ClientMapper {
     Client toUpdateEntity(ClientToUpdateDTO dto);
 
     ClientToGetDTO toGetDto(Client entity);
+
+    Client toRequestSaveEntity(ClientToRequestSaveDTO dto);
 }
