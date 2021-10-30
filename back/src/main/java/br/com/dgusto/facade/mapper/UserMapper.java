@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Mapper(
     componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE
+    unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public interface UserMapper {
 

@@ -29,9 +29,7 @@ public class UserAdminResource {
 
     private final UserAdminFacade userAdminFacade;
 
-    public UserAdminResource(
-        UserAdminFacade userAdminFacade
-    ) {
+    public UserAdminResource(UserAdminFacade userAdminFacade) {
         this.userAdminFacade = userAdminFacade;
     }
 

@@ -20,9 +20,7 @@ public class ProductResource {
 
     private final ProductFacade productFacade;
 
-    public ProductResource(
-        ProductFacade productFacade
-    ) {
+    public ProductResource(ProductFacade productFacade) {
         this.productFacade = productFacade;
     }
 
@@ -35,21 +33,21 @@ public class ProductResource {
     @GetMapping("/products")
     public ResponseEntity<Page<ProductToGetAllDTO>> getAll(Pageable pageable) {
         Page<ProductToGetAllDTO> page = productFacade.getAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products");
-        return ResponseEntity.ok().headers(headers).body(page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/products");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/products/categories/{categoryName}")
     public ResponseEntity<Page<ProductToGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName, Pageable pageable) {
         Page<ProductToGetAllDTO> page = productFacade.getAllProductCategories(categoryName, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/categories");
-        return ResponseEntity.ok().headers(headers).body(page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/products/categories");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/products/types/{typeName}")
     public ResponseEntity<Page<ProductToGetAllDTO>> getAllPizzaTypes(@PathVariable String typeName, Pageable pageable) {
         Page<ProductToGetAllDTO> page = productFacade.getAllProductTypes(typeName, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/types");
-        return ResponseEntity.ok().headers(headers).body(page);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/products/types");
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 }

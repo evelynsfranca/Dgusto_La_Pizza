@@ -23,9 +23,7 @@ public class UserResource {
 
     private final UserAdminFacade userFacade;
 
-    public UserResource(
-        UserAdminFacade userFacade
-    ) {
+    public UserResource(UserAdminFacade userFacade) {
         this.userFacade = userFacade;
     }
     @PostMapping("/users")
