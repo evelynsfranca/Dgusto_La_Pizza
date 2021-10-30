@@ -9,7 +9,9 @@ import br.com.dgusto.repository.ProductTypeRepository;
 import br.com.dgusto.security.SecurityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 
@@ -54,13 +56,13 @@ public class ProductServiceImpl implements ProductService {
                 it.setCreatedDate(LocalDateTime.now());
                 return it;
             }).map(productRepository::save)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.product.notFound"));
     }
 
     @Override
     public Product get(Long id) {
         return productRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.product.notFound"));
     }
 
     @Override
@@ -83,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         Product product = productRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.product.notFound"));
         productRepository.delete(product);
     }
 }

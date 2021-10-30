@@ -26,9 +26,7 @@ public class RequestAdminResource {
 
     private final RequestAdminFacade requestAdminFacade;
 
-    public RequestAdminResource(
-        RequestAdminFacade requestAdminFacade
-    ) {
+    public RequestAdminResource(RequestAdminFacade requestAdminFacade) {
         this.requestAdminFacade = requestAdminFacade;
     }
 

@@ -4,16 +4,16 @@ import br.com.dgusto.domain.ProductCategory;
 import br.com.dgusto.repository.ProductCategoryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductCategoryServiceImpl(
-        ProductCategoryRepository productCategoryRepository
-    ) {
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
         this.productCategoryRepository = productCategoryRepository;
     }
 
@@ -29,13 +29,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 it.setName(productCategory.getName());
                 return it;
             }).map(productCategoryRepository::save)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productCategory.notFound"));
     }
 
     @Override
     public ProductCategory get(Long id) {
         return productCategoryRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productCategory.notFound"));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void delete(Long id) {
         ProductCategory productCategory = productCategoryRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productCategory.notFound"));
         productCategoryRepository.delete(productCategory);
     }
 }

@@ -4,16 +4,16 @@ import br.com.dgusto.domain.ProductType;
 import br.com.dgusto.repository.ProductTypeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
 
-    public ProductTypeServiceImpl(
-        ProductTypeRepository productTypeRepository
-    ) {
+    public ProductTypeServiceImpl(ProductTypeRepository productTypeRepository) {
         this.productTypeRepository = productTypeRepository;
     }
 
@@ -29,13 +29,13 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 it.setName(productType.getName());
                 return it;
             }).map(productTypeRepository::save)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productType.notFound"));
     }
 
     @Override
     public ProductType get(Long id) {
         return productTypeRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productType.notFound"));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public void delete(Long id) {
         ProductType productType = productTypeRepository.findById(id)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productType.notFound"));
         productTypeRepository.delete(productType);
     }
 }

@@ -48,7 +48,8 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public void clientDelete(Long clientId, Long phoneId) {
-        Phone phone = phoneRepository.findByClientIdAndPhoneId(clientId, phoneId).orElseThrow();
+        Phone phone = phoneRepository.findByClientIdAndPhoneId(clientId, phoneId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.phone.notFound"));
         phoneRepository.delete(phone);
     }
 }
