@@ -1,5 +1,6 @@
 package br.com.dgusto.facade.dto.address;
 
+import br.com.dgusto.facade.dto.client.ClientSimpleDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,6 @@ public class AddressToGetDTO implements Serializable {
     private String reference;
 
     private Boolean mainAddress;
+
+    private ClientSimpleDTO client;
 }
