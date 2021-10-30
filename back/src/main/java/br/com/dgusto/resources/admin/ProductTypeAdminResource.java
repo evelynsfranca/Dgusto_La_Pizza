@@ -29,9 +29,7 @@ public class ProductTypeAdminResource {
 
     private final ProductTypeAdminFacade productTypeAdminFacade;
 
-    public ProductTypeAdminResource(
-        ProductTypeAdminFacade productTypeAdminFacade
-    ) {
+    public ProductTypeAdminResource(ProductTypeAdminFacade productTypeAdminFacade) {
         this.productTypeAdminFacade = productTypeAdminFacade;
     }
 

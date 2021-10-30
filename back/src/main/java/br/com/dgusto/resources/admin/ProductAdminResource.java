@@ -29,11 +29,10 @@ public class ProductAdminResource {
 
     private final ProductAdminFacade productAdminFacade;
 
-    public ProductAdminResource(
-        ProductAdminFacade productAdminFacade
-    ) {
+    public ProductAdminResource(ProductAdminFacade productAdminFacade) {
         this.productAdminFacade = productAdminFacade;
     }
+
     @PostMapping("/products")
     public ResponseEntity<ProductDTO> save(@RequestBody ProductToSaveDTO dto) {
         ProductDTO result = productAdminFacade.save(dto);

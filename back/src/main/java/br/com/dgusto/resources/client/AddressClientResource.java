@@ -29,9 +29,7 @@ public class AddressClientResource {
 
     private final AddressClientFacade addressClientFacade;
 
-    public AddressClientResource(
-        AddressClientFacade addressClientFacade
-    ) {
+    public AddressClientResource(AddressClientFacade addressClientFacade) {
         this.addressClientFacade = addressClientFacade;
     }
 
@@ -56,7 +54,7 @@ public class AddressClientResource {
     @GetMapping("/addresses")
     public ResponseEntity<Page<AddressToGetAllDTO>> getAll(Pageable pageable) {
         Page<AddressToGetAllDTO> page = addressClientFacade.getAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/addresses");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/client/addresses");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 

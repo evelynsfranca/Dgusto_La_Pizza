@@ -24,17 +24,19 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 
     public JWTAuthorizationFilter(
-            AuthenticationManager authenticationManager,
-            CustomUserDetailService customUserDetailService
+        AuthenticationManager authenticationManager,
+        CustomUserDetailService customUserDetailService
     ) {
         super(authenticationManager);
         this.customUserDetailService = customUserDetailService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain chain
+    ) throws IOException, ServletException {
 
         String header =  request.getHeader(HEADER_STRING);
 

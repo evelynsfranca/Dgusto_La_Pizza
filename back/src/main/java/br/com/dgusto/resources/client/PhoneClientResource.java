@@ -29,9 +29,7 @@ public class PhoneClientResource {
 
     private final PhoneClientFacade phoneClientFacade;
 
-    public PhoneClientResource(
-        PhoneClientFacade phoneClientFacade
-    ) {
+    public PhoneClientResource(PhoneClientFacade phoneClientFacade) {
         this.phoneClientFacade = phoneClientFacade;
     }
 
