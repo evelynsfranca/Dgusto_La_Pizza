@@ -7,29 +7,42 @@ import br.com.dgusto.facade.dto.user.UserToGetDTO;
 import br.com.dgusto.facade.dto.user.UserToSaveDTO;
 import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
 import br.com.dgusto.facade.mapper.UserMapper;
+import br.com.dgusto.service.AuthorityService;
 import br.com.dgusto.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.Collectors;
+
 @Service
 public class UserAdminFacade {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final AuthorityService authorityService;
 
     public UserAdminFacade(
         UserService userService,
-        UserMapper userMapper
+        UserMapper userMapper,
+        AuthorityService authorityService
     ) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.authorityService = authorityService;
     }
 
     @Transactional
     public UserDTO save(UserToSaveDTO dto) {
         User entity = userMapper.toSaveEntity(dto);
+
+        entity.setAuthorities(
+            entity.getAuthorities().stream()
+                .map(it -> authorityService.findById(it.getName()))
+                .collect(Collectors.toSet())
+        );
+
         User saved = userService.save(entity);
         return userMapper.toDto(saved);
     }
@@ -37,6 +50,13 @@ public class UserAdminFacade {
     @Transactional
     public UserDTO update(UserToUpdateDTO dto) {
         User entity = userMapper.toUpdateEntity(dto);
+
+        entity.setAuthorities(
+            entity.getAuthorities().stream()
+                .map(it -> authorityService.findById(it.getName()))
+                .collect(Collectors.toSet())
+        );
+
         User saved = userService.update(entity);
         return userMapper.toDto(saved);
     }

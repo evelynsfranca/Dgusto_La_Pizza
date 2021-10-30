@@ -1,37 +1,28 @@
 package br.com.dgusto.service;
 
 import br.com.dgusto.domain.User;
-import br.com.dgusto.repository.AuthorityRepository;
 import br.com.dgusto.repository.UserRepository;
+import br.com.dgusto.security.AuthoritiesConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
 
     public UserServiceImpl(
-        UserRepository userRepository,
-        AuthorityRepository authorityRepository
+        UserRepository userRepository
     ) {
         this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
     }
 
     @Override
     public User save(User user) {
         user.setPassword(encodePassword(user.getPassword()));
-        user.setAuthorities(
-            user.getAuthorities().stream()
-                .map(it -> authorityRepository.findById(it.getName()).orElseThrow())
-                .collect(Collectors.toSet())
-        );
         return userRepository.save(user);
     }
 
@@ -41,11 +32,7 @@ public class UserServiceImpl implements UserService {
             .map(it -> {
                 it.setName(user.getName());
                 it.setEmail(user.getEmail());
-                it.setAuthorities(
-                    user.getAuthorities().stream()
-                        .map(authority -> authorityRepository.findById(authority.getName()).orElseThrow())
-                        .collect(Collectors.toSet())
-                );
+                it.setAuthorities(user.getAuthorities());
                 return it;
             })
             .map(userRepository::save)
@@ -73,17 +60,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getAllAdmins(Pageable pageable) {
-        return userRepository.findAllByAuthority("ROLE_ADMIN", pageable);
+        return userRepository.findAllByAuthority(AuthoritiesConstants.ADMIN, pageable);
     }
 
     @Override
     public Page<User> getAllClients(Pageable pageable) {
-        return userRepository.findAllByAuthority("ROLE_CLIENT", pageable);
+        return userRepository.findAllByAuthority(AuthoritiesConstants.CLIENT, pageable);
     }
 
     @Override
     public Page<User> getAllEmployees(Pageable pageable) {
-        return userRepository.findAllByAuthority("ROLE_EMPLOYEE", pageable);
+        return userRepository.findAllByAuthority(AuthoritiesConstants.EMPLOYEE, pageable);
     }
 
     private String encodePassword(String password) {
