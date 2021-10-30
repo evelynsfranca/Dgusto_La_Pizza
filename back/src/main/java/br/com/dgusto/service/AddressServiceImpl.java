@@ -23,6 +23,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public Address get(Long id) {
+        return addressRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.address.notFound"));
+    }
+
+    @Override
     public Address clientUpdate(Long clientId, Address address) {
         return addressRepository.findByClientIdAndAddressId(clientId, address.getId())
             .map(it  -> {

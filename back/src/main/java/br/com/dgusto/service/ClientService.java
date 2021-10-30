@@ -11,4 +11,6 @@ public interface ClientService {
     Client get(String userLogin);
 
     Client findByUserLogin(String userLogin);
+
+    Client findById(Long id);
 }
