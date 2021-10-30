@@ -4,7 +4,9 @@ import br.com.dgusto.domain.Address;
 import br.com.dgusto.repository.AddressRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -36,12 +38,13 @@ public class AddressServiceImpl implements AddressService {
                 it.setMainAddress(address.getMainAddress());
                 return it;
             }).map(addressRepository::save)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.address.notFound"));
     }
 
     @Override
-    public Address clientGet(Long clientId, Long addressid) {
-        return addressRepository.findByClientIdAndAddressId(clientId, addressid).orElseThrow();
+    public Address clientGet(Long clientId, Long addressId) {
+        return addressRepository.findByClientIdAndAddressId(clientId, addressId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.address.notFound"));
     }
 
     @Override
@@ -51,7 +54,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void clientDelete(Long clientId, Long addressId) {
-        Address address = addressRepository.findByClientIdAndAddressId(clientId, addressId).orElseThrow();
+        Address address = addressRepository.findByClientIdAndAddressId(clientId, addressId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.address.notFound"));
         addressRepository.delete(address);
     }
 }

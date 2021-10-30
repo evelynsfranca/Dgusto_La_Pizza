@@ -2,9 +2,11 @@ package br.com.dgusto.resources;
 
 import br.com.dgusto.facade.AccountFacade;
 import br.com.dgusto.facade.dto.LoginDTO;
-import br.com.dgusto.facade.dto.SignupDTO;
+import br.com.dgusto.facade.dto.client.ClientDTO;
+import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
 import br.com.dgusto.facade.dto.user.UserDTO;
-import br.com.dgusto.facade.vm.SignupVM;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,8 +31,9 @@ public class AccountResource {
     }
 
     @PostMapping("/signup")
-    public SignupDTO signup(@RequestBody SignupVM vm) {
-        return accountFacade.signup(vm);
+    public ResponseEntity<ClientDTO> clientSignup(@RequestBody ClientToSaveDTO dto) {
+        ClientDTO result = accountFacade.clientSignup(dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping("/authenticate")

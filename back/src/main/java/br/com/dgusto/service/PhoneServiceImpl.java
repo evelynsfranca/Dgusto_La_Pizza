@@ -4,16 +4,16 @@ import br.com.dgusto.domain.Phone;
 import br.com.dgusto.repository.PhoneRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
 
     private final PhoneRepository phoneRepository;
 
-    public PhoneServiceImpl(
-        PhoneRepository phoneRepository
-    ) {
+    public PhoneServiceImpl(PhoneRepository phoneRepository) {
         this.phoneRepository = phoneRepository;
     }
 
@@ -32,12 +32,13 @@ public class PhoneServiceImpl implements PhoneService {
                 it.setMainPhone(phone.getMainPhone());
                 return it;
             }).map(phoneRepository::save)
-            .orElseThrow();
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.phone.notFound"));
     }
 
     @Override
     public Phone clientGet(Long clientId, Long phoneId) {
-        return phoneRepository.findByClientIdAndPhoneId(clientId, phoneId).orElseThrow();
+        return phoneRepository.findByClientIdAndPhoneId(clientId, phoneId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.phone.notFound"));
     }
 
     @Override

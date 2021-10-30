@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class ClientSimpleDTO implements Serializable {
+public class ClientToSimpleDTO implements Serializable {
 
     private Long id;
 

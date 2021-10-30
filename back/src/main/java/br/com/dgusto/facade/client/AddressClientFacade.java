@@ -43,6 +43,7 @@ public class AddressClientFacade {
 
         entity.setClient(client);
         Address saved = addressService.save(entity);
+
         return addressMapper.toDto(saved);
     }
 
@@ -54,6 +55,7 @@ public class AddressClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         Address updated = addressService.clientUpdate(client.getId(), entity);
+
         return addressMapper.toDto(updated);
     }
 
@@ -63,6 +65,7 @@ public class AddressClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         Address address = addressService.clientGet(client.getId(), id);
+
         return addressMapper.toGetDto(address);
     }
 

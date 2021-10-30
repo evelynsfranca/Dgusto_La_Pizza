@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class AddressToGetDTO implements Serializable {
+public class AddressToClientGetDTO implements Serializable {
 
     private Long id;
 
@@ -31,6 +31,4 @@ public class AddressToGetDTO implements Serializable {
     private String reference;
 
     private Boolean mainAddress;
-
-    private ClientToSimpleDTO client;
 }

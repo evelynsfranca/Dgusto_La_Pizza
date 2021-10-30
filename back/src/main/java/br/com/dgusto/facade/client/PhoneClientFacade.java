@@ -42,6 +42,7 @@ public class PhoneClientFacade {
 
         entity.setClient(client);
         Phone saved = phoneService.save(entity);
+
         return phoneMapper.toDto(saved);
     }
 
@@ -53,6 +54,7 @@ public class PhoneClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         Phone updated = phoneService.clientUpdate(client.getId(), entity);
+
         return phoneMapper.toDto(updated);
     }
 
@@ -62,6 +64,7 @@ public class PhoneClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         Phone phone = phoneService.clientGet(client.getId(), id);
+
         return phoneMapper.toGetDto(phone);
     }
 
