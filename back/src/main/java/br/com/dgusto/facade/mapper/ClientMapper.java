@@ -7,6 +7,7 @@ import br.com.dgusto.facade.dto.client.ClientToGetDTO;
 import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
 import br.com.dgusto.facade.dto.client.ClientToUpdateDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -18,6 +19,7 @@ public interface ClientMapper {
 
     ClientDTO toDto(Client entity);
 
+    @Mapping(source = "user.name", target = "name")
     ClientToSimpleDTO toSimpleDto(Client entity);
 
     Client toSaveEntity(ClientToSaveDTO dto);
