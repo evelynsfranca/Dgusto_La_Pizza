@@ -1,7 +1,7 @@
 package br.com.dgusto.facade.dto.phone;
 
 import br.com.dgusto.domain.enumeration.PhoneType;
-import br.com.dgusto.facade.dto.client.ClientSimpleDTO;
+import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,5 +21,5 @@ public class PhoneToGetDTO implements Serializable {
 
     private Boolean mainPhone;
 
-    private ClientSimpleDTO client;
+    private ClientToSimpleDTO client;
 }

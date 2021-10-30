@@ -1,6 +1,6 @@
 package br.com.dgusto.facade.dto.address;
 
-import br.com.dgusto.facade.dto.client.ClientSimpleDTO;
+import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,5 +32,5 @@ public class AddressDTO implements Serializable {
 
     private Boolean mainAddress;
 
-    private ClientSimpleDTO client;
+    private ClientToSimpleDTO client;
 }
