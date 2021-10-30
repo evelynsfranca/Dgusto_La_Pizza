@@ -3,7 +3,7 @@ package br.com.dgusto.facade.dto.request;
 import br.com.dgusto.domain.enumeration.RequestStatus;
 import br.com.dgusto.domain.enumeration.PaymentMethod;
 import br.com.dgusto.facade.dto.address.AddressDTO;
-import br.com.dgusto.facade.dto.client.ClientSimpleDTO;
+import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +31,7 @@ public class RequestToGetDTO implements Serializable {
 
     private Boolean delivery;
 
-    private ClientSimpleDTO client;
+    private ClientToSimpleDTO client;
 
     private AddressDTO address;
 }

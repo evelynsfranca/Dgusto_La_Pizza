@@ -15,12 +15,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "request")
@@ -68,4 +70,7 @@ public class Request implements Serializable {
 
     @ManyToOne
     private Address address;
+
+    @OneToMany(mappedBy = "request")
+    private Set<RequestItem> requestItems;
 }
