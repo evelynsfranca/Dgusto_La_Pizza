@@ -1,0 +1,43 @@
+
+.bannerCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+
+  background-color: #fff;
+  border-radius: 15px;
+  color: #000;
+  padding: 10px 35px;
+  margin-right: 40px;
+
+  text-decoration: none;
+  z-index: 1;
+}
+
+.bannerCard.HomePage {
+  margin-bottom: 40px;
+  margin-right: 0px;
+}
+
+.bannerCardText {
+  
+}
+
+.bannerCardPhone {
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: bold;
+}
+
+.bannerCardPhone > svg {
+  margin-right: 10px;
+}
+
+.bannerCardTextGreen {
+  color: #328e00;
+  font-size: 0.875rem;
+}

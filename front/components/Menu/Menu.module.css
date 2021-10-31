@@ -1,0 +1,17 @@
+.container {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  margin: 5% auto;
+  gap: 5%;
+  max-width: 75%;
+}
+
+.productsContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 20px;
+}
