@@ -1,5 +1,5 @@
 {
-  "name": "learn-starter",
+  "name": "dgusto-la-pizza",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,13 +13,17 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@hookform/resolvers": "^2.8.1",
+    "bootstrap": "^5.1.1",
+    "bootstrap-icons": "^1.5.0",
     "next": "^11.0.0",
     "next-images": "^1.8.1",
     "react": "17.0.2",
     "react-bootstrap-sweetalert": "^5.2.0",
+    "react-currency-format": "^1.0.0",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.16.1",
     "react-number-format": "^4.7.3",
+    "sass": "^1.43.4",
     "swr": "^0.5.6",
     "yup": "^0.32.9"
   }

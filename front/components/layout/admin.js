@@ -53,6 +53,7 @@ export default function LayoutAdmin({ children }) {
           </div>
 
         </main>
+        
         <style jsx global>{`
         html,
         body {

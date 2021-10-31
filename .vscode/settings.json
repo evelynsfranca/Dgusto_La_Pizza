@@ -1,0 +1,10 @@
+{
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"],
+  "files.eol": "\n",
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true
+}
