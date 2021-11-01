@@ -10,7 +10,7 @@ public class SecurityConstants {
 
     public static final String HEADER_STRING = "Authorization";
 
-    public static final String SIGN_UP_URL = "/api/login";
+    public static final String SIGN_UP_URL = "/login";
 
     public static final Long EXPIRATION_TIME = 86400000L; // 1 dia
 }

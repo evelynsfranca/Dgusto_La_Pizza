@@ -4,6 +4,7 @@ import br.com.dgusto.domain.Request;
 import br.com.dgusto.facade.dto.request.RequestDTO;
 import br.com.dgusto.facade.dto.request.RequestToAdminUpdateDTO;
 import br.com.dgusto.facade.dto.request.RequestToClientSaveDTO;
+import br.com.dgusto.facade.dto.request.RequestToEmployeeUpdateDTO;
 import br.com.dgusto.facade.dto.request.RequestToGetAllDTO;
 import br.com.dgusto.facade.dto.request.RequestToGetDTO;
 import org.mapstruct.Mapper;
@@ -19,6 +20,8 @@ public interface RequestMapper {
     RequestDTO toDto(Request entity);
 
     Request toAdminUpdateEntity(RequestToAdminUpdateDTO dto);
+
+    Request toEmployeeUpdateEntity(RequestToEmployeeUpdateDTO dto);
 
     RequestToGetDTO toGetDto(Request entity);
 
