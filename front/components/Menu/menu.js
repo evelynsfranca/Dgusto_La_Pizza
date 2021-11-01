@@ -4,6 +4,7 @@ import styles from './Menu.module.css';
 import CurrencyFormat from 'react-currency-format';
 import Image from 'next/image';
 import pizzas from '/public/images/products/sample.png';
+import Loading from '../Loading/loading';
 
 export const Menu = () => {
   const fetcher = (url) => fetch(url)
@@ -13,7 +14,7 @@ export const Menu = () => {
   const { data, error } = useSWR(`${API_URL}/products`, fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Loading/>
 
   return (
     <>

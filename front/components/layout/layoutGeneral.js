@@ -11,6 +11,7 @@ import style from './layoutGeneral.module.css';
 import Navbar from '../Navbar/navbar';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import RequestToday from '../requestToday/requestToday';
+import Loading from '../Loading/loading';
 
 function ApiAccount({ token }) {
   if (!token) return <></>
@@ -22,7 +23,7 @@ function ApiAccount({ token }) {
   const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
 
   if (error) return <> (failed to load)</>
-  if (!data) return <> (loading...)</>
+  if (!data) return <Loading />
 
   return !!data?.authorities ? data.authorities.includes("ROLE_ADMIN") ? <>(ADM)</> : <>(USER)</> : ''
 }
