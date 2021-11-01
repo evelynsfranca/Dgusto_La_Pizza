@@ -1,7 +1,6 @@
 package br.com.dgusto.resources;
 
 import br.com.dgusto.facade.AccountFacade;
-import br.com.dgusto.facade.dto.LoginDTO;
 import br.com.dgusto.facade.dto.client.ClientDTO;
 import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
 import br.com.dgusto.facade.dto.user.UserDTO;
@@ -23,11 +22,6 @@ public class AccountResource {
 
     public AccountResource(AccountFacade accountFacade) {
         this.accountFacade = accountFacade;
-    }
-
-    @PostMapping("/login")
-    public UserDTO login(@RequestBody LoginDTO dto) {
-        return accountFacade.login(dto);
     }
 
     @PostMapping("/signup")

@@ -25,9 +25,5 @@ public class AddressToGetAllDTO implements Serializable {
 
     private String state;
 
-    private String country;
-
-    private String reference;
-
     private Boolean mainAddress;
 }
