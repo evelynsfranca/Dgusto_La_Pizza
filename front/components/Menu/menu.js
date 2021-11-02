@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import useSWR from 'swr';
 import { API_URL } from '../../utils/constants';
 import styles from './Menu.module.css';
@@ -9,32 +11,47 @@ import { groupBy } from 'lodash';
 
 export const ListCategory = ({ data }) => {
   const list = data.content.filter(it => it.productCategory != null).map(category => category.productCategory)
-  return (Object.keys(groupBy(list, 'name')).map((item, index) => <li key={index} className={[styles.listItem, "flex-sm-fill text-sm-center nav-link "].join(' ')}>{item}</li>))
+  return (Object.keys(groupBy(list, 'name')).map((item, index) => {
+    return (<li key={index} className={[styles.listItem, "flex-sm-fill text-sm-center nav-link "].join(' ')}>
+      <a>{item}</a>
+    </li>)
+  }))
 }
 
 export const Menu = () => {
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-    .then(res => res.json())
-    .catch(e => console.warn(e))
+  const [productslist, setProductslist] = useState([]);
 
-  const { data, error } = useSWR(`${API_URL}/products`, fetcher)
+  const loadProducts = () => {
 
-  if (error) return <>failed to load</>
-  if (!data) return <Loading />
+    const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+
+    const { data, error } = useSWR(`${API_URL}/products`, fetcher)
+
+    if (error) return <>failed to load</>
+    if (!data) return <Loading />
+
+    return setProductslist(data)
+  }
+
+  useEffect(() => {
+    loadProducts()
+  }, [productslist]);
 
   return (
     <>
       <ul className="nav nav-pills flex-column flex-sm-row">
-        {data.content.length > 0 &&
+        {productslist.length > 0 &&
           <ListCategory data={data} />
         }
       </ul>
 
       <div className="container">
         <div className="row my-5 py-5">
-          {data.content.length > 0 &&
+          {productslist.length > 0 &&
             <>
-              {data.content.map(flavor => (
+              {productslist.content.map(flavor => (
                 <div key={flavor.id} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
 
                   <div>

@@ -1,20 +1,18 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
+import useSWR from 'swr';
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/dist/client/router';
-import { API_LOGIN_URL } from '../utils/constants';
+import { API_LOGIN_URL, API_URL } from '../utils/constants';
+import LayoutGeneral from '../components/layout/layoutGeneral';
+import style from './LoginPage.module.css';
+import Router, { useRouter } from 'next/router';
 
-import style from './Login.module.css';
-
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logo from '/public/images/logo.png';
 
 function LoginPage() {
+  const [token, setToken] = useState('');
+  const router = useRouter()
 
-  const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [sendingForm, setSendingForm] = useState(false)
   const [login, setLogin] = useState({
     username: '',
@@ -22,99 +20,164 @@ function LoginPage() {
   })
 
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
-      router.push('/admin/products/list')
-    }
+    // if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
+    //   router.push('/my-purchases')
+    // }
+
+    /*if (isLoggedIn) {
+      if(isAdmin) {
+        router.push('/admin')
+      } else {
+        router.push('/my-purchases')
+      }
+    } else {
+      router.push('/login')
+    }*/
+
   }, []);
+
+  function ApiAccount({ token }) {
+    if (!token) return <></>
+
+    const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+
+    const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
+
+    if (error) return <> (failed to load)</>
+    if (!data) return <> carregado... </>
+
+    if (data.authorities.includes("ROLE_ADMIN")) {
+      setIsAdmin(true)
+    } else {
+      setIsAdmin(false)
+    }
+
+    // {isLoggedIn && !isAdmin &&
+    //   <>my-purchases</>
+    //   // Router.push('/my-purchases')
+    // }
+
+    // {isLoggedIn && isAdmin &&
+    //   <>/admin</>
+    //   // Router.push('/admin')
+    // }
+
+    return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ?
+      setTimeout(() => router.push('/admin/login'), 1000) :
+      setTimeout(() => router.push('/my-purchases'), 1000) : ''
+  }
 
   async function handleLogin() {
     setSendingForm(true);
 
-    const res = await fetch(`${API_LOGIN_URL}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(login)
-    })
-      .then(res => {
-        let token = res.headers.get("Authorization");
-        localStorage.setItem("token", token);
-        return res
+    if (!login.username || !login.password) {
+
+      console.log(`login ou senha estão em brancos`)
+      setSendingForm(false);
+
+    } else {
+
+      const resLogin = await fetch(`${API_LOGIN_URL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(login)
       })
-      .catch(e => {
-        console.warn(e)
-        setSendingForm(false);
-      });
+        .then(res => {
+          let token = res.headers.get("Authorization");
+          localStorage.setItem("token", token);
+          setToken(token)
 
-    const response = await res;
+          return res
+        })
+        .catch(e => {
+          console.warn(e)
+        });
 
-    if (response) {
-      router.push('/admin/products/list')
+      const responseLogin = await resLogin;
+
+      if (responseLogin.ok) {
+        setIsLoggedIn(true)
+        setSendingForm(false)
+      } else {
+        setIsLoggedIn(false)
+        setSendingForm(false)
+      }
+
+      /*if (response.authorities.includes("ROLE_ADMIN")) {
+        setIsAdmin(true)
+        router.push('/admin')
+      } else {
+        setIsAdmin(false)
+      }*/
+
     }
 
   }
 
   return (
-    <div className={style.body}>
+    <LayoutGeneral pageName="LoginPage">
+      <section className={style.pizzaContainer}></section>
 
-      <Head>
-        <title>Login</title>
-      </Head>
+      <main className="container my-5">
 
-      <main className="text-center">
+        {!isLoggedIn &&
+          <section className={style.formsignin}>
 
-        <Link href="/">
-          <a>
-            <Image src={logo} width={150} height={137} />
-          </a>
-        </Link>
+            <form>
+              {/* <h1 className="h3 mb-3 fw-normal">Login</h1> */}
 
-        <section className={style.formsignin}>
+              <div className="form-floating mb-1">
+                <input
+                  type="text"
+                  value={login.username}
+                  className="form-control"
+                  onChange={username => setLogin({ ...login, username: username.target.value })}
+                  id="email"
+                />
 
-          <form>
-            <h1 className="h3 mb-3 fw-normal">Login</h1>
+                <label>Email</label>
+              </div>
 
-            <div className="form-floating mb-1">
-              <input
-                type="text"
-                value={login.username}
-                className="form-control"
-                onChange={username => setLogin({ ...login, username: username.target.value })}
-                id="email"
-              />
+              <div className="form-floating mb-4">
+                <input
+                  type={passwordVisibility ? "text" : "password"}
+                  value={login.password}
+                  className="form-control"
+                  onChange={password => setLogin({ ...login, password: password.target.value })}
+                  id="password"
+                />
+                <label>Senha</label>
+              </div>
 
-              <label>Email</label>
-            </div>
+              <button className="w-100 btn btn-lg btn-primary" onClick={handleLogin} type="button" disabled={sendingForm} >
+                {sendingForm === true &&
+                  'Carregando...'
+                }
 
-            <div className="form-floating mb-4">
-              <input
-                type={passwordVisibility ? "text" : "password"}
-                value={login.password}
-                className="form-control"
-                onChange={password => setLogin({ ...login, password: password.target.value })}
-                id="password"
-              />
-              <label>Senha</label>
-            </div>
+                {sendingForm === false &&
+                  'Entrar'
+                }
+              </button>
+            </form>
 
-            <button className="w-100 btn btn-lg btn-primary" onClick={handleLogin} type="button" disabled={sendingForm} >
-              {sendingForm === true &&
-                'Carregando...'
-              }
+          </section>
+        }
 
-              {sendingForm === false &&
-                'Entrar'
-              }
-            </button>
-          </form>
-
-        </section>
+        {isLoggedIn &&
+          <>
+          carregando...
+          <div className="d-none"><ApiAccount token={token} /></div>
+          </>
+        }
 
       </main>
 
-    </div>
-  );
+    </LayoutGeneral>
+  )
 }
 
 export default LoginPage;

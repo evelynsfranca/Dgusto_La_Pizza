@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-
 .bannerCard {
   display: flex;
   align-items: center;
@@ -12,17 +11,37 @@
   border-radius: 15px;
   color: #000;
   padding: 10px 35px;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 
   text-decoration: none;
   z-index: 1;
 }
 
-.bannerCard.HomePage {
-  margin-bottom: 40px;
-  margin-right: 0px;
+@media all and (min-width: 768px) {
+  .bannerCard {
+    margin-right: 40px;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media all and (min-width: 768px) {
+  .bannerCard.HomePage {
+    margin-bottom: 40px;
+    margin-right: 0px;
+  }
 }
 
 .positionRelactive {
   position: relative;
+}
+
+.mt--5 {
+  margin-top: -5rem;
+}
+
+body > div > main, html {
+  background-color: #fff9f9;
 }

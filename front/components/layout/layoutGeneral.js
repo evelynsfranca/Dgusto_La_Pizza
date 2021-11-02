@@ -42,23 +42,27 @@ function LayoutGeneral({ children, pageName }) {
         <title>
           {pageName === 'HomePage' ?
             'Início'
-          :''}
+            : ''}
 
           {pageName === 'MenuPage' ?
             'Cardápio'
-          :''}
+            : ''}
 
           {pageName === 'MyPurchasesPage' ?
             'Meus Pedidos'
-          :''}
+            : ''}
 
           {pageName === 'PromotionsPage' ?
             'Promoções'
-          :''}
+            : ''}
 
           {pageName === 'ContactPage' ?
             'Contato'
-          :''}
+            : ''}
+
+          {pageName === 'LoginPage' ?
+            'Login'
+            : ''}
 
           {' '}
 
@@ -66,11 +70,12 @@ function LayoutGeneral({ children, pageName }) {
         </title>
       </Head>
 
-      <Link href="/login">
+      {/* <Link href="/admin/login">
         <a className={style.loginButton}>
-          LOGIN <ApiAccount token={token} />
+          LOGIN 
+          <ApiAccount token={token} />
         </a>
-      </Link>
+      </Link> */}
 
       {pageName === "HomePage" &&
         <main className={style.bannerContainer}>
@@ -132,9 +137,16 @@ function LayoutGeneral({ children, pageName }) {
                     Promoções
                   </span>
                 }
+
                 {pageName === 'ContactPage' &&
                   <span>
                     Contato
+                  </span>
+                }
+
+                {pageName === 'LoginPage' &&
+                  <span>
+                    Login
                   </span>
                 }
               </h1>

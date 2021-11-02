@@ -1,12 +1,18 @@
+
 import LayoutGeneral from '../components/layout/layoutGeneral';
 import style from './MyPurchases.module.css';
 
 function MyPurchases() {
+  
   return (
     <LayoutGeneral pageName="MyPurchasesPage">
       <section className={style.pizzaContainer}></section>
 
-      MyPurchases
+      <main className="container my-5">
+
+        list of my Purchases
+
+      </main>
 
     </LayoutGeneral>
   )
