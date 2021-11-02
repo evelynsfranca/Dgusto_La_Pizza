@@ -19,10 +19,10 @@ function Navbar() {
             </Link>
           </li>
           <li
-            className={style.navbarListItem, linkActive === 'my-purchases' ? style.linkActive : ''}
-            onClick={() => setLinkActive('my-purchases')}
+            className={style.navbarListItem, linkActive === 'login' ? style.linkActive : ''}
+            onClick={() => setLinkActive('login')}
           >
-            <Link href="/my-purchases">
+            <Link href="/login">
               <a className={style.navbarListItemLink}>Meus Pedidos</a>
             </Link>
           </li>

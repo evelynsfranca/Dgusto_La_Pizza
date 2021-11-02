@@ -13,7 +13,7 @@ function PromotionsPage() {
 
       </main>
 
-    </LayoutGeneral >
+    </LayoutGeneral>
   )
 }
 
