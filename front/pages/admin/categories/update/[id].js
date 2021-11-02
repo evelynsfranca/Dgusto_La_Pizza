@@ -83,18 +83,21 @@ export default function CategoryUpdate() {
         Editando categoria
       </h1>
 
-      <p className="form">
-        <label>
-          Nome
+      <form className="form">
+        <div className="mb-3">
+          <label>
+            Nome
+          </label>
           <input
             type="text"
+            className="form-control"
             value={category.name}
             onChange={name => setCategory({ ...category, name: name.target.value })}
           />
-        </label>
-        
-        <button className="button-secondary" onClick={handleUpdateCategory}>SALVAR</button>
-      </p>
+        </div>
+
+        <button className="btn btn-secondary" onClick={handleUpdateCategory}>SALVAR</button>
+      </form>
     </LayoutAdmin>
   );
 }

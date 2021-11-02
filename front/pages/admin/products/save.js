@@ -154,50 +154,65 @@ export default function ProductList() {
       </h1>
 
       <form className="form" onSubmit={handleSubmit(handleProduct)}>
-        <label>
-          Nome
+
+        <div className="mb-3">
+          <label>
+            Nome
+          </label>
           <input
             type="text"
             {...register('name')} className={`form-control ${errors.name ? 'is-invalid' : ''}`}
             onChange={name => setProduct({ ...product, name: name.target.value })}
           />
-        </label>
-        <div className="invalid-feedback">{errors.name?.message}</div>
-        <label>
-          Descrição
+          <div className="invalid-feedback">{errors.name?.message}</div>
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Descrição
+          </label>
           <input
             type="text"
             {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}
             onChange={description => setProduct({ ...product, description: description.target.value })}
           />
-        </label>
-        <div className="invalid-feedback">{errors.description?.message}</div>
-        <label>
-          Valor
+          <div className="invalid-feedback">{errors.description?.message}</div>
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Valor
+          </label>
           <input
             type="number"
             min="0"
             {...register('unitValue')} className={`form-control ${errors.unitValue ? 'is-invalid' : ''}`}
             onChange={unitValue => setProduct({ ...product, unitValue: unitValue.target.value })}
           />
-        </label>
-        <div className="invalid-feedback">{errors.unitValue?.message}</div>
-        <label>
-          Quantidade em estoque
+          <div className="invalid-feedback">{errors.unitValue?.message}</div>
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Quantidade em estoque
+          </label>
           <input
             type="number"
             min="0"
             {...register('stockQuantity')} className={`form-control ${errors.stockQuantity ? 'is-invalid' : ''}`}
             onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
           />
-        </label>
-        <div className="invalid-feedback">{errors.stockQuantity?.message}</div>
-        <label>
-          Selecione um Tipo
+          <div className="invalid-feedback">{errors.stockQuantity?.message}</div>
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Selecione um Tipo
+          </label>
           {productTypes?.length && (
             <select
               name="type"
-              {...register('type')} className={`form-control ${errors.type ? 'is-invalid' : ''}`}
+              {...register('type')} className={`form-select ${errors.type ? 'is-invalid' : ''}`}
               value={product?.productType?.id ?? ''}
               defaultValue={product?.productType?.id ?? ''}
               onChange={selectType}
@@ -208,14 +223,17 @@ export default function ProductList() {
               ))}
             </select>
           )}
-        </label>
-        <div className="invalid-feedback">{errors.type?.message}</div>
-        <label>
-          Selecione uma Categoria
+          <div className="invalid-feedback">{errors.type?.message}</div>
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Selecione uma Categoria
+          </label>
           {productCategories?.length && (
             <select
               name="category"
-              {...register('category')} className={`form-control ${errors.category ? 'is-invalid' : ''}`}
+              {...register('category')} className={`form-select ${errors.category ? 'is-invalid' : ''}`}
               value={product?.productCategory?.id ?? ''}
               defaultValue={product?.productCategory?.id ?? ''}
               onChange={selectCategory}
@@ -226,10 +244,11 @@ export default function ProductList() {
               ))}
             </select>
           )}
-        </label>
-        <div className="invalid-feedback">{errors.category?.message}</div>
+          <div className="invalid-feedback">{errors.category?.message}</div>
+        </div>
 
-        <button type="submit" className="button-secondary">SALVAR</button>
+
+        <button type="submit" className="btn btn-secondary">SALVAR</button>
       </form>
 
     </LayoutAdmin>

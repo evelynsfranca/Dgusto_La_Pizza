@@ -12,7 +12,7 @@ function MenuPage() {
         <Image src={pizza} width={384} height={221} />
       </section>
 
-      <section className="pt-5 my-5">
+      <section className="container pt-5 my-5">
        
         <Menu />
 

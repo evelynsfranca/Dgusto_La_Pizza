@@ -132,7 +132,7 @@ export default function ProductUpdate() {
   }
 
   function selectCategory(event) {
-    setProduct({ ...product, productCategory: { ...product.productCategory, id:  event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
+    setProduct({ ...product, productCategory: { ...product.productCategory, id: event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
   }
 
   return (
@@ -154,80 +154,111 @@ export default function ProductUpdate() {
           Editando produto
         </h1>
 
-        <p className="form">
-          <label>
-            Nome
-            <input
-              type="text"
-              value={product.name}
-              onChange={name => setProduct({ ...product, name: name.target.value })}
-            />
-          </label>
-          <label>
-            Descrição
-            <input
-              type="text"
-              value={product.description}
-              onChange={description => setProduct({ ...product, description: description.target.value })}
-            />
-          </label>
-          <label>
-            Valor
-            <input
-              type="number"
-              value={product.unitValue}
-              onChange={value => setProduct({ ...product, unitValue: value.target.value })}
-            />
-          </label>
-          <label>
-            Quantidade em estoque
-            <input
-              type="number"
-              value={product.stockQuantity}
-              onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
-            />
-          </label>
-          <label>
-            Selecione um Tipo
-            {productTypes?.length && (
-              <select 
-                name="type"
-                value={product?.productType?.id ?? ''} 
-                defaultValue={product?.productType?.id ?? ''}
-                onChange={selectType}
-                onSelect={selectType}
-              >
-              <option value=""></option>
-                {productTypes?.map(type => (
-                  <React.Fragment key={type.id}>
-                    <option value={type.id}>{type.name}</option>
-                  </React.Fragment>
-                ))}
-              </select>
-            )}
-          </label>
-          <label>
-            Selecione uma Categoria
-            {productCategories?.length && (
-              <select 
-                name="category"
-                value={product?.productCategory?.id ?? ''} 
-                defaultValue={product?.productCategory?.id ?? ''}
-                onChange={selectCategory}
-                onSelect={selectCategory}
-              >
-              <option value=""></option>
-                {productCategories?.map(category => (
-                  <React.Fragment key={category.id}>
-                    <option value={category.id}>{category.name}</option>
-                  </React.Fragment>
-                ))}
-              </select>
-            )}
-          </label>
+        <div className="row">
+          <div className="col">
 
-          <button className="button-secondary" onClick={handleUpdateProduct}>SALVAR</button>
-        </p>
+            <form className="form">
+
+              <div className="mb-3">
+                <label>
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  value={product.name}
+                  className="form-control"
+                  onChange={name => setProduct({ ...product, name: name.target.value })}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>
+                  Descrição
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={product.description}
+                  onChange={description => setProduct({ ...product, description: description.target.value })}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>
+                  Valor
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={product.unitValue}
+                  onChange={value => setProduct({ ...product, unitValue: value.target.value })}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>
+                  Quantidade em estoque
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={product.stockQuantity}
+                  onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>
+                  Selecione um Tipo
+                </label>
+                {productTypes?.length && (
+                  <select
+                    name="type"
+                    className="form-select"
+                    value={product?.productType?.id ?? ''}
+                    defaultValue={product?.productType?.id ?? ''}
+                    onChange={selectType}
+                    onSelect={selectType}
+                  >
+                    <option value=""></option>
+                    {productTypes?.map(type => (
+                      <React.Fragment key={type.id}>
+                        <option value={type.id}>{type.name}</option>
+                      </React.Fragment>
+                    ))}
+                  </select>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label>
+                  Selecione uma Categoria
+                </label>
+                {productCategories?.length && (
+                  <select
+                    className="form-select"
+                    name="category"
+                    value={product?.productCategory?.id ?? ''}
+                    defaultValue={product?.productCategory?.id ?? ''}
+                    onChange={selectCategory}
+                    onSelect={selectCategory}
+                  >
+                    <option value=""></option>
+                    {productCategories?.map(category => (
+                      <React.Fragment key={category.id}>
+                        <option value={category.id}>{category.name}</option>
+                      </React.Fragment>
+                    ))}
+                  </select>
+                )}
+              </div>
+
+              <button className="btn btn-secondary" onClick={handleUpdateProduct}>SALVAR</button>
+
+            </form>
+
+          </div>
+        </div>
 
       </>
 

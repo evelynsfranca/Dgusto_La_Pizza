@@ -63,7 +63,7 @@ export default function CategoryDetail() {
         Detalhes da categoria
       </h1>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>#</td>

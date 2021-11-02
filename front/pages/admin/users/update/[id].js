@@ -84,26 +84,35 @@ export default function UserUpdate() {
         Editando usuário
       </h1>
 
-      <p className="form">
-        <label>
-          Nome
+      <form className="form">
+        <div className="mb-3">
+
+          <label>
+            Nome
+          </label>
           <input
             type="text"
+            className="form-control"
             value={user.name}
             onChange={name => setUser({ ...user, name: name.target.value })}
           />
-        </label>
-        <label>
-          Email
+        </div>
+
+        <div className="mb-3">
+
+          <label>
+            Email
+          </label>
           <input
             type="text"
+            className="form-control"
             value={user.email}
             onChange={email => setUser({ ...user, email: email.target.value })}
           />
-        </label>
-        
-        <button className="button-secondary" onClick={handleUpdateUser}>SALVAR</button>
-      </p>
+        </div>
+
+        <button className="btn btn-secondary" onClick={handleUpdateUser}>SALVAR</button>
+      </form>
     </LayoutAdmin>
   );
 }

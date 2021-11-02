@@ -83,18 +83,21 @@ export default function TypeUpdate() {
         Editando Tipo
       </h1>
 
-      <p className="form">
+      <form className="form">
+        <div className="mb-3">
         <label>
           Nome
+        </label>
           <input
+            className="form-control"
             type="text"
             value={type.name}
             onChange={name => setType({ ...type, name: name.target.value })}
           />
-        </label>
-        
-        <button className="button-secondary" onClick={handleUpdateType}>SALVAR</button>
-      </p>
+        </div>
+
+        <button className="btn btn-secondary" onClick={handleUpdateType}>SALVAR</button>
+      </form>
     </LayoutAdmin>
   );
 }
