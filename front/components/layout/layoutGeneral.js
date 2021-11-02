@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import useSWR from 'swr';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '/public/images/logo.png';
 import { API_URL } from '../../utils/constants';
 import { useEffect, useState } from 'react';
@@ -22,9 +21,9 @@ function ApiAccount({ token }) {
   const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
 
   if (error) return <> (failed to load)</>
-  if (!data) return <> (loading...)</>
+  if (!data) return <> carregado... </>
 
-  return !!data?.authorities ? data.authorities.includes("ROLE_ADMIN") ? <>(ADM)</> : <>(USER)</> : ''
+  return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ? <>(ADM)</> : <>(USER)</> : ''
 }
 
 function LayoutGeneral({ children, pageName }) {
@@ -38,6 +37,35 @@ function LayoutGeneral({ children, pageName }) {
 
   return (
     <>
+
+      <Head>
+        <title>
+          {pageName === 'HomePage' ?
+            'Início'
+          :''}
+
+          {pageName === 'MenuPage' ?
+            'Cardápio'
+          :''}
+
+          {pageName === 'MyPurchasesPage' ?
+            'Meus Pedidos'
+          :''}
+
+          {pageName === 'PromotionsPage' ?
+            'Promoções'
+          :''}
+
+          {pageName === 'ContactPage' ?
+            'Contato'
+          :''}
+
+          {' '}
+
+          - D'Gusto La Pizza
+        </title>
+      </Head>
+
       <Link href="/login">
         <a className={style.loginButton}>
           LOGIN <ApiAccount token={token} />
@@ -93,7 +121,7 @@ function LayoutGeneral({ children, pageName }) {
                   </span>
                 }
 
-                {pageName === 'MyRequestsPage' &&
+                {pageName === 'MyPurchasesPage' &&
                   <span>
                     Meus Pedidos
                   </span>
@@ -104,7 +132,7 @@ function LayoutGeneral({ children, pageName }) {
                     Promoções
                   </span>
                 }
-                {pageName === 'ContatoPage' &&
+                {pageName === 'ContactPage' &&
                   <span>
                     Contato
                   </span>

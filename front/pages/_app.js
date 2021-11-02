@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     pageLoading
-      ? (<Loading/>)
+      ? (<Loading isFullScreen='true'/>)
       : <Component {...pageProps} />
   )
 

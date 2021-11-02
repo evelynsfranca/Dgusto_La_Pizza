@@ -13,10 +13,7 @@ function MenuPage() {
       </section>
 
       <section className="pt-5 my-5">
-        <h2 className="display-5 text-center">
-          Tradicionais
-        </h2>
-
+       
         <Menu />
 
       </section>
