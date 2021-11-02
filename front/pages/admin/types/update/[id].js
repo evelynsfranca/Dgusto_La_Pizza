@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API_URL } from '../../../../utils/constants';
-import LayoutAdmin from '../../../../components/layout/admin';
+import LayoutAdmin from '../../../../components/layout/layoutAdmin';
 
 
 export default function TypeUpdate() {

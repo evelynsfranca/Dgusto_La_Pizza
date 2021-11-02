@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import NumberFormat from 'react-number-format';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/layout/admin';
+import LayoutAdmin from '../../../components/layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 export default function ProductList() {
@@ -49,8 +49,8 @@ export default function ProductList() {
 
     const { data, error } = useSWR([`${API_URL}/admin/products`, token], fetcher)
 
-    if (error) return <tr rowSpan="4"><td>failed to load</td></tr>
-    if (!data) return <tr rowSpan="4"><td>loading...</td></tr>
+    if (error) return <tr><td colSpan="4">failed to load</td></tr>
+    if (!data) return <tr><td colSpan="4">loading...</td></tr>
 
     return <>
       {data.content.map((product, index) => (

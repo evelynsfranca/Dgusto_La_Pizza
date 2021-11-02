@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/layout/admin';
+import LayoutAdmin from '../../../components/layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 function ApiUsersList({ token }) {
@@ -17,8 +17,8 @@ function ApiUsersList({ token }) {
 
   const { data, error } = useSWR([`${API_URL}/admin/users`, token], fetcher)
 
-  if (error) return <tr rowSpan="4"><td>failed to load</td></tr>
-  if (!data) return <tr rowSpan="4"><td>loading...</td></tr>
+  if (error) return <tr><td colSpan="4">failed to load</td></tr>
+  if (!data) return <tr><td colSpan="4">loading...</td></tr>
 
   return <>
     {data.content.map((user, index) => (

@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import LayoutAdmin from '../../../components/layout/admin';
+import LayoutAdmin from '../../../components/layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 

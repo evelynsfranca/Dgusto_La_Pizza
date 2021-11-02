@@ -19,21 +19,18 @@ function LoginPage() {
     password: ''
   })
 
+  if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin')) === btoa('true')) {
+    router.push('/admin/login')
+  }
+
+  if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin')) === btoa('false')) {
+    router.push('/my-purchases')
+  }
+
   useEffect(() => {
     // if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
     //   router.push('/my-purchases')
     // }
-
-    /*if (isLoggedIn) {
-      if(isAdmin) {
-        router.push('/admin')
-      } else {
-        router.push('/my-purchases')
-      }
-    } else {
-      router.push('/login')
-    }*/
-
   }, []);
 
   function ApiAccount({ token }) {
@@ -50,8 +47,10 @@ function LoginPage() {
 
     if (data.authorities.includes("ROLE_ADMIN")) {
       setIsAdmin(true)
+      localStorage.setItem(btoa("isAdmin"), btoa('true'));
     } else {
       setIsAdmin(false)
+      localStorage.setItem(btoa("isAdmin"), btoa('false'));
     }
 
     // {isLoggedIn && !isAdmin &&
@@ -101,11 +100,11 @@ function LoginPage() {
 
       if (responseLogin.ok) {
         setIsLoggedIn(true)
-        setSendingForm(false)
       } else {
         setIsLoggedIn(false)
-        setSendingForm(false)
       }
+
+      setSendingForm(false)
 
       /*if (response.authorities.includes("ROLE_ADMIN")) {
         setIsAdmin(true)
@@ -128,7 +127,6 @@ function LoginPage() {
           <section className={style.formsignin}>
 
             <form>
-              {/* <h1 className="h3 mb-3 fw-normal">Login</h1> */}
 
               <div className="form-floating mb-1">
                 <input
@@ -169,8 +167,8 @@ function LoginPage() {
 
         {isLoggedIn &&
           <>
-          carregando...
-          <div className="d-none"><ApiAccount token={token} /></div>
+            carregando...
+            <div className="d-none"><ApiAccount token={token} /></div>
           </>
         }
 
