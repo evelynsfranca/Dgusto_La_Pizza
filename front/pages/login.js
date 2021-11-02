@@ -15,6 +15,7 @@ function LoginPage() {
 
   const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const [sendingForm, setSendingForm] = useState(false)
   const [login, setLogin] = useState({
     username: '',
     password: ''
@@ -27,6 +28,8 @@ function LoginPage() {
   }, []);
 
   async function handleLogin() {
+    setSendingForm(true);
+
     const res = await fetch(`${API_LOGIN_URL}`, {
       method: "POST",
       headers: {
@@ -39,7 +42,10 @@ function LoginPage() {
         localStorage.setItem("token", token);
         return res
       })
-      .catch(e => console.warn(e));
+      .catch(e => {
+        console.warn(e)
+        setSendingForm(false);
+      });
 
     const response = await res;
 
@@ -92,7 +98,15 @@ function LoginPage() {
               <label>Senha</label>
             </div>
 
-            <button className="w-100 btn btn-lg btn-primary" onClick={handleLogin} type="button">Entrar</button>
+            <button className="w-100 btn btn-lg btn-primary" onClick={handleLogin} type="button" disabled={sendingForm} >
+              {sendingForm === true &&
+                'Carregando...'
+              }
+
+              {sendingForm === false &&
+                'Entrar'
+              }
+            </button>
           </form>
 
         </section>

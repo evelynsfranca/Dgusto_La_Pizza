@@ -1,7 +1,9 @@
-const Loading = () => (
+import style from './Loading.module.css';
+
+const Loading = ({isFullScreen}) => (
   <>
-    <div className="loaderContainer">
-      <div className="loader"></div>
+    <div className={isFullScreen === 'true' ? style.loaderContainerFullscreen : style.loaderContainer}>
+      <div className={style.loader}>&nbsp;</div>
     </div>
   </>
 );

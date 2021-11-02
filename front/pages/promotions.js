@@ -1,12 +1,19 @@
 import LayoutGeneral from '../components/layout/layoutGeneral';
+import PromotionsList from '../components/PromotionsList/promotionsList';
+import style from './Promotions.module.css';
 
 function PromotionsPage() {
   return (
     <LayoutGeneral pageName="PromotionsPage">
+      <section className={style.pizzaContainer}></section>
 
-      PromotionsPage
+      <main className="container my-5">
 
-    </LayoutGeneral>
+        <PromotionsList/>
+
+      </main>
+
+    </LayoutGeneral >
   )
 }
 
