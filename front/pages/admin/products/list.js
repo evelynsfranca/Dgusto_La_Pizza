@@ -65,15 +65,15 @@ export default function ProductList() {
             {product.stockQuantity}
           </td>
           <td>
-            <button type="button" className="button-secondary" onClick={() => router.push(`/admin/products/detail/${product.id}`)} title="Visualizar">
+            <button type="button" className="btn btn-secondary" onClick={() => router.push(`/admin/products/detail/${product.id}`)} title="Visualizar">
               Ver
             </button>
             {' '}
-            <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/products/update/${product.id}`)} title="Editar">
+            <button type="button" className="btn btn-primary" onClick={() => router.push(`/admin/products/update/${product.id}`)} title="Editar">
               Editar
             </button>
             {' '}
-            <button type="button" className="button-danger" onClick={() => openModalDelete(product.id)} title="Deletar">
+            <button type="button" className="btn btn-danger" onClick={() => openModalDelete(product.id)} title="Deletar">
               Deletar
             </button>
           </td>
@@ -99,11 +99,11 @@ export default function ProductList() {
         Lista de Produtos
       </h1>
 
-      <button type="button" className="button-primary" onClick={() => router.push('/admin/products/save')}>
+      <button type="button" className="btn btn-primary" onClick={() => router.push('/admin/products/save')}>
         ADICIONAR PRODUTO
       </button>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>Sabor</td>

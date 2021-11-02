@@ -67,7 +67,7 @@ export default function UserDetail() {
         Detalhes do usuário
       </h1>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>#</td>

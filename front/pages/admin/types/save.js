@@ -57,18 +57,21 @@ export default function ProductTypesAdd() {
         Adicionar Novo Tipo
       </h1>
 
-      <p className="form">
-        <label>
-          Nome
+      <form className="form">
+        <div className="mb-3">
+          <label>
+            Nome
+          </label>
           <input
+            className="form-control"
             type="text"
             value={productTypes.name}
             onChange={type => setProductTypes({ ...productTypes, name: type.target.value })}
           />
-        </label>
+        </div>
 
-        <button className="button-secondary" onClick={handleProductTypes}>SALVAR</button>
-      </p>
+        <button className="btn btn-secondary" onClick={handleProductTypes}>SALVAR</button>
+      </form>
 
     </LayoutAdmin>
   );

@@ -1,0 +1,11 @@
+
+.listItem {
+  font-weight: 300;
+  line-height: 1.2;
+  font-size: 4.5rem;
+}
+
+.itemLink {
+  text-decoration: none;
+  color: #000;
+}

@@ -57,18 +57,21 @@ export default function ProductCategoriesAdd() {
         Adicionar Nova Categorias
       </h1>
 
-      <p className="form">
-        <label>
-          Nome
+      <form className="form">
+        <div className="mb-3">
+          <label>
+            Nome
+          </label>
           <input
             type="text"
+            className="form-control"
             value={productCategories.name}
             onChange={category => setProductCategories({ ...productCategories, name: category.target.value })}
           />
-        </label>
-
-        <button className="button-secondary" onClick={handleProductCategories}>SALVAR</button>
-      </p>
+        </div>
+        
+        <button className="btn btn-secondary" onClick={handleProductCategories}>SALVAR</button>
+      </form>
 
     </LayoutAdmin>
   );

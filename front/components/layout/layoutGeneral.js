@@ -48,6 +48,10 @@ function LayoutGeneral({ children, pageName }) {
             'Cardápio'
             : ''}
 
+          {pageName === 'MenuDetailPage' ?
+            'Cardápio'
+            : ''}
+
           {pageName === 'MyPurchasesPage' ?
             'Meus Pedidos'
             : ''}
@@ -126,6 +130,12 @@ function LayoutGeneral({ children, pageName }) {
                   </span>
                 }
 
+                {pageName === 'MenuDetailPage' &&
+                  <span>
+                    Cardápio
+                  </span>
+                }
+
                 {pageName === 'MyPurchasesPage' &&
                   <span>
                     Meus Pedidos
@@ -153,6 +163,12 @@ function LayoutGeneral({ children, pageName }) {
 
               <p className="text-light mb-5">
                 {pageName === 'MenuPage' &&
+                  <span>
+                    O sabor que conquistou os Curitibanos!
+                  </span>
+                }
+
+                {pageName === 'MenuDetailPage' &&
                   <span>
                     O sabor que conquistou os Curitibanos!
                   </span>

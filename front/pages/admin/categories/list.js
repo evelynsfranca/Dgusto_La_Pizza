@@ -27,11 +27,11 @@ function ApiCategoriesList({ token }) {
           {user.name}
         </td>
         <td>
-          <button type="button" className="button-secondary" onClick={() => router.push(`/admin/categories/detail/${user.id}`)} title="Visualizar">
+          <button type="button" className="btn btn-secondary" onClick={() => router.push(`/admin/categories/detail/${user.id}`)} title="Visualizar">
             Ver
           </button>
           {' '}
-          <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/categories/update/${user.id}`)} title="Editar">
+          <button type="button" className="btn btn-primary" onClick={() => router.push(`/admin/categories/update/${user.id}`)} title="Editar">
             Editar
           </button>
         </td>
@@ -62,11 +62,11 @@ export default function CategoriesList() {
         Lista de Categorias
       </h1>
 
-      <button type="button" className="button-primary" onClick={() => router.push('/admin/categories/save')}>
+      <button type="button" className="btn btn-primary" onClick={() => router.push('/admin/categories/save')}>
         ADICIONAR CATEGORIA
       </button>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>Categoria</td>

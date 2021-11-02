@@ -1,0 +1,15 @@
+.pizzaContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe728;
+  height: 60px;
+}
+
+.customLink {
+  text-decoration: none;
+  color: #000;
+  font-size: 70%;
+}

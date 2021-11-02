@@ -64,7 +64,7 @@ export default function TypeDetail() {
         Detalhes do tipo
       </h1>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>#</td>

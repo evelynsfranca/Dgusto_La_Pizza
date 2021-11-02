@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import LayoutAdmin from '../../../components/layout/admin';
+import LayoutAdmin from '../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 
@@ -66,50 +66,71 @@ export default function UserList() {
         Adicionar novo usuario
       </h1>
 
-      <p className="form">
-        <label>
-          Nome
+      <form className="form">
+
+        <div className="mb-3">
+          <label>
+            Nome
+          </label>
           <input
             type="text"
+            className="form-control"
             value={user.name}
             onChange={name => setUser({ ...user, name: name.target.value })}
           />
-        </label>
-        <label>
-          Email
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Email
+          </label>
           <input
+            className="form-control"
             type="text"
             value={user.email}
             onChange={email => setUser({ ...user, email: email.target.value })}
           />
-        </label>
-        <label>
-          Senha
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Senha
+          </label>
           <input
+            className="form-control"
             type="text"
             value={user.password}
             onChange={password => setUser({ ...user, password: password.target.value })}
           />
-        </label>
-        <label>
-          Username
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Username
+          </label>
           <input
+            className="form-control"
             type="text"
             value={user.username}
             onChange={username => setUser({ ...user, username: username.target.value })}
           />
-        </label>
-        <label>
-          Permissões
+        </div>
+
+        <div className="mb-3">
+          <label>
+            Permissões
+          </label>
           <input
+            className="form-control"
             type="text"
             value={user?.authorithies.length ? user?.authorithies[0].name : ''}
             onChange={authority => setUser({ ...user, authorithies: [{ name: authority.target.value }] })}
           />
-        </label>
+        </div>
 
-        <button className="button-secondary" onClick={handleUser}>SALVAR</button>
-      </p>
+        <button className="btn btn-secondary" onClick={handleUser}>SALVAR</button>
+
+      </form>
 
     </LayoutAdmin>
   );

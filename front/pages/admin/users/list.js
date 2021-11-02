@@ -30,11 +30,11 @@ function ApiUsersList({ token }) {
           {user.email}
         </td>
         <td>
-          <button type="button" className="button-secondary" onClick={() => router.push(`/admin/users/detail/${user.id}`)} title="Visualizar">
+          <button type="button" className="btn btn-secondary" onClick={() => router.push(`/admin/users/detail/${user.id}`)} title="Visualizar">
             Ver
           </button>
           {' '}
-          <button type="button" className="button-tertiary" onClick={() => router.push(`/admin/users/update/${user.id}`)} title="Editar">
+          <button type="button" className="btn btn-primary" onClick={() => router.push(`/admin/users/update/${user.id}`)} title="Editar">
             Editar
           </button>
         </td>
@@ -66,11 +66,11 @@ export default function UserList() {
         Lista de Usuários
       </h1>
 
-      <button type="button" className="button-primary" onClick={() => router.push('/admin/users/save')}>
+      <button type="button" className="btn btn-primary" onClick={() => router.push('/admin/users/save')}>
         ADICIONAR USUÁRIO
       </button>
 
-      <table>
+      <table className="table my-5 py-5">
         <thead>
           <tr>
             <td>Nome</td>
