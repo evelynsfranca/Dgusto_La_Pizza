@@ -4,7 +4,7 @@ import { API_LOGIN_URL, API_URL } from '../utils/constants';
 import LayoutGeneral from '../components/layout/layoutGeneral';
 import style from './LoginPage.module.css';
 import Router, { useRouter } from 'next/router';
-
+import localStorage from 'localStorage';
 
 function LoginPage() {
   const [token, setToken] = useState('');

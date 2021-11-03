@@ -35,7 +35,7 @@ function LoginAdminPage() {
     })
       .then(res => {
         let token = res.headers.get("Authorization");
-        localStorage.setItem("token", token);
+        window.localStorage.setItem("token", token);
         setSendingForm(false);
 
         return res
