@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { API_LOGIN_URL, API_URL } from '../utils/constants';
 import LayoutGeneral from '../components/layout/layoutGeneral';
 import style from './LoginPage.module.css';
@@ -27,12 +27,6 @@ function LoginPage() {
     router.push('/my-purchases')
   }
 
-  useEffect(() => {
-    // if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
-    //   router.push('/my-purchases')
-    // }
-  }, []);
-
   function ApiAccount({ token }) {
     if (!token) return <></>
 
@@ -52,16 +46,6 @@ function LoginPage() {
       setIsAdmin(false)
       localStorage.setItem(btoa("isAdmin"), btoa('false'));
     }
-
-    // {isLoggedIn && !isAdmin &&
-    //   <>my-purchases</>
-    //   // Router.push('/my-purchases')
-    // }
-
-    // {isLoggedIn && isAdmin &&
-    //   <>/admin</>
-    //   // Router.push('/admin')
-    // }
 
     return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ?
       setTimeout(() => router.push('/admin/login'), 1000) :
@@ -105,14 +89,6 @@ function LoginPage() {
       }
 
       setSendingForm(false)
-
-      /*if (response.authorities.includes("ROLE_ADMIN")) {
-        setIsAdmin(true)
-        router.push('/admin')
-      } else {
-        setIsAdmin(false)
-      }*/
-
     }
 
   }

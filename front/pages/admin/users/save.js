@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import LayoutAdmin from '../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
-
 export default function UserList() {
 
   const router = useRouter();

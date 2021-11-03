@@ -1,9 +1,7 @@
-import Image from 'next/image';
-import logo from '/public/images/logo.png';
 import Link from 'next/link';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-export default function LayoutAdmin({ children }) {
+function LayoutAdmin({ children }) {
 
   return (
     <>
@@ -65,3 +63,5 @@ export default function LayoutAdmin({ children }) {
     </>
   )
 }
+
+export default LayoutAdmin;

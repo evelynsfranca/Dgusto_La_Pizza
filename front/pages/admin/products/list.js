@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import NumberFormat from 'react-number-format';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/layout/layoutAdmin';
+import LayoutAdmin from '../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 export default function ProductList() {

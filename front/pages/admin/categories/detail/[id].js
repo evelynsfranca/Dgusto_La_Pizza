@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
 import { API_URL } from '../../../../utils/constants';
-import LayoutAdmin from '../../../../components/layout/layoutAdmin';
+import LayoutAdmin from '../../../../components/Layout/layoutAdmin';
 
 function ApiCategoryDetail({ token }) {
 

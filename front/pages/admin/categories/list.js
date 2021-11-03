@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from "react";
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/layout/layoutAdmin';
+import LayoutAdmin from '../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
 
 function ApiCategoriesList({ token }) {

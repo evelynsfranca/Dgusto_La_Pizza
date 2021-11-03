@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API_URL } from '../../../../utils/constants';
-import LayoutAdmin from '../../../../components/layout/layoutAdmin';
+import LayoutAdmin from '../../../../components/Layout/layoutAdmin';
 
 
 export default function CategoryUpdate() {

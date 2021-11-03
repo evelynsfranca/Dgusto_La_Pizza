@@ -37,7 +37,6 @@ function LayoutGeneral({ children, pageName }) {
 
   return (
     <>
-
       <Head>
         <title>
           {pageName === 'HomePage' ?
@@ -74,13 +73,6 @@ function LayoutGeneral({ children, pageName }) {
         </title>
       </Head>
 
-      {/* <Link href="/admin/login">
-        <a className={style.loginButton}>
-          LOGIN 
-          <ApiAccount token={token} />
-        </a>
-      </Link> */}
-
       {pageName === "HomePage" &&
         <main className={style.bannerContainer}>
 
@@ -106,7 +98,7 @@ function LayoutGeneral({ children, pageName }) {
       {pageName !== "HomePage" &&
 
         <main>
-
+          
           <section className={style.containerLogo}>
             <div className={style.sectionLogo}>
 
@@ -186,6 +178,7 @@ function LayoutGeneral({ children, pageName }) {
           </section>
 
           {children}
+
         </main>
       }
 

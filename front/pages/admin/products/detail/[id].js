@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import NumberFormat from 'react-number-format';
 import useSWR from 'swr';
-import LayoutAdmin from '../../../../components/layout/layoutAdmin';
+import LayoutAdmin from '../../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../../utils/constants';
 
 
