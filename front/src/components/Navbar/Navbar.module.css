@@ -1,0 +1,141 @@
+.bannerContainer {
+  background-image: url(../../../public/images/background.jpg);
+  background-position: center;
+  box-shadow: 0 3px 4px -4px grey;
+  background-size: cover;
+  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100vh;
+  width: 100%;
+
+  position: sticky;
+}
+
+.bannerContainer::before {
+  background-color: rgba(0, 0, 0, 0.9);
+  content: "";
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+.loginButton {
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 30px;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.loginButton:hover {
+  text-decoration: underline;
+}
+
+.bannerCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: #fff;
+  border-radius: 15px;
+  color: #000;
+  margin-bottom: 40px;
+  padding: 10px 35px;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.bannerCardText {
+  margin-bottom: 5px;
+}
+
+.bannerCardPhone {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.bannerCardPhone > svg {
+  margin-right: 10px;
+}
+
+.bannerCardTextGreen {
+  color: #328e00;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.logo {
+  width: 290px;
+}
+
+.logoImage {
+  position: absolute;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.navbarList {
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .navbarList {
+    display: flex;
+    margin-bottom: 0;
+  }
+}
+
+.navbarListItem {
+  color: white;
+}
+
+.navbarListItemLink {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .navbarListItemLink {
+    padding: 30px;
+  }
+}
+
+.navbarListItemLink:hover {
+  color: #ffe728;
+}
+
+.navbarListItem:hover > a {
+  margin-top: -2px;
+}
+
+.linkActive > a {
+  margin-top: -2px;
+  color: #ffe728;
+}
