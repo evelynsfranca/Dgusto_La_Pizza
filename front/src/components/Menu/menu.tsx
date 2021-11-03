@@ -4,7 +4,7 @@ import CategoriesList from '../CategoryList/categoryList';
 import Loading from '../Loading/loading';
 import ProductsList from '../ProductsList/productsList';
 
-export const Menu = () => {
+export function Menu(): any {
   const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))

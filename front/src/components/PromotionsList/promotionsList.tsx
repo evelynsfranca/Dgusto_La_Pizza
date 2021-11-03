@@ -3,7 +3,18 @@ import { API_URL } from '../../utils/constants';
 import CurrencyFormat from 'react-currency-format';
 import Loading from '../Loading/loading';
 
-export const PromotionsList = () => {
+export interface IContentPromotions {
+  content: IPromotions[];
+}
+
+export interface IPromotions {
+  id: Number | any;
+  name: String;
+  description?: String;
+  unitValue: Number;
+}
+
+export function PromotionsList() {
 
   const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())

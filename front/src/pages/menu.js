@@ -1,8 +1,8 @@
-import LayoutGeneral from '../components/layout/layoutGeneral';
 import Menu from '../components/Menu/menu';
 import Image from 'next/image';
 import pizza from '/public/images/pizza.png';
 import style from './MenuPage.module.css';
+import LayoutGeneral from '../components/Layout/layoutGeneral';
 
 
 function MenuPage() {

@@ -1,4 +1,4 @@
-import LayoutGeneral from '../components/layout/layoutGeneral';
+import LayoutGeneral from '../components/Layout/layoutGeneral';
 
 function IndexPage() {
   return (

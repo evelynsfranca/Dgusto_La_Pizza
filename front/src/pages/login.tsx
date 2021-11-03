@@ -1,20 +1,25 @@
 import useSWR from 'swr';
 import { useState } from "react";
 import { API_LOGIN_URL, API_URL } from '../utils/constants';
-import LayoutGeneral from '../components/layout/layoutGeneral';
 import style from './LoginPage.module.css';
 import Router, { useRouter } from 'next/router';
 import localStorage from 'localStorage';
+import LayoutGeneral from '../components/Layout/layoutGeneral';
+
+export interface IUser {
+  username?: string;
+  password?: string;
+}
 
 function LoginPage() {
   const [token, setToken] = useState('');
   const router = useRouter()
 
-  const [passwordVisibility, setPasswordVisibility] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [sendingForm, setSendingForm] = useState(false)
-  const [login, setLogin] = useState({
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [sendingForm, setSendingForm] = useState<boolean>(false)
+  const [login, setLogin] = useState<IUser>({
     username: '',
     password: ''
   })
@@ -27,9 +32,7 @@ function LoginPage() {
     router.push('/my-purchases')
   }
 
-  function ApiAccount({ token }) {
-    if (!token) return <></>
-
+  function ApiAccount(): any {
     const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
       .then(res => res.json())
       .catch(e => console.warn(e))
@@ -50,6 +53,7 @@ function LoginPage() {
     return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ?
       setTimeout(() => router.push('/admin/login'), 1000) :
       setTimeout(() => router.push('/my-purchases'), 1000) : ''
+
   }
 
   async function handleLogin() {
@@ -80,7 +84,7 @@ function LoginPage() {
           console.warn(e)
         });
 
-      const responseLogin = await resLogin;
+      const responseLogin: any = await resLogin;
 
       if (responseLogin.ok) {
         setIsLoggedIn(true)
@@ -144,7 +148,9 @@ function LoginPage() {
         {isLoggedIn &&
           <>
             carregando...
-            <div className="d-none"><ApiAccount token={token} /></div>
+            <div className="d-none">
+              <ApiAccount />
+            </div>
           </>
         }
 

@@ -2,29 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import useSWR from 'swr';
 import logo from '/public/images/logo.png';
-import { API_URL } from '../../utils/constants';
 import { useEffect, useState } from 'react';
 import style from './layoutGeneral.module.css';
 import Navbar from '../Navbar/navbar';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import RequestToday from '../requestToday/requestToday';
 
-function ApiAccount({ token }) {
-  if (!token) return <></>
-
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-    .then(res => res.json())
-    .catch(e => console.warn(e))
-
-  const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
-
-  if (error) return <> (failed to load)</>
-  if (!data) return <> carregado... </>
-
-  return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ? <>(ADM)</> : <>(USER)</> : ''
-}
 
 function LayoutGeneral({ children, pageName }) {
   const [token, setToken] = useState('');

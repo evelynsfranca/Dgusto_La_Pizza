@@ -1,4 +1,4 @@
-import LayoutGeneral from '../components/layout/layoutGeneral';
+import LayoutGeneral from '../components/Layout/layoutGeneral';
 import PromotionsList from '../components/PromotionsList/promotionsList';
 import style from './Promotions.module.css';
 

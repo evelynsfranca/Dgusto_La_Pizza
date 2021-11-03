@@ -3,7 +3,23 @@ import Image from 'next/image';
 import pizzas from '/public/images/products/sample.png';
 import styles from './ProductsList.module.css';
 
-export function ProductsList({ data }) {
+export interface IContentProducts {
+  content: IProducts[];
+}
+
+export interface IProducts {
+  id: Number | any;
+  name: String;
+  description: String;
+  unitValue: Number;
+  productType: IProductType;
+}
+
+export interface IProductType {
+  id: Number;
+}
+
+export function ProductsList({ data }: { data: IContentProducts }) {
   return <>
     {data?.content?.map(flavor => (
       <div key={flavor.id} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
@@ -36,6 +52,5 @@ export function ProductsList({ data }) {
     ))}
   </>
 }
-
 
 export default ProductsList;

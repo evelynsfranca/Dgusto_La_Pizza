@@ -1,16 +1,14 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import useSWR from 'swr';
-import LayoutGeneral from '../../components/layout/layoutGeneral';
-import ProductsList from '../../components/ProductsList/productsList';
-import { API_URL } from "../../utils/constants";
 import Link from 'next/link';
-
+import { API_URL } from '../../utils/constants';
+import LayoutGeneral from '../../components/Layout/layoutGeneral';
+import ProductsList from '../../components/ProductsList/productsList';
 import pizza from '/public/images/pizza.png';
 import style from './MenuDetailPage.module.css';
 
 function ApiMenuDetail() {
-
   const router = useRouter();
   const { name } = router.query;
 
@@ -23,9 +21,7 @@ function ApiMenuDetail() {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-  return <>
-    <ProductsList data={data} />
-  </>
+  return (<ProductsList data={data} />)
 }
 
 function MenuDetail() {

@@ -1,5 +1,5 @@
 
-import LayoutGeneral from '../components/layout/layoutGeneral';
+import LayoutGeneral from '../components/Layout/layoutGeneral';
 import style from './MyPurchases.module.css';
 
 function MyPurchases() {

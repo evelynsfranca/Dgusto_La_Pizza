@@ -1,8 +1,7 @@
-import LayoutGeneral from '../components/layout/layoutGeneral';
 import style from './Contact.module.css';
 import Image from 'next/image';
 import localization from '/public/images/localization.png';
-
+import LayoutGeneral from '../components/Layout/layoutGeneral';
 
 function ContactPage() {
   return (
@@ -24,23 +23,23 @@ function ContactPage() {
 
                 <form className="my-4">
                   <div className="mb-3">
-                    <label htmlFor="exampleFormControlInput1" className="form-label">Nome:</label>
-                    <input type="text" className="form-control" id="exampleFormControlInput1"/>
+                    <label htmlFor="name" className="form-label">Nome:</label>
+                    <input type="text" className="form-control" id="name"/>
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="exampleFormControlInput1" className="form-label">Email:</label>
-                    <input type="email" className="form-control" id="exampleFormControlInput1"/>
+                    <label htmlFor="email" className="form-label">Email:</label>
+                    <input type="email" className="form-control" id="email"/>
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="exampleFormControlInput1" className="form-label">Assunto:</label>
-                    <input type="text" className="form-control" id="exampleFormControlInput1"/>
+                    <label htmlFor="subject" className="form-label">Assunto:</label>
+                    <input type="text" className="form-control" id="subject"/>
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="exampleFormControlTextarea1" className="form-label">Menssagem:</label>
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label htmlFor="message" className="form-label">Menssagem:</label>
+                    <textarea className="form-control" id="message"></textarea>
                   </div>
 
                   <button type="button" className="btn btn-primary">Enviar contato</button>
@@ -54,7 +53,8 @@ function ContactPage() {
               <div className="card-body">
 
                 <h3>D’Gusto La Pizza</h3>
-                <p><a href="https://www.google.com.br/maps/search/Rua+Lorem+Ipsum,+44+Dolor+SitAmet+-+99999-100+Curitiba+-+PR" target="_blank">Rua Lorem Ipsum, 44 <br />
+                <p><a href="https://www.google.com.br/maps/search/Rua+Lorem+Ipsum,+44+Dolor+SitAmet+-+99999-100+Curitiba+-+PR" 
+                target="_blank">Rua Lorem Ipsum, 44 <br />
                   Dolor SitAmet – 99999-100 <br />
                   Curitiba - PR</a></p>
 

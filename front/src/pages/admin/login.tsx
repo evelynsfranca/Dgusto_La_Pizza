@@ -45,7 +45,7 @@ function LoginAdminPage() {
         setSendingForm(false);
       });
 
-    const response = await res;
+    const response: any = await res;
 
     if (response.status == 200) {
       router.push('/admin/products/list')
