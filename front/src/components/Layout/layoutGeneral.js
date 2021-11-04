@@ -51,6 +51,10 @@ function LayoutGeneral({ children, pageName }) {
             'Login'
             : ''}
 
+          {pageName === 'CreateAccountPage' ?
+            'Criar Conta'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -82,7 +86,7 @@ function LayoutGeneral({ children, pageName }) {
       {pageName !== "HomePage" &&
 
         <main>
-          
+
           <section className={style.containerLogo}>
             <div className={style.sectionLogo}>
 
@@ -135,6 +139,13 @@ function LayoutGeneral({ children, pageName }) {
                     Login
                   </span>
                 }
+
+                {pageName === 'CreateAccountPage' &&
+                  <span>
+                    Criar Conta
+                  </span>
+                }
+
               </h1>
 
               <p className="text-light mb-5">
