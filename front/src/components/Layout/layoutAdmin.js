@@ -43,10 +43,17 @@ function LayoutAdmin({ children }) {
                 </a>
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item ms-4">
               <Link href="/">
-                <a className="nav-link">
+                <a className="nav-link text-success">
                   Voltar ao site
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/sair">
+                <a className="nav-link text-danger">
+                  Deslogar
                 </a>
               </Link>
             </li>
