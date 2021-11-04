@@ -5,10 +5,11 @@ import style from './LoginPage.module.css';
 import Router, { useRouter } from 'next/router';
 import localStorage from 'localStorage';
 import LayoutGeneral from '../components/Layout/layoutGeneral';
+import Link from 'next/link';
 
 export interface IUser {
-  username?: string;
-  password?: string;
+  username: string;
+  password: string;
 }
 
 function LoginPage() {
@@ -19,10 +20,14 @@ function LoginPage() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [sendingForm, setSendingForm] = useState<boolean>(false)
+  const [isUserNameInvalid, setIsUserNameInvalid] = useState<boolean>(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>(undefined);
   const [login, setLogin] = useState<IUser>({
     username: '',
     password: ''
   })
+
 
   if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin')) === btoa('true')) {
     router.push('/admin/login')
@@ -56,12 +61,67 @@ function LoginPage() {
 
   }
 
+  function validateForm(): boolean {
+    let returnValue = false;
+
+    if (login.username.length < 3) {
+
+      setIsUserNameInvalid(true);
+      returnValue = true;
+
+    } else {
+
+      setIsUserNameInvalid(false);
+      setIsPasswordInvalid(false);
+      returnValue = false;
+    }
+
+    if (login.username.length === 0) {
+
+      setIsUserNameInvalid(true);
+      returnValue = true;
+
+    } else {
+
+      setIsUserNameInvalid(false);
+      setIsPasswordInvalid(false);
+      returnValue = false;
+    }
+
+    if (login.password.length < 3) {
+
+      setIsPasswordInvalid(true);
+      returnValue = true;
+
+    } else {
+
+      setIsUserNameInvalid(false);
+      setIsPasswordInvalid(false);
+      returnValue = false;
+    }
+
+    if (login.password.length === 0) {
+
+      setIsPasswordInvalid(true);
+      returnValue = true;
+
+    } else {
+
+      setIsUserNameInvalid(false);
+      setIsPasswordInvalid(false);
+      returnValue = false;
+
+    }
+
+    return returnValue;
+
+  }
+
   async function handleLogin() {
     setSendingForm(true);
 
-    if (!login.username || !login.password) {
+    if (validateForm()) {
 
-      console.log(`login ou senha estão em brancos`)
       setSendingForm(false);
 
     } else {
@@ -90,6 +150,11 @@ function LoginPage() {
         setIsLoggedIn(true)
       } else {
         setIsLoggedIn(false)
+
+        if (responseLogin.status === 401) {
+          setErrorMessage("Ops, aconteceu algo de errado, seu usuário ou senha não estão corretos, tente novamente.")
+        }
+
       }
 
       setSendingForm(false)
@@ -106,32 +171,45 @@ function LoginPage() {
         {!isLoggedIn &&
           <section className={style.formsignin}>
 
+            {!!errorMessage &&
+              <div className="alert alert-danger" role="alert">
+                {errorMessage}
+              </div>
+            }
+
             <form>
 
               <div className="form-floating mb-1">
                 <input
                   type="text"
                   value={login.username}
-                  className="form-control"
+                  className={[isUserNameInvalid ? " is-invalid " : "", "form-control"].join(" ")}
                   onChange={username => setLogin({ ...login, username: username.target.value })}
                   id="email"
                 />
+                <label>Usuário</label>
 
-                <label>Email</label>
+                <div id="validationFeedback" className="invalid-feedback">
+                  Campo inválido
+                </div>
               </div>
 
               <div className="form-floating mb-4">
                 <input
                   type={passwordVisibility ? "text" : "password"}
                   value={login.password}
-                  className="form-control"
+                  className={[isPasswordInvalid ? " is-invalid " : "", "form-control"].join(" ")}
                   onChange={password => setLogin({ ...login, password: password.target.value })}
                   id="password"
                 />
                 <label>Senha</label>
+
+                <div id="validationFeedback" className="invalid-feedback">
+                  Campo inválido
+                </div>
               </div>
 
-              <button className="w-100 btn btn-lg btn-primary" onClick={handleLogin} type="button" disabled={sendingForm} >
+              <button className="w-100 btn btn-lg btn-success" onClick={handleLogin} type="button" disabled={sendingForm} >
                 {sendingForm === true &&
                   'Carregando...'
                 }
@@ -140,6 +218,13 @@ function LoginPage() {
                   'Entrar'
                 }
               </button>
+
+              <Link href="/criar-conta">
+                <a className="btn btn-link ps-0">
+                  Criar Conta
+                </a>
+              </Link>
+
             </form>
 
           </section>
