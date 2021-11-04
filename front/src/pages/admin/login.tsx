@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 import { API_LOGIN_URL } from '../../utils/constants';
 import style from './Login.module.css';
 import logo from '/public/images/logo.png';
