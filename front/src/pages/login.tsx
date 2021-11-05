@@ -29,11 +29,11 @@ function LoginPage() {
   })
 
 
-  if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin')) === btoa('true')) {
+  if (typeof window !== undefined && localStorage.getItem('isAdmin') === 'true') {
     router.push('/admin/login')
   }
 
-  if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin')) === btoa('false')) {
+  if (typeof window !== undefined && localStorage.getItem('isAdmin') === 'false') {
     router.push('/my-purchases')
   }
 
@@ -49,10 +49,10 @@ function LoginPage() {
 
     if (data.authorities.includes("ROLE_ADMIN")) {
       setIsAdmin(true)
-      localStorage.setItem(btoa("isAdmin"), btoa('true'));
+      localStorage.setItem("isAdmin", 'true');
     } else {
       setIsAdmin(false)
-      localStorage.setItem(btoa("isAdmin"), btoa('false'));
+      localStorage.setItem("isAdmin", 'false');
     }
 
     return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ?
