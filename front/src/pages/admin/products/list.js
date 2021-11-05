@@ -1,8 +1,8 @@
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from "react";
-import NumberFormat from 'react-number-format';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import NumberFormat from 'react-number-format';
 import useSWR from 'swr';
 import LayoutAdmin from '../../../components/Layout/layoutAdmin';
 import { API_URL } from '../../../utils/constants';
@@ -53,7 +53,7 @@ export default function ProductList() {
     if (!data) return <tr><td colSpan="4">loading...</td></tr>
 
     return <>
-      {data.content.map((product, index) => (
+      {data.content?.map((product, index) => (
         <tr key={index}>
           <td>
             {product.name}
@@ -87,7 +87,7 @@ export default function ProductList() {
 
       setToken(localStorage.getItem('token'))
     }
-  }, []);
+  }, [token]);
 
   return (
     <LayoutAdmin>

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import LayoutAdmin from '../../../components/Layout/layoutAdmin';
-import { API_URL } from '../../../utils/constants';
+import { API_URL, userAuthorities } from '../../../utils/constants';
 
 export default function UserList() {
 
@@ -15,12 +15,7 @@ export default function UserList() {
     username: '',
     email: '',
     password: '',
-    authorithies: [
-      {
-        name: ''
-      }
-    ]
-
+    authorities: []
   });
 
   async function handleUser() {
@@ -48,6 +43,15 @@ export default function UserList() {
       setToken(localStorage.getItem('token'))
     }
   }, []);
+
+  const handleAuthority = (event) => {
+    if(!user.authorities?.includes(event.target.value)){
+      setUser({ ...user, authorities: [...user.authorities, event.target.value ]  })
+    } else {
+      const arr = user.authorities?.filter((item) => item !== event.target.value);
+      setUser({ ...user, authorities: arr  })
+    }
+  }
 
   return (
     <LayoutAdmin>
@@ -106,28 +110,33 @@ export default function UserList() {
         <div className="mb-3">
           <label>
             Username
-          </label>
           <input
             className="form-control"
             type="text"
             value={user.username}
             onChange={username => setUser({ ...user, username: username.target.value })}
           />
+        </label>
         </div>
+         <label>
+          Permissões
+          {
+            Object.keys(userAuthorities).map((authority) => (
+              <label key={authority}>
+                {userAuthorities[authority]}
+                
+                <input 
+                  type="checkbox"
+                  value={userAuthorities[authority]}
+                  checked={user.authorities?.includes(userAuthorities[authority])}
+                  onChange={handleAuthority}      
+                />
+              </label>              
+            ))
+          }
+        </label>
 
-        <div className="mb-3">
-          <label>
-            Permissões
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            value={user?.authorithies.length ? user?.authorithies[0].name : ''}
-            onChange={authority => setUser({ ...user, authorithies: [{ name: authority.target.value }] })}
-          />
-        </div>
-
-        <button className="btn btn-secondary" onClick={handleUser}>SALVAR</button>
+<button type="button" className="btn btn-secondary" onClick={handleUser}>SALVAR</button>
 
       </form>
 
