@@ -6,8 +6,8 @@ import Router, { useRouter } from 'next/router';
 function LogoutPage() {
   const router = useRouter()
 
-  if (typeof window !== undefined && localStorage.getItem(btoa('isAdmin'))) {
-    localStorage.removeItem(btoa('isAdmin'));
+  if (typeof window !== undefined && localStorage.getItem('isAdmin')) {
+    localStorage.removeItem('isAdmin');
     router.push('/')
   }
 
