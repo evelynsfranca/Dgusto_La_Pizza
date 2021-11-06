@@ -2,7 +2,9 @@ import LayoutGeneral from '../components/Layout/layoutGeneral';
 
 function IndexPage() {
   return (
-    <LayoutGeneral pageName="HomePage"/>
+    <LayoutGeneral pageName="HomePage">
+      
+    </LayoutGeneral>
   )
 }
 

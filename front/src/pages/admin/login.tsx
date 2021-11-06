@@ -19,7 +19,7 @@ function LoginAdminPage() {
 
   useEffect(() => {
     if (typeof window !== undefined && localStorage.getItem('token')?.includes("Bearer ")) {
-      router.push('/admin/products/list')
+      router.push('/admin/requests/list')
     }
   }, []);
 
@@ -48,7 +48,7 @@ function LoginAdminPage() {
     const response: any = await res;
 
     if (response.status == 200) {
-      router.push('/admin/products/list')
+      router.push('/admin/requests/list')
     }
 
   }

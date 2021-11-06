@@ -1,4 +1,5 @@
 
+import MyPurchasesList from 'src/components/MyPurchasesList/myPurchasesList';
 import LayoutGeneral from '../components/Layout/layoutGeneral';
 import style from './MyPurchases.module.css';
 
@@ -10,7 +11,7 @@ function MyPurchases() {
 
       <main className="container my-5">
 
-        list of my Purchases
+        <MyPurchasesList />
 
       </main>
 

@@ -142,3 +142,7 @@
   width: 100%;
   z-index: 0;
 }
+
+.notFoundContainer {
+  z-index: 1;
+}

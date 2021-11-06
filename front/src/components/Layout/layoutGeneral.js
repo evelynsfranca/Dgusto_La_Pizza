@@ -56,6 +56,10 @@ function LayoutGeneral({ children, pageName }) {
             'Criar Conta'
             : ''}
 
+          {pageName === 'NotFoundPage' ?
+            'Não encontramos esta página'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -84,7 +88,21 @@ function LayoutGeneral({ children, pageName }) {
         </main>
       }
 
-      {pageName !== "HomePage" &&
+      {pageName === "NotFoundPage" &&
+      
+        <main className={style.bannerContainer}>
+
+          <section className={style.notFoundContainer}>
+            {children}
+          </section>
+
+        </main>
+
+      }
+
+
+
+      {pageName !== "HomePage" || pageName !== "NotFoundPage" &&
 
         <main>
 

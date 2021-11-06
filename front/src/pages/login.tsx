@@ -28,7 +28,6 @@ function LoginPage() {
     password: ''
   })
 
-
   if (typeof window !== undefined && localStorage.getItem('isAdmin') === 'true') {
     router.push('/admin/login')
   }
@@ -50,14 +49,14 @@ function LoginPage() {
     if (data.authorities.includes("ROLE_ADMIN")) {
       setIsAdmin(true)
       localStorage.setItem("isAdmin", 'true');
+      router.push('/admin/login')
     } else {
       setIsAdmin(false)
       localStorage.setItem("isAdmin", 'false');
+      router.push('/my-purchases')
     }
 
-    return data?.authorities ? data.authorities.includes("ROLE_ADMIN") ?
-      setTimeout(() => router.push('/admin/login'), 1000) :
-      setTimeout(() => router.push('/my-purchases'), 1000) : ''
+    return <span className="d-none">{data?.authorities.includes("ROLE_ADMIN")}</span>
 
   }
 
@@ -134,9 +133,11 @@ function LoginPage() {
         body: JSON.stringify(login)
       })
         .then(res => {
-          let token = res.headers.get("Authorization");
-          localStorage.setItem("token", token);
-          setToken(token)
+          if (res.status === 200) {
+            let token = res.headers.get("Authorization");
+            localStorage.setItem("token", token);
+            setToken(token)
+          }
 
           return res
         })
