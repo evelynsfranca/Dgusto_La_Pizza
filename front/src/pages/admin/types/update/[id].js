@@ -2,8 +2,8 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import { API_URL } from '../../../../utils/constants';
-import LayoutAdmin from '../../../../components/Layout/layoutAdmin';
+import LayoutAdmin from 'src/components/Layout/layoutAdmin';
+import { API_URL } from 'src/utils/constants';
 
 
 export default function TypeUpdate() {

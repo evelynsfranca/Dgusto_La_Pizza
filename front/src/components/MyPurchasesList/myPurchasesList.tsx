@@ -16,8 +16,7 @@ export interface IPromotions {
 }
 
 export function MyPurchasesList() {
-  const [errorMessage, setErrorMessage] = useState(null);
-
+  
   const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))

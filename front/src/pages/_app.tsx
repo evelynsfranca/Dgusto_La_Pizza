@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import 'bootstrap/scss/bootstrap.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Loading from '../components/Loading/loading';
+import Loading from 'src/components/Loading/loading';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

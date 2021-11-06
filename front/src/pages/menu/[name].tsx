@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import useSWR from 'swr';
 import Link from 'next/link';
-import { API_URL } from '../../utils/constants';
-import LayoutGeneral from '../../components/Layout/layoutGeneral';
-import ProductsList from '../../components/ProductsList/productsList';
 import pizza from '/public/images/pizza.png';
 import style from './MenuDetailPage.module.css';
+import ProductsList from 'src/components/ProductsList/productsList';
+import { API_URL } from 'src/utils/constants';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
 function ApiMenuDetail() {
   const router = useRouter();

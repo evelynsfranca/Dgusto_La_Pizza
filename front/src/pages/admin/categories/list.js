@@ -1,9 +1,9 @@
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import { useEffect, useState } from "react";
+import LayoutAdmin from 'src/components/Layout/layoutAdmin';
+import { API_URL } from 'src/utils/constants';
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/Layout/layoutAdmin';
-import { API_URL } from '../../../utils/constants';
 
 function ApiCategoriesList({ token }) {
 

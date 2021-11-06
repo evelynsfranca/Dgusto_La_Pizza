@@ -55,7 +55,7 @@ function Navbar() {
                 {isLoggedIn &&
                   <>
                     <li>
-                      <Link href="/login">
+                      <Link href="/my-purchases">
                         <a className="dropdown-item">Meus Pedidos</a>
                       </Link>
                     </li>
@@ -77,7 +77,7 @@ function Navbar() {
                 {!isLoggedIn &&
                   <>
                   <li>
-                      <Link href="/criar-conta">
+                      <Link href="/create-account">
                         <a className="dropdown-item">Criar conta</a>
                       </Link>
                     </li>

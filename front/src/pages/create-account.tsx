@@ -1,8 +1,8 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
 import localStorage from 'localStorage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
-import { API_URL } from '../utils/constants';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
+import { API_URL } from 'src/utils/constants';
 
 export interface IUser {
   name: string;
