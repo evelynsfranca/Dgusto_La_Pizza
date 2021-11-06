@@ -1,6 +1,6 @@
-import CategoriesList from 'src/pages/admin/categories/list';
 import { API_URL } from 'src/utils/constants';
 import useSWR from 'swr';
+import CategoriesList from '../CategoryList/categoryList';
 import Loading from '../Loading/loading';
 import ProductsList from '../ProductsList/productsList';
 
