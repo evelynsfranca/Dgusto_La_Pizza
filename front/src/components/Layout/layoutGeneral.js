@@ -88,21 +88,7 @@ function LayoutGeneral({ children, pageName }) {
         </main>
       }
 
-      {pageName === "NotFoundPage" &&
-      
-        <main className={style.bannerContainer}>
-
-          <section className={style.notFoundContainer}>
-            {children}
-          </section>
-
-        </main>
-
-      }
-
-
-
-      {pageName !== "HomePage" || pageName !== "NotFoundPage" &&
+      {pageName !== "HomePage" && pageName !== "NotFoundPage" &&
 
         <main>
 
@@ -194,6 +180,19 @@ function LayoutGeneral({ children, pageName }) {
           {children}
 
         </main>
+
+      }
+
+      {pageName === "NotFoundPage" &&
+
+        <main className={style.bannerContainer}>
+
+          <section className={style.notFoundContainer}>
+            {children}
+          </section>
+
+        </main>
+
       }
 
     </>
