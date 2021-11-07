@@ -38,11 +38,11 @@ function LoginPage() {
   const encryptedLocalStorageStringIsAdmin = encryptString('isAdmin', pass);
   const decryptedLocalStorageStringIsAdmin = decryptString(encryptedLocalStorageStringIsAdmin, pass);
 
-  if (typeof window !== undefined && decryptedLocalStorageStringIsAdmin === 'true') {
+  if (typeof window !== undefined && localStorage.getItem(decryptedLocalStorageStringIsAdmin) === 'true') {
     router.push('/admin/login')
   }
 
-  if (typeof window !== undefined && decryptedLocalStorageStringIsAdmin === 'false') {
+  if (typeof window !== undefined && localStorage.getItem(decryptedLocalStorageStringIsAdmin) === 'false') {
     router.push('/my-purchases')
   }
 

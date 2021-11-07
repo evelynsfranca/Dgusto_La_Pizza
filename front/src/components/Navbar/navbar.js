@@ -65,7 +65,7 @@ function Navbar() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/sair">
+                      <Link href="/logout">
                         <a className="dropdown-item">
                           Sair
                         </a>
