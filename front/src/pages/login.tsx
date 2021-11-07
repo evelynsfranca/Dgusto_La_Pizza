@@ -1,11 +1,12 @@
 import useSWR from 'swr';
 import { useState } from "react";
 import { API_LOGIN_URL, API_URL } from '../utils/constants';
+import StringCrypto from 'string-crypto';
 import style from './LoginPage.module.css';
 import Router, { useRouter } from 'next/router';
 import localStorage from 'localStorage';
-import LayoutGeneral from '../components/Layout/layoutGeneral';
 import Link from 'next/link';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
 export interface IUser {
   username: string;
@@ -28,11 +29,20 @@ function LoginPage() {
     password: ''
   })
 
-  if (typeof window !== undefined && localStorage.getItem('isAdmin') === 'true') {
+  const pass = 'Oh-no,not-again';
+  const {
+    encryptString,
+    decryptString,
+  } = new StringCrypto();
+
+  const encryptedLocalStorageStringIsAdmin = encryptString('isAdmin', pass);
+  const decryptedLocalStorageStringIsAdmin = decryptString(encryptedLocalStorageStringIsAdmin, pass);
+
+  if (typeof window !== undefined && localStorage.getItem(decryptedLocalStorageStringIsAdmin) === 'true') {
     router.push('/admin/login')
   }
 
-  if (typeof window !== undefined && localStorage.getItem('isAdmin') === 'false') {
+  if (typeof window !== undefined && localStorage.getItem(decryptedLocalStorageStringIsAdmin) === 'false') {
     router.push('/my-purchases')
   }
 
@@ -48,11 +58,11 @@ function LoginPage() {
 
     if (data.authorities.includes("ROLE_ADMIN")) {
       setIsAdmin(true)
-      localStorage.setItem("isAdmin", 'true');
+      localStorage.setItem(encryptedLocalStorageStringIsAdmin, 'true');
       router.push('/admin/login')
     } else {
       setIsAdmin(false)
-      localStorage.setItem("isAdmin", 'false');
+      localStorage.setItem(encryptedLocalStorageStringIsAdmin, 'false');
       router.push('/my-purchases')
     }
 
@@ -220,7 +230,7 @@ function LoginPage() {
                 }
               </button>
 
-              <Link href="/criar-conta">
+              <Link href="/create-account">
                 <a className="btn btn-link ps-0">
                   Criar Conta
                 </a>

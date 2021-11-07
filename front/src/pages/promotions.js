@@ -1,5 +1,5 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
-import PromotionsList from '../components/PromotionsList/promotionsList';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
+import PromotionsList from 'src/components/PromotionsList/promotionsList';
 import style from './Promotions.module.css';
 
 function PromotionsPage() {

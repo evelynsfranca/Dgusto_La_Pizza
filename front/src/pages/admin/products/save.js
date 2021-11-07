@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
-import LayoutAdmin from '../../../components/Layout/layoutAdmin';
-import { API_URL } from '../../../utils/constants';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { API_URL } from 'src/utils/constants';
+import LayoutAdmin from 'src/components/Layout/layoutAdmin';
 
 export default function ProductList() {
 

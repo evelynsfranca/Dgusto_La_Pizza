@@ -58,7 +58,7 @@ function LayoutAdmin({ children }) {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/sair">
+              <Link href="/logout">
                 <a className="nav-link text-danger">
                   Deslogar
                 </a>
