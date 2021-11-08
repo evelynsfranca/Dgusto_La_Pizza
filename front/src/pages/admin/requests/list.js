@@ -3,9 +3,9 @@ import Head from 'next/head';
 import { useEffect, useState } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import NumberFormat from 'react-number-format';
+import LayoutAdmin from 'src/components/Layout/layoutAdmin';
+import { API_URL } from 'src/utils/constants';
 import useSWR from 'swr';
-import LayoutAdmin from '../../../components/Layout/layoutAdmin';
-import { API_URL } from '../../../utils/constants';
 
 export default function RequestsList() {
   const router = useRouter();

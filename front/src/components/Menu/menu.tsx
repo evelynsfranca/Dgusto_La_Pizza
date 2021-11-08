@@ -1,11 +1,11 @@
+import { API_URL } from 'src/utils/constants';
 import useSWR from 'swr';
-import { API_URL } from '../../utils/constants';
 import CategoriesList from '../CategoryList/categoryList';
 import Loading from '../Loading/loading';
 import ProductsList from '../ProductsList/productsList';
 
 export function Menu(): any {
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+  const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))
 

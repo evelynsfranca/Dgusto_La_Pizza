@@ -2,8 +2,8 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import LayoutAdmin from '../../../components/Layout/layoutAdmin';
-import { API_URL } from '../../../utils/constants';
+import LayoutAdmin from 'src/components/Layout/layoutAdmin';
+import { API_URL } from 'src/utils/constants';
 
 
 export default function ProductCategoriesAdd() {
@@ -43,6 +43,7 @@ export default function ProductCategoriesAdd() {
 
   return (
     <LayoutAdmin>
+      
       <Head>
         <title>Adicionar Nova Categorias</title>
       </Head>

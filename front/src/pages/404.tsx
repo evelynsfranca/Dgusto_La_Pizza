@@ -1,5 +1,5 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
 import Link from 'next/link';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
 function NotFoundPage() {
   return (

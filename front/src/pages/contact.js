@@ -1,7 +1,7 @@
 import style from './Contact.module.css';
 import Image from 'next/image';
 import localization from '/public/images/localization.png';
-import LayoutGeneral from '../components/Layout/layoutGeneral';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
 function ContactPage() {
   return (
