@@ -3,7 +3,7 @@
   background-position: center;
   box-shadow: 0 3px 4px -4px grey;
   background-size: cover;
-  
+
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -138,4 +138,9 @@
 .linkActive > a {
   margin-top: -2px;
   color: #ffe728;
+}
+
+.cartItemsQuantity {
+  font-size: 1rem;
+  margin-left: 6px;
 }

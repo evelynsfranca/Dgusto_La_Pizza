@@ -8,16 +8,14 @@ import RequestToday from '../RequestToday/requestToday';
 import style from './layoutGeneral.module.css';
 import logo from '/public/images/logo.png';
 
-
-
-
-function LayoutGeneral({ children, pageName }) {
+function LayoutGeneral({ children, pageName, cartData }) {
   const [token, setToken] = useState('');
 
   useEffect(() => {
     if (typeof window !== undefined && localStorage.getItem('token')) {
       setToken(localStorage.getItem('token'))
     }
+
   }, []);
 
   return (
@@ -78,7 +76,7 @@ function LayoutGeneral({ children, pageName }) {
           </Link>
 
           <section>
-            <Navbar />
+            <Navbar cartData={cartData} />
           </section>
 
           <section>
@@ -105,7 +103,7 @@ function LayoutGeneral({ children, pageName }) {
 
             </div>
 
-            <Navbar />
+            <Navbar cartData={cartData} />
 
             <section className="positionRelactive text-center pb-5">
               <h1 className="display-1 text-light">

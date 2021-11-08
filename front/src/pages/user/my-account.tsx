@@ -1,8 +1,8 @@
 import LayoutGeneral from "src/components/Layout/layoutGeneral";
 
-function MyAccountPage() {
+function MyAccountPage({ cartData }) {
   return (
-    <LayoutGeneral pageName="MyAccountPage">
+    <LayoutGeneral pageName="MyAccountPage" cartData={cartData}>
 
       <main className="container">
         my account

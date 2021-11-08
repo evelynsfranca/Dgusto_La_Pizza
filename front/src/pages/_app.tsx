@@ -7,6 +7,7 @@ import Loading from 'src/components/Loading/loading';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(false);
+  const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
     const handleStart = () => { setPageLoading(true); };
@@ -15,12 +16,22 @@ function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
     router.events.on('routeChangeError', handleComplete);
+
+    if (!!localStorage.getItem('cart')) {
+      setCartData(JSON.parse(localStorage.getItem('cart')))
+    } else {
+      localStorage.setItem('cart', JSON.stringify([]))
+      setCartData([])
+    }
+
   }, [router]);
+
+  const modifiedPageProps = { ...pageProps, cartData, setCartData }
 
   return (
     pageLoading
-      ? (<Loading isFullScreen='true'/>)
-      : <Component {...pageProps} />
+      ? (<Loading isFullScreen='true' />)
+      : <Component {...modifiedPageProps} />
   )
 
 }
