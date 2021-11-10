@@ -11,7 +11,7 @@ export interface IUser {
   rePassword: string;
 }
 
-function CreateAccountPage() {
+function CreateAccountPage({ cartData }) {
   const router = useRouter();
 
   const [token, setToken] = useState('');
@@ -190,7 +190,7 @@ function CreateAccountPage() {
   }
 
   return (
-    <LayoutGeneral pageName="CreateAccountPage">
+    <LayoutGeneral pageName="CreateAccountPage" cartData={cartData}>
 
       <main className="container my-5">
 

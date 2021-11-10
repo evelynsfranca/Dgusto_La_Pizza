@@ -13,7 +13,7 @@ export interface IUser {
   password: string;
 }
 
-function LoginPage() {
+function LoginPage({ cartData }) {
   const [token, setToken] = useState('');
   const router = useRouter()
 
@@ -174,7 +174,7 @@ function LoginPage() {
   }
 
   return (
-    <LayoutGeneral pageName="LoginPage">
+    <LayoutGeneral pageName="LoginPage" cartData={cartData}>
       <section className={style.pizzaContainer}></section>
 
       <main className="container my-5">

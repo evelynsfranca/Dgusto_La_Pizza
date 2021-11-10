@@ -4,7 +4,7 @@ import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 import Loading from 'src/components/Loading/loading';
 import StringCrypto from 'string-crypto';
 
-function LogoutPage() {
+function LogoutPage({ cartData }) {
   const router = useRouter();
 
   const pass = 'Oh-no,not-again';
@@ -27,7 +27,7 @@ function LogoutPage() {
   }
 
   return (
-    <LayoutGeneral pageName="LogoutPage">
+    <LayoutGeneral pageName="LogoutPage" cartData={cartData}>
       <Loading />
     </LayoutGeneral>
   )
