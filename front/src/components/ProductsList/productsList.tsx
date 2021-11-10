@@ -3,7 +3,6 @@ import Image from 'next/image';
 import pizzas from '/public/images/products/sample.png';
 import styles from './ProductsList.module.css';
 import localStorage from 'localStorage';
-import { useState } from 'react';
 
 export interface IContentProducts {
   content: IProducts[];
@@ -15,30 +14,18 @@ export interface IProducts {
   description: string;
   unitValue: Number;
   productType: IProductType;
+  qty: 1
 }
 
 export interface IProductType {
   id: Number;
 }
 
-export function ProductsList({ data, cartData, setCartData }: { data: IContentProducts, cartData: IProducts, setCartData: any }) {
-  const [productInCart, setProductInCart] = useState([]);
+export function ProductsList({ data, cartData, setCartData }: { data: IContentProducts, cartData: any, setCartData: any }) {
 
   const addToCard = (product: IProducts) => {
-
-    //if (!localStorage.getItem('cart')) {
-    productInCart.push(product);
-
-    setCartData(productInCart)
-
-    //setProductInCart(productInCart)
-    localStorage.setItem('cart', JSON.stringify(productInCart))
-    /*} else {
-      let localStorageCart = JSON.parse(localStorage.getItem('cart'));
-      localStorageCart.push(product);
-      setProductInCart(localStorageCart)
-      localStorage.setItem('cart', JSON.stringify(localStorageCart))
-    }*/
+    setCartData([...cartData, product])
+    localStorage.setItem('cart', JSON.stringify([...cartData, product]))
   }
 
   return <>
@@ -46,7 +33,7 @@ export function ProductsList({ data, cartData, setCartData }: { data: IContentPr
       <div key={flavor.id} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
 
         <div>
-          <Image src={pizzas} width={100} height={100} />
+          <Image src={pizzas} width={100} height={100} alt={flavor.name} />
         </div>
 
         <div>
@@ -75,7 +62,6 @@ export function ProductsList({ data, cartData, setCartData }: { data: IContentPr
           >
             <i className="bi bi-cart2"></i> Adicionar ao Carrinho
           </button>
-
 
         </div>
 

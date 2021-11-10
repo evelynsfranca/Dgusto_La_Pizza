@@ -58,6 +58,14 @@ function LayoutGeneral({ children, pageName, cartData }) {
             'Não encontramos esta página'
             : ''}
 
+          {pageName === 'CartPage' ?
+            'Carrinho'
+            : ''}
+
+          {pageName === 'CheckoutPage' ?
+            'Finalizar Compra'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -149,6 +157,18 @@ function LayoutGeneral({ children, pageName, cartData }) {
                   </span>
                 }
 
+                {pageName === 'CartPage' &&
+                  <span>
+                    Carrinho
+                  </span>
+                }
+
+                {pageName === 'CheckoutPage' &&
+                  <span>
+                    Finalizar Compra
+                  </span>
+                }
+
               </h1>
 
               <p className="text-light mb-5">
@@ -169,6 +189,7 @@ function LayoutGeneral({ children, pageName, cartData }) {
                     Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!
                   </span>
                 }
+
               </p>
 
             </section>
