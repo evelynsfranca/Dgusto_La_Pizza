@@ -8,16 +8,14 @@ import RequestToday from '../RequestToday/requestToday';
 import style from './layoutGeneral.module.css';
 import logo from '/public/images/logo.png';
 
-
-
-
-function LayoutGeneral({ children, pageName }) {
+function LayoutGeneral({ children, pageName, cartData }) {
   const [token, setToken] = useState('');
 
   useEffect(() => {
     if (typeof window !== undefined && localStorage.getItem('token')) {
       setToken(localStorage.getItem('token'))
     }
+
   }, []);
 
   return (
@@ -60,6 +58,14 @@ function LayoutGeneral({ children, pageName }) {
             'Não encontramos esta página'
             : ''}
 
+          {pageName === 'CartPage' ?
+            'Carrinho'
+            : ''}
+
+          {pageName === 'CheckoutPage' ?
+            'Finalizar Compra'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -78,7 +84,7 @@ function LayoutGeneral({ children, pageName }) {
           </Link>
 
           <section>
-            <Navbar />
+            <Navbar cartData={cartData} />
           </section>
 
           <section>
@@ -105,7 +111,7 @@ function LayoutGeneral({ children, pageName }) {
 
             </div>
 
-            <Navbar />
+            <Navbar cartData={cartData} />
 
             <section className="positionRelactive text-center pb-5">
               <h1 className="display-1 text-light">
@@ -151,6 +157,18 @@ function LayoutGeneral({ children, pageName }) {
                   </span>
                 }
 
+                {pageName === 'CartPage' &&
+                  <span>
+                    Carrinho
+                  </span>
+                }
+
+                {pageName === 'CheckoutPage' &&
+                  <span>
+                    Finalizar Compra
+                  </span>
+                }
+
               </h1>
 
               <p className="text-light mb-5">
@@ -171,6 +189,7 @@ function LayoutGeneral({ children, pageName }) {
                     Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!
                   </span>
                 }
+
               </p>
 
             </section>
