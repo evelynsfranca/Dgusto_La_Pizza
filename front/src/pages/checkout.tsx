@@ -1,9 +1,56 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
+import Image from 'next/image';
+import pizzas from '/public/images/products/sample.png';
+import CurrencyFormat from 'react-currency-format';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+
+export interface IProducts {
+  id: Number | any;
+  name: string;
+  description: string;
+  unitValue: number;
+  productType: IProductType;
+  qty: number;
+  total: number;
+}
+
+export interface IProductType {
+  id: Number;
+}
 
 function CheckoutPage({ cartData, setCartData }) {
   const [state, setState] = useState({})
+  const [newArrayProducts, setNewArrayProducts] = useState(null);
+  const [cartSubTotal, setCartSubTotal] = useState(0);
+  const [cartShipping, setCartShipping] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
+
+  let groupedCartData = _.groupBy(cartData, 'id')
+
+  const calculateCart = () => {
+    let localNewArrayProducts = [];
+    let subTotal = 0;
+    _.map(groupedCartData, (it: IProducts[]) => {
+      _.map(it, (e, i) => {
+        if (i >= 1) {
+          return
+        } else {
+          localNewArrayProducts.push({ product: e, qty: it.length, total: (e.unitValue * it.length) })
+        }
+      })
+    })
+
+    _.map(localNewArrayProducts, (product: IProducts) => {
+      subTotal = subTotal + product.total;
+    })
+
+    setCartSubTotal(subTotal);
+    setCartShipping(0)
+    setCartTotal(subTotal + cartShipping)
+    setNewArrayProducts(localNewArrayProducts);
+  };
 
   function handleChange(evt) {
     const value = evt.target.value;
@@ -13,6 +60,10 @@ function CheckoutPage({ cartData, setCartData }) {
     });
   }
 
+  useEffect(() => {
+    calculateCart()
+  }, []);
+
   return (
     <LayoutGeneral pageName="CheckoutPage" cartData={cartData}>
 
@@ -21,52 +72,65 @@ function CheckoutPage({ cartData, setCartData }) {
         <div className="row g-5">
           <div className="col-md-5 col-lg-4 order-md-last">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-primary">Your cart</span>
-              <span className="badge bg-primary rounded-pill">3</span>
+              <span className="text-primary">Meu carrinho</span>
+              <span className="badge bg-primary rounded-pill">
+                {cartData.length}
+              </span>
             </h4>
             <ul className="list-group mb-3">
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Product name</h6>
-                  <small className="text-muted">Brief description</small>
-                </div>
-                <span className="text-muted">$12</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Second product</h6>
-                  <small className="text-muted">Brief description</small>
-                </div>
-                <span className="text-muted">$8</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Third item</h6>
-                  <small className="text-muted">Brief description</small>
-                </div>
-                <span className="text-muted">$5</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between bg-light">
-                <div className="text-success">
-                  <h6 className="my-0">Promo code</h6>
-                  <small>EXAMPLECODE</small>
-                </div>
-                <span className="text-success">−$5</span>
-              </li>
+
+              {_.map(newArrayProducts, (productItem, index) => (
+                <li key={index} className="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 className="my-0">
+                      {productItem.product.name}
+                    </h6>
+                    <small className="text-muted">
+                      {productItem.qty}x
+                    </small>
+                  </div>
+                  <span className="text-muted">
+                    <CurrencyFormat
+                      value={productItem.product.unitValue}
+                      displayType={'text'}
+                      decimalSeparator={','}
+                      prefix={'R$ '}
+                      renderText={value => <>{value}</>}
+                    />
+
+                  </span>
+                </li>
+              ))}
+
               <li className="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong>$20</strong>
+                <span>Total</span>
+                <strong>
+                  <CurrencyFormat
+                    value={cartTotal}
+                    displayType={'text'}
+                    decimalSeparator={','}
+                    prefix={'R$ '}
+                    renderText={value => <>{value}</>}
+                  />
+                </strong>
               </li>
             </ul>
 
-            <form className="card p-2">
+            {/* <form className="card p-2">
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Promo code"
                   onChange={handleChange}
                 />
                 <button type="submit" className="btn btn-secondary">Redeem</button>
               </div>
-            </form>
+            </form> */}
+
+            <div className="my-5">
+              <button className="w-100 btn btn-primary btn-lg">
+                Finalizar Compra!
+              </button>
+            </div>
+
           </div>
 
           <div className="col-md-7 col-lg-8">
@@ -250,8 +314,8 @@ function CheckoutPage({ cartData, setCartData }) {
               </div>
 
               <div className="my-5">
-                <button className="w-100 btn btn-primary btn-lg" type="submit">
-                  Continue to checkout
+                <button className="w-100 btn btn-primary btn-lg">
+                  Finalizar Compra!
                 </button>
               </div>
 

@@ -8,7 +8,7 @@ import RequestToday from '../RequestToday/requestToday';
 import style from './layoutGeneral.module.css';
 import logo from '/public/images/logo.png';
 
-function LayoutGeneral({ children, pageName, cartData }) {
+function LayoutGeneral({ children, pageName, cartData, productAddedToCart=false }) {
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -212,6 +212,19 @@ function LayoutGeneral({ children, pageName, cartData }) {
 
         </main>
 
+      }
+
+      {productAddedToCart &&
+        <div className="position-fixed top-0 end-0 p-3">
+          <div id="liveToast" className="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div className="toast-header">
+              <strong className="me-auto">Produto Adicionado</strong>
+            </div>
+            <div className="toast-body">
+              Produto Adicionado ao Carrinho com sucesso!
+            </div>
+          </div>
+        </div>
       }
 
     </>

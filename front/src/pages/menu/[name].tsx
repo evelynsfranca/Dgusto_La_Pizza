@@ -8,7 +8,7 @@ import ProductsList from 'src/components/ProductsList/productsList';
 import { API_URL } from 'src/utils/constants';
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
-function ApiMenuDetail({ name, cartData, setCartData }) {
+function ApiMenuDetail({ name, cartData, setCartData, setProductAddedToCart }) {
   const fetcher = (url) => fetch(url)
     .then(res => res.json())
     .catch(e => console.warn(e))
@@ -18,15 +18,26 @@ function ApiMenuDetail({ name, cartData, setCartData }) {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-  return (<ProductsList data={data} cartData={cartData} setCartData={setCartData} />)
+  return (
+    <ProductsList
+      data={data}
+      cartData={cartData}
+      setCartData={setCartData}
+      setProductAddedToCart={setProductAddedToCart}
+    />
+  )
 }
 
-function MenuDetail({ cartData, setCartData }) {
+function MenuDetail({ cartData, setCartData, productAddedToCart, setProductAddedToCart }) {
   const router = useRouter();
   const { name } = router.query;
 
   return (
-    <LayoutGeneral pageName="MenuDetailPage" cartData={cartData}>
+    <LayoutGeneral
+      pageName="MenuDetailPage"
+      cartData={cartData}
+      productAddedToCart={productAddedToCart}
+    >
       <section className={style.pizzaContainer}>
         <Image src={pizza} width={384} height={221} />
       </section>
@@ -48,7 +59,11 @@ function MenuDetail({ cartData, setCartData }) {
         </div>
 
         <div className="row my-5 py-5">
-          <ApiMenuDetail cartData={cartData} setCartData={setCartData} name={name} />
+          <ApiMenuDetail
+            name={name}
+            cartData={cartData}
+            setCartData={setCartData}
+            setProductAddedToCart={setProductAddedToCart} />
         </div>
       </div>
     </LayoutGeneral>

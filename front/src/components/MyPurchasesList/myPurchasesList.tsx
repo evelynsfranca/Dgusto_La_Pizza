@@ -21,7 +21,7 @@ export function MyPurchasesList() {
     .then(res => res.json())
     .catch(e => console.warn(e))
 
-  const { data, error } = useSWR(`${API_URL}/client/requests`, fetcher)
+  const { data, error } = useSWR(`${API_URL}/client/me`, fetcher)
 
   if (error) return <>failed to load</>
   if (!data) return <Loading />
