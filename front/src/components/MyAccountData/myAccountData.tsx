@@ -15,18 +15,17 @@ export interface IPromotions {
   unitValue: Number;
 }
 
-export function MyPurchasesList() {
-  
+export function MyAccountData() {
   const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))
 
-  const { data, error } = useSWR(`${API_URL}/client/requests`, fetcher)
+  const { data, error } = useSWR(`${API_URL}/client/me`, fetcher)
 
   if (error) return <>failed to load</>
   if (!data) return <Loading />
 
-  if (data.status != 200) return <div className="alert alert-danger" role="alert">Erro ao tentar carregar sua lista de pedidos, tente novamente mais tarde. </div>
+  if (data.status != 200) return <div className="alert alert-danger" role="alert">Erro ao tentar carregar seus dados, tente novamente mais tarde. </div>
 
   return (
     <>
@@ -45,4 +44,4 @@ export function MyPurchasesList() {
   );
 }
 
-export default MyPurchasesList;
+export default MyAccountData;

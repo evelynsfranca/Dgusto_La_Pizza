@@ -88,7 +88,7 @@ function CartPage({ cartData, setCartData }) {
 
                 {cartData.length == 0 &&
                   <div className="text-center">
-                    <h2 className="mb-5">Nenhum produto em seu carrinho</h2>
+                    <h2 className="mb-5">Nenhum produto em seu carrinho :(</h2>
                     <p>
                       Acesse a <Link href="/menu">lista de nossos produtos</Link> e adicione um produto para continuar comprando
                     </p>

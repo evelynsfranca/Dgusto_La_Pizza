@@ -8,7 +8,7 @@ import RequestToday from '../RequestToday/requestToday';
 import style from './layoutGeneral.module.css';
 import logo from '/public/images/logo.png';
 
-function LayoutGeneral({ children, pageName, cartData, productAddedToCart=false }) {
+function LayoutGeneral({ children, pageName, cartData, productAddedToCart = false }) {
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -64,6 +64,10 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart=false 
 
           {pageName === 'CheckoutPage' ?
             'Finalizar Compra'
+            : ''}
+
+          {pageName === 'MyAccountPage' ?
+            'Minha Conta'
             : ''}
 
           {' '}
@@ -166,6 +170,12 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart=false 
                 {pageName === 'CheckoutPage' &&
                   <span>
                     Finalizar Compra
+                  </span>
+                }
+
+                {pageName === 'MyAccountPage' &&
+                  <span>
+                    Minha Conta
                   </span>
                 }
 
