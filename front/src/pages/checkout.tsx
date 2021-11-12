@@ -183,6 +183,16 @@ function CheckoutPage({ cartData, setCartData }) {
                   </div>
                 </div>
 
+                <div className="col-md-3">
+                  <label htmlFor="zip" className="form-label">CEP:</label>
+                  <input type="text" className="form-control" id="zip" placeholder="" required
+                    onChange={handleChange}
+                  />
+                  <div className="invalid-feedback">
+                    Zip code required.
+                  </div>
+                </div>
+
                 <div className="col-12">
                   <label htmlFor="address" className="form-label">Address</label>
                   <input type="text" className="form-control" id="address" placeholder="1234 Main St" required
@@ -200,40 +210,32 @@ function CheckoutPage({ cartData, setCartData }) {
                   />
                 </div>
 
-                <div className="col-md-5">
+                {/* <div className="col-md-5">
                   <label htmlFor="country" className="form-label">Country</label>
                   <select className="form-select" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>United States</option>
+                    <option value="">Escolha...</option>
+                    <option>Brasil</option>
                   </select>
                   <div className="invalid-feedback">
                     Please select a valid country.
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <label htmlFor="state" className="form-label">State</label>
                   <select className="form-select" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
+                    <option value="">Escolha...</option>
+                    <option>Paraná</option>
+                    <option>Minas Gerais</option>
                   </select>
                   <div className="invalid-feedback">
                     Please provide a valid state.
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-md-3">
-                  <label htmlFor="zip" className="form-label">Zip</label>
-                  <input type="text" className="form-control" id="zip" placeholder="" required
-                    onChange={handleChange}
-                  />
-                  <div className="invalid-feedback">
-                    Zip code required.
-                  </div>
-                </div>
               </div>
 
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input type="checkbox" className="form-check-input" id="same-address"
                   onChange={handleChange}
                 />
@@ -245,7 +247,7 @@ function CheckoutPage({ cartData, setCartData }) {
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="save-info">Save this information for next time</label>
-              </div>
+              </div> */}
 
               <h4 className="mt-5 mb-3">Payment</h4>
 
