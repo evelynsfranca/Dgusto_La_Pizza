@@ -117,7 +117,7 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
 
             <Navbar cartData={cartData} />
 
-            <section className="positionRelactive text-center pb-5">
+            <section className={["positionRelactive text-center", pageName === "MenuPage" || pageName === "ContactPage" ? "pb-5" : "pb-2"].join(' ')}>
               <h1 className="display-1 text-light">
                 {pageName === 'MenuPage' &&
                   <span>
@@ -197,6 +197,12 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
                 {pageName === 'PromotionsPage' &&
                   <span>
                     Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!
+                  </span>
+                }
+
+                {pageName === "MyAccountPage" &&
+                  <span>
+                   {">"} Meus Dados
                   </span>
                 }
 

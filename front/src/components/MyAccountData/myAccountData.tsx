@@ -21,11 +21,73 @@ export const UserInfos = (data): any => {
   return (
     _.map(data, account => (
       <div key={account.id}>
-        <h1>cpf: {account.cpf}</h1>
-        <h1>nome: {account.user.name}</h1>
-        <h1>email: {account.user.email}</h1>
-        <h1>telefones: {account.phones}</h1>
-        <h1>endereços: {account.addresses}</h1>
+        <div className="row">
+          <div className="col">
+
+            <div className="card mb-3">
+              <div className="card-body">
+                <h3 className="mb-4">Meu Dados</h3>
+
+                <div className="mb-2 row">
+                  <label htmlFor="cpf" className="col-sm-2 form-label">CPF:</label>
+                  <div className="col-sm-10">
+                    {account?.cpf}
+                  </div>
+                </div>
+
+                <div className="mb-2 row">
+                  <label htmlFor="name" className="col-sm-2 form-label">Nome:</label>
+                  <div className="col-sm-10">
+                    {account?.user?.name}
+                  </div>
+                </div>
+
+                <div className="mb-2 row">
+                  <label htmlFor="email" className="col-sm-2 form-label">Email:</label>
+                  <div className="col-sm-10">
+                    {account?.user?.email}
+                  </div>
+                </div>
+
+                <hr />
+
+                <h3 className="mb-4">Meus Endereços</h3>
+
+                {account?.addresses?.length === 0 &&
+                  <Link href="/user/my-account/new-address">
+                    <a className="btn btn-link">
+                      Novo endereço
+                    </a>
+                  </Link>
+                }
+
+                {account?.addresses?.length > 0 &&
+                  <p>endereços: {account.addresses}</p>
+                }
+
+                <hr />
+
+                <h3 className="mb-4">Meu Telefones</h3>
+
+                {account?.phones?.length === 0 &&
+                  <Link href="/user/my-account/new-phone">
+                    <a className="btn btn-link">
+                      Novo endereço
+                    </a>
+                  </Link>
+                }
+
+                {account?.phones?.length > 0 &&
+                  <p>telefones: {account.phones}</p>
+                }
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
     ))
   )
@@ -36,7 +98,7 @@ export function MyAccountData() {
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState('')
 
-  const getData = async () => {
+  async function getData() {
     setIsLoading(true)
 
     const res = await fetch(`${API_URL}/client/me`, {
@@ -51,7 +113,7 @@ export function MyAccountData() {
 
     const response = await res
 
-    if (response) {
+    if (!!response) {
       setUserData(response)
     } else {
       setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.');
