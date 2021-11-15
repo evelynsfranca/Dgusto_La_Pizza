@@ -3,11 +3,13 @@ import 'bootstrap/scss/bootstrap.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Loading from 'src/components/Loading/loading';
+import localStorage from 'localStorage';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(false);
   const [cartData, setCartData] = useState([]);
+  const [productAddedToCart, setProductAddedToCart] = useState(false);
 
   useEffect(() => {
     const handleStart = () => { setPageLoading(true); };
@@ -26,7 +28,7 @@ function MyApp({ Component, pageProps }) {
 
   }, [router]);
 
-  const modifiedPageProps = { ...pageProps, cartData, setCartData }
+  const modifiedPageProps = { ...pageProps, cartData, setCartData, productAddedToCart, setProductAddedToCart }
 
   return (
     pageLoading

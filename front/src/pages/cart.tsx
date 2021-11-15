@@ -5,6 +5,7 @@ import pizzas from '/public/images/products/sample.png';
 import CurrencyFormat from 'react-currency-format';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
+import localStorage from 'localStorage';
 
 export interface IProducts {
   id: Number | any;
@@ -63,6 +64,12 @@ function CartPage({ cartData, setCartData }) {
     console.log(id)
   }
 
+  const clearCartData = () => {
+    setCartData([])
+    localStorage.setItem('cart', JSON.stringify([]))
+
+  }
+
   useEffect(() => {
     calculateCart()
   }, []);
@@ -81,18 +88,24 @@ function CartPage({ cartData, setCartData }) {
 
                 {cartData.length == 0 &&
                   <div className="text-center">
-                    <h2 className="mb-5">Nenhum produto em seu carrinho</h2>
-                    <Link href="/menu">
-                      <a className="btn btn-outline-success">
-                        Acesse a lista de nossos produtos e adicione um produto ao seu carrinho!
-                      </a>
-                    </Link>
+                    <h2 className="mb-5">Nenhum produto em seu carrinho :(</h2>
+                    <p>
+                      Acesse a <Link href="/menu">lista de nossos produtos</Link> e adicione um produto para continuar comprando
+                    </p>
+
                   </div>
                 }
 
                 {cartData.length > 0 &&
                   <>
                     <div className="table-responsive mb-4">
+
+                      <div className="text-end">
+                        <a className="btn btn-link mb-3" href="#" onClick={() => clearCartData()}>
+                          Limpar carrinho <i className="bi bi-trash"></i>
+                        </a>
+                      </div>
+
                       <table className="table table-borderless">
                         <thead>
                           <tr>
@@ -176,6 +189,7 @@ function CartPage({ cartData, setCartData }) {
 
                         </tbody>
                       </table>
+
                     </div>
 
                     <div className="row">
@@ -186,7 +200,7 @@ function CartPage({ cartData, setCartData }) {
                               <div className="input-group">
                                 <input type="search" className="form-control" placeholder="Eu tenho um desconto" aria-label="Search" aria-describedby="button-addonTags" />
                                 <div className="input-group-append">
-                                  <button className="input-group-text" type="submit" id="button-addonTags">
+                                  <button className="input-group-text" type="button" id="button-addonTags">
                                     Aplicar!
                                   </button>
                                 </div>
@@ -265,12 +279,8 @@ function CartPage({ cartData, setCartData }) {
                   </>
                 }
 
-
-
               </div>
-
             </div>
-
           </div>
         </div>
 

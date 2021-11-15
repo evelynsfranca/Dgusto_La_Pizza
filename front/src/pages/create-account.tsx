@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 import { API_URL } from 'src/utils/constants';
 
+export interface IAccount {
+  cpf: string;
+  user: IUser;
+}
+
 export interface IUser {
   name: string;
   email: string;
   password: string;
-  rePassword: string;
+  passwordConfirm: string;
 }
 
 function CreateAccountPage({ cartData }) {
@@ -17,17 +22,24 @@ function CreateAccountPage({ cartData }) {
   const [token, setToken] = useState('');
   const [sendingForm, setSendingForm] = useState<boolean>(false)
 
+  const [isCpfInvalid, setIsCpfInvalid] = useState<boolean>(false);
   const [isNameInvalid, setIsNameInvalid] = useState<boolean>(false);
   const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
-  const [isRePasswordInvalid, setIsRePasswordInvalid] = useState<boolean>(false);
+  const [isPasswordConfirmInvalid, setIsPasswordConfirmInvalid] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>(undefined);
+  const [isAccountCreated, setIsAccountCreated] = useState<boolean>(false);
+
+  const [account, setAccount] = useState<IAccount>({
+    cpf: '',
+    user: null
+  });
 
   const [user, setUser] = useState<IUser>({
     name: '',
     email: '',
     password: '',
-    rePassword: ''
+    passwordConfirm: ''
   });
 
   useEffect(() => {
@@ -37,10 +49,26 @@ function CreateAccountPage({ cartData }) {
   }, []);
 
   function resetStatusForm() {
+    setIsCpfInvalid(false);
     setIsNameInvalid(false);
     setIsEmailInvalid(false);
     setIsPasswordInvalid(false);
-    setIsRePasswordInvalid(false);
+    setIsPasswordConfirmInvalid(false);
+  }
+
+  function clearForm() {
+    setAccount({
+      cpf: '',
+      user: null
+    })
+
+    setUser({
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirm: ''
+    })
+
   }
 
   function createErrorMessage() {
@@ -49,6 +77,16 @@ function CreateAccountPage({ cartData }) {
 
   function validateForm(): boolean {
     let returnValue = false;
+
+    if (account.cpf.length === 0) {
+
+      setIsCpfInvalid(true);
+      returnValue = true;
+
+    } else {
+      resetStatusForm()
+      returnValue = false;
+    }
 
     if (user.email.length < 3) {
 
@@ -117,9 +155,9 @@ function CreateAccountPage({ cartData }) {
 
     }
 
-    if (user.rePassword.length < 3) {
+    if (user.passwordConfirm.length < 3) {
 
-      setIsRePasswordInvalid(true);
+      setIsPasswordConfirmInvalid(true);
       returnValue = true;
 
     } else {
@@ -128,9 +166,9 @@ function CreateAccountPage({ cartData }) {
       returnValue = false;
     }
 
-    if (user.rePassword.length === 0) {
+    if (user.passwordConfirm.length === 0) {
 
-      setIsRePasswordInvalid(true);
+      setIsPasswordConfirmInvalid(true);
       returnValue = true;
 
     } else {
@@ -140,10 +178,11 @@ function CreateAccountPage({ cartData }) {
 
     }
 
-    /*if ( !(user.password != user.rePassword) && !(user.password.length != 0 && user.rePassword.length != 0)) {
+    /*if ( !(account.password != account.passwordConfirm) && !
+    (account.password.length != 0 && account.passwordConfirm.length != 0)) {
 
       setIsPasswordInvalid(true);
-      setIsRePasswordInvalid(true);
+      setIsPasswordConfirmInvalid(true);
       returnValue = true;
 
     } else {
@@ -167,21 +206,29 @@ function CreateAccountPage({ cartData }) {
 
     } else {
 
-      const res = await fetch(`${API_URL}/create-account`, {
-        method: "PUT",
+      account.user = user;
+
+      const res = await fetch(`${API_URL}/signup`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": token
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(account)
       })
         .then(res => res.json())
         .catch(e => console.warn(e));
 
       const response = await res;
 
-      if (response) {
-        router.push('/login')
+      if (!!response?.id) {
+        setIsAccountCreated(true)
+        clearForm()
+        //router.push('/login')
+      }
+
+      if (response.status != 200) {
+        setErrorMessage(response.error)
       }
 
       setSendingForm(false)
@@ -194,6 +241,13 @@ function CreateAccountPage({ cartData }) {
 
       <main className="container my-5">
 
+        {!!isAccountCreated &&
+          <div className="alert alert-success" role="alert">
+            <h4 className="alert-heading">Bem Vindo(a)!</h4>
+            <p className="m-0">Agora que você possui uma conta você poderá comprar uma de nossas deliciosas pizzas com mais facilidade!</p>
+          </div>
+        }
+
         {!!errorMessage &&
           <div className="alert alert-danger" role="alert">
             {errorMessage}
@@ -201,6 +255,19 @@ function CreateAccountPage({ cartData }) {
         }
 
         <form className="form">
+
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className={[isCpfInvalid ? " is-invalid " : "", "form-control"].join(" ")}
+              value={account.cpf}
+              maxLength={11}
+              onChange={cpf => setAccount({ ...account, cpf: cpf.target.value })}
+            />
+            <label>
+              CPF
+            </label>
+          </div>
 
           <div className="form-floating mb-3">
             <input
@@ -240,10 +307,10 @@ function CreateAccountPage({ cartData }) {
 
           <div className="form-floating mb-3">
             <input
-              className={[isRePasswordInvalid ? " is-invalid " : "", "form-control"].join(" ")}
+              className={[isPasswordConfirmInvalid ? " is-invalid " : "", "form-control"].join(" ")}
               type="password"
-              value={user.rePassword}
-              onChange={rePassword => setUser({ ...user, rePassword: rePassword.target.value })}
+              value={user.passwordConfirm}
+              onChange={passwordConfirm => setUser({ ...user, passwordConfirm: passwordConfirm.target.value })}
             />
             <label>
               Repita sua Senha

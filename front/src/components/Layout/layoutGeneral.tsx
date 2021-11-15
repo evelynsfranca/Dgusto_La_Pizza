@@ -8,7 +8,7 @@ import RequestToday from '../RequestToday/requestToday';
 import style from './layoutGeneral.module.css';
 import logo from '/public/images/logo.png';
 
-function LayoutGeneral({ children, pageName, cartData }) {
+function LayoutGeneral({ children, pageName, cartData, productAddedToCart = false }) {
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -66,6 +66,14 @@ function LayoutGeneral({ children, pageName, cartData }) {
             'Finalizar Compra'
             : ''}
 
+          {pageName === 'MyAccountPage' ?
+            'Minha Conta'
+            : ''}
+
+          {pageName === 'NewAddressPage' ?
+            'Novo endereço'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -113,7 +121,7 @@ function LayoutGeneral({ children, pageName, cartData }) {
 
             <Navbar cartData={cartData} />
 
-            <section className="positionRelactive text-center pb-5">
+            <section className={["positionRelactive text-center", pageName === "MenuPage" || pageName === "ContactPage" ? "pb-5" : "pb-2"].join(' ')}>
               <h1 className="display-1 text-light">
                 {pageName === 'MenuPage' &&
                   <span>
@@ -169,6 +177,18 @@ function LayoutGeneral({ children, pageName, cartData }) {
                   </span>
                 }
 
+                {pageName === 'MyAccountPage' &&
+                  <span>
+                    Minha Conta
+                  </span>
+                }
+
+                {pageName === 'NewAddressPage' &&
+                  <span>
+                    Novo endereço
+                  </span>
+                }
+
               </h1>
 
               <p className="text-light mb-5">
@@ -187,6 +207,12 @@ function LayoutGeneral({ children, pageName, cartData }) {
                 {pageName === 'PromotionsPage' &&
                   <span>
                     Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!
+                  </span>
+                }
+
+                {pageName === "MyAccountPage" &&
+                  <span>
+                    {">"} Meus Dados
                   </span>
                 }
 
@@ -212,6 +238,19 @@ function LayoutGeneral({ children, pageName, cartData }) {
 
         </main>
 
+      }
+
+      {productAddedToCart &&
+        <div className="position-fixed top-0 end-0 p-3">
+          <div id="liveToast" className="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div className="toast-header">
+              <strong className="me-auto">Produto Adicionado</strong>
+            </div>
+            <div className="toast-body">
+              Produto Adicionado ao Carrinho com sucesso!
+            </div>
+          </div>
+        </div>
       }
 
     </>
