@@ -4,7 +4,7 @@ import CurrencyFormat from 'react-currency-format'
 import Loading from '../Loading/loading'
 import { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
-import _ from 'lodash'
+import _, { add } from 'lodash'
 
 export interface IContentPromotions {
   content: IPromotions[]
@@ -53,29 +53,41 @@ export const UserInfos = (data): any => {
 
                 <h3 className="mb-4">Meus Endereços</h3>
 
-                {account?.addresses?.length === 0 &&
-                  <Link href="/user/my-account/new-address">
-                    <a className="btn btn-link">
-                      Novo endereço
-                    </a>
-                  </Link>
-                }
+                <Link href="/user/my-account/new-address">
+                  <a className="btn btn-link mb-3">
+                    Novo endereço
+                  </a>
+                </Link>
 
                 {account?.addresses?.length > 0 &&
-                  <p>endereços: {account.addresses}</p>
+                  <div className="row">
+                    {account.addresses.map((address, index) => {
+                      return (
+                        <div className="col">
+                          <div className="card mb-3">
+                            <div className="card-body">
+
+                              {address.street}, {address.number} - {address.neighborhood} - {address.zipCode} <br />
+                              {address.city} - {address.state} <br /><br />
+                              {address.mainAddress ? <span className="badge rounded-pill bg-primary">Endereço principal</span> : ''}
+
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 }
 
                 <hr />
 
-                <h3 className="mb-4">Meu Telefones</h3>
+                <h3 className="mb-4">Meus Telefones</h3>
 
-                {account?.phones?.length === 0 &&
-                  <Link href="/user/my-account/new-phone">
-                    <a className="btn btn-link">
-                      Novo endereço
-                    </a>
-                  </Link>
-                }
+                <Link href="/user/my-account/new-phone">
+                  <a className="btn btn-link">
+                    Novo endereço
+                  </a>
+                </Link>
 
                 {account?.phones?.length > 0 &&
                   <p>telefones: {account.phones}</p>
@@ -127,28 +139,10 @@ export function MyAccountData() {
     getData()
   }, [])
 
-
-  // const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
-  //   .then(res => res.json())
-  //   .catch(e => console.warn(e))
-
-  // const { data, error } = useSWR(`${API_URL}/client/me`, fetcher)
-
-  // if (error) return <>failed to load</>
-  // if (!data) return <Loading />
-
-  // if (!data?.cpf) {
-  //   let message: ReactElement
-  //   message = <div className="alert alert-danger" role="alert">Erro ao tentar carregar seus dados, tente novamente mais tarde.</div>
-  //   return message
-  // }
-
-  // setUserData(data)
-
   return (
     <>
       <div className="container">
-        <div className="row my-5 py-5">
+        <div className="row">
 
           {!isLoading && isErrored &&
             <>

@@ -70,6 +70,10 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
             'Minha Conta'
             : ''}
 
+          {pageName === 'NewAddressPage' ?
+            'Novo endereço'
+            : ''}
+
           {' '}
 
           - D'Gusto La Pizza
@@ -179,6 +183,12 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
                   </span>
                 }
 
+                {pageName === 'NewAddressPage' &&
+                  <span>
+                    Novo endereço
+                  </span>
+                }
+
               </h1>
 
               <p className="text-light mb-5">
@@ -202,7 +212,7 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
 
                 {pageName === "MyAccountPage" &&
                   <span>
-                   {">"} Meus Dados
+                    {">"} Meus Dados
                   </span>
                 }
 
