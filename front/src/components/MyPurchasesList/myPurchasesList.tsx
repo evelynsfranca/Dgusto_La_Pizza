@@ -2,7 +2,8 @@ import useSWR from 'swr';
 import { API_URL } from '../../utils/constants';
 import CurrencyFormat from 'react-currency-format';
 import Loading from '../Loading/loading';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
+import Link from 'next/link';
 
 export interface IContentPromotions {
   content: IPromotions[];
@@ -26,7 +27,28 @@ export function MyPurchasesList() {
   if (error) return <>failed to load</>
   if (!data) return <Loading />
 
-  if (data.status != 200) return <div className="alert alert-danger" role="alert">Erro ao tentar carregar sua lista de pedidos, tente novamente mais tarde. </div>
+  if (data.status != 200) {
+    let message:ReactElement;
+    
+    if(data?.content?.length == 0) {
+      message = <>
+        <h3 className="mb-4">Ops, parece que você não fez nenhum pedido ainda.</h3>
+        Acesse o nosso 
+        {' '}
+        <Link href="/menu">
+          <a>
+          menu
+          </a>
+        </Link>
+        {' '}
+        e peça sua pizza!
+      </>
+    } else {
+      message = <div className="alert alert-danger" role="alert">Erro ao tentar carregar sua lista de pedidos, tente novamente mais tarde. </div>
+    }
+
+    return message;
+  }
 
   return (
     <>

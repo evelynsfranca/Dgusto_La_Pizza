@@ -67,12 +67,12 @@ function Navbar({ cartData }) {
                 {isLoggedIn &&
                   <>
                     <li>
-                      <Link href="/my-purchases">
+                      <Link href="/user/my-purchases">
                         <a className="dropdown-item">Meus Pedidos</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/my-account">
+                      <Link href="/user/my-account">
                         <a className="dropdown-item">Meus Dados</a>
                       </Link>
                     </li>

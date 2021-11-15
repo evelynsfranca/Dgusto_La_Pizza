@@ -43,7 +43,7 @@ function LoginPage({ cartData }) {
   }
 
   if (typeof window !== undefined && localStorage.getItem(decryptedLocalStorageStringIsAdmin) === 'false') {
-    router.push('/my-purchases')
+    router.push('/user/my-purchases')
   }
 
   function ApiAccount(): any {
@@ -63,7 +63,7 @@ function LoginPage({ cartData }) {
     } else {
       setIsAdmin(false)
       localStorage.setItem(encryptedLocalStorageStringIsAdmin, 'false');
-      router.push('/my-purchases')
+      router.push('/user/my-purchases')
     }
 
     return <span className="d-none">{data?.authorities.includes("ROLE_ADMIN")}</span>
