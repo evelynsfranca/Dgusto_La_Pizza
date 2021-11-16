@@ -2,16 +2,13 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import useSWR from 'swr';
 import Link from 'next/link';
-import { API_URL } from '../../utils/constants';
-import LayoutGeneral from '../../components/Layout/layoutGeneral';
-import ProductsList from '../../components/ProductsList/productsList';
 import pizza from '/public/images/pizza.png';
 import style from './MenuDetailPage.module.css';
+import ProductsList from 'src/components/ProductsList/productsList';
+import { API_URL } from 'src/utils/constants';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
-function ApiMenuDetail() {
-  const router = useRouter();
-  const { name } = router.query;
-
+function ApiMenuDetail({ name, cartData, setCartData, setProductAddedToCart }) {
   const fetcher = (url) => fetch(url)
     .then(res => res.json())
     .catch(e => console.warn(e))
@@ -21,15 +18,26 @@ function ApiMenuDetail() {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-  return (<ProductsList data={data} />)
+  return (
+    <ProductsList
+      data={data}
+      cartData={cartData}
+      setCartData={setCartData}
+      setProductAddedToCart={setProductAddedToCart}
+    />
+  )
 }
 
-function MenuDetail() {
+function MenuDetail({ cartData, setCartData, productAddedToCart, setProductAddedToCart }) {
   const router = useRouter();
   const { name } = router.query;
 
   return (
-    <LayoutGeneral pageName="MenuDetailPage">
+    <LayoutGeneral
+      pageName="MenuDetailPage"
+      cartData={cartData}
+      productAddedToCart={productAddedToCart}
+    >
       <section className={style.pizzaContainer}>
         <Image src={pizza} width={384} height={221} />
       </section>
@@ -51,7 +59,11 @@ function MenuDetail() {
         </div>
 
         <div className="row my-5 py-5">
-          <ApiMenuDetail />
+          <ApiMenuDetail
+            name={name}
+            cartData={cartData}
+            setCartData={setCartData}
+            setProductAddedToCart={setProductAddedToCart} />
         </div>
       </div>
     </LayoutGeneral>

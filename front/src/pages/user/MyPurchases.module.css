@@ -1,0 +1,9 @@
+.pizzaContainer {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe728;
+  height: 12px;
+}

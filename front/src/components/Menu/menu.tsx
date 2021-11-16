@@ -1,11 +1,12 @@
+import { API_URL } from 'src/utils/constants';
 import useSWR from 'swr';
-import { API_URL } from '../../utils/constants';
 import CategoriesList from '../CategoryList/categoryList';
 import Loading from '../Loading/loading';
 import ProductsList from '../ProductsList/productsList';
 
-export function Menu(): any {
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+export function Menu({ cartData, setCartData, setProductAddedToCart }): any {
+
+  const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))
 
@@ -22,7 +23,12 @@ export function Menu(): any {
 
       <div className="container">
         <div className="row my-5 py-5">
-          <ProductsList data={data} />
+          <ProductsList
+            data={data}
+            cartData={cartData}
+            setCartData={setCartData}
+            setProductAddedToCart={setProductAddedToCart}
+          />
         </div>
       </div>
     </>

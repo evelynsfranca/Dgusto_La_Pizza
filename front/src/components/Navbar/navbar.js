@@ -3,7 +3,7 @@ import Link from 'next/link';
 import style from './Navbar.module.css';
 import localStorage from 'localStorage';
 
-function Navbar() {
+function Navbar({ cartData }) {
   const [isLoggedIn, setIsLoggedIn] = useState('');
 
   const [linkActive, setLinkActive] = useState('')
@@ -44,6 +44,18 @@ function Navbar() {
               <a className={style.navbarListItemLink}>Meus Pedidos</a>
             </Link>
           </li> */}
+          <li
+            className={style.navbarListItem}
+          >
+            <Link href="/cart">
+              <a className={style.navbarListItemLink} title="Meu carrinho">
+                <i className="bi bi-cart2"></i>
+                <span className={style.cartItemsQuantity}>
+                  {!!cartData ? cartData.length : 0}
+                </span>
+              </a>
+            </Link>
+          </li>
           <li>
             <div className="dropdown">
               <a className={[style.navbarListItemLink, " dropdown-toggle", dropDownOpened ? " show " : ""].join(' ')}
@@ -55,17 +67,17 @@ function Navbar() {
                 {isLoggedIn &&
                   <>
                     <li>
-                      <Link href="/login">
+                      <Link href="/user/my-purchases">
                         <a className="dropdown-item">Meus Pedidos</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/my-account">
+                      <Link href="/user/my-account">
                         <a className="dropdown-item">Meus Dados</a>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/sair">
+                      <Link href="/logout">
                         <a className="dropdown-item">
                           Sair
                         </a>
@@ -76,8 +88,8 @@ function Navbar() {
 
                 {!isLoggedIn &&
                   <>
-                  <li>
-                      <Link href="/criar-conta">
+                    <li>
+                      <Link href="/create-account">
                         <a className="dropdown-item">Criar conta</a>
                       </Link>
                     </li>

@@ -1,9 +1,9 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
+import LayoutGeneral from "src/components/Layout/layoutGeneral";
 
-function IndexPage() {
+function IndexPage({ cartData }) {
   return (
-    <LayoutGeneral pageName="HomePage">
-      
+    <LayoutGeneral pageName="HomePage" cartData={cartData}>
+
     </LayoutGeneral>
   )
 }

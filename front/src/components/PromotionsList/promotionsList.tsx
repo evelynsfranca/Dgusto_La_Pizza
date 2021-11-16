@@ -1,6 +1,6 @@
 import useSWR from 'swr';
-import { API_URL } from '../../utils/constants';
 import CurrencyFormat from 'react-currency-format';
+import { API_URL } from 'src/utils/constants';
 import Loading from '../Loading/loading';
 
 export interface IContentPromotions {
@@ -16,7 +16,7 @@ export interface IPromotions {
 
 export function PromotionsList() {
 
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+  const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
     .then(res => res.json())
     .catch(e => console.warn(e))
 

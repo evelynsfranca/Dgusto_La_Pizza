@@ -1,9 +1,9 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
 import Link from 'next/link';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
 function NotFoundPage() {
   return (
-    <LayoutGeneral pageName="NotFoundPage">
+    <LayoutGeneral pageName="NotFoundPage" cartData={[]}>
 
       <main className="container">
         <h1 className="text-white">404 - Página não encontrada</h1>

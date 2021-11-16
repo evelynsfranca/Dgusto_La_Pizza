@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -34,13 +36,13 @@ public class ProductCategoryAdminResource {
     }
 
     @PostMapping("/product-categories")
-    public ResponseEntity<ProductCategoryDTO> save(@RequestBody ProductCategoryToSaveDTO dto) {
+    public ResponseEntity<ProductCategoryDTO> save(@Valid @RequestBody ProductCategoryToSaveDTO dto) {
         ProductCategoryDTO result = productTypeAdminFacade.save(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/product-categories")
-    public ResponseEntity<ProductCategoryDTO> update(@RequestBody ProductCategoryToUpdateDTO dto) {
+    public ResponseEntity<ProductCategoryDTO> update(@Valid @RequestBody ProductCategoryToUpdateDTO dto) {
         ProductCategoryDTO result = productTypeAdminFacade.update(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

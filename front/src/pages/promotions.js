@@ -1,15 +1,15 @@
-import LayoutGeneral from '../components/Layout/layoutGeneral';
-import PromotionsList from '../components/PromotionsList/promotionsList';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
+import PromotionsList from 'src/components/PromotionsList/promotionsList';
 import style from './Promotions.module.css';
 
-function PromotionsPage() {
+function PromotionsPage({ cartData }) {
   return (
-    <LayoutGeneral pageName="PromotionsPage">
+    <LayoutGeneral pageName="PromotionsPage" cartData={cartData}>
       <section className={style.pizzaContainer}></section>
 
       <main className="container my-5">
 
-        <PromotionsList/>
+        <PromotionsList />
 
       </main>
 
