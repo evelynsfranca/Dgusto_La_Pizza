@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form'
 import localStorage from 'localStorage'
 
 import LayoutGeneral from 'src/components/Layout/layoutGeneral'
-import style from './NewAddress.module.css'
+import style from './EditAddress.module.css'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { API_URL } from "src/utils/constants"
-import router from "next/router"
+import router, { useRouter } from "next/router"
 
-function NewAddress({ cartData }) {
+function EditAddress({ cartData }) {
 
   const validationSchema = Yup.object().shape({
     zipCode: Yup.string()
@@ -38,6 +38,7 @@ function NewAddress({ cartData }) {
   const { errors } = formState
   const [token, setToken] = useState(localStorage.getItem('token'))
   const [isLoading, setIsLoading] = useState(false)
+  const [isErrored, setIsErrored] = useState('')
 
   const [address, setAddress] = useState({
     zipCode: '',
@@ -54,7 +55,7 @@ function NewAddress({ cartData }) {
 
   async function handleAddress() {
     setIsLoading(true)
-
+    
     const res = await fetch(`${API_URL}/client/addresses`, {
       method: "POST",
       headers: {
@@ -76,9 +77,40 @@ function NewAddress({ cartData }) {
       router.push('/user/my-account')
     }
   }
+  
+  async function getAddressData() {
+    const router = useRouter()
+    const { id } = router.query
+
+    setIsLoading(true)
+
+    const res = await fetch(`${API_URL}/client/addresses/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem('token')
+      }
+    })
+      .then(res => res.json())
+      .catch(e => console.warn(e))
+
+    const response = await res
+
+    if (!!response) {
+      setAddress(response)
+    } else {
+      setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.')
+    }
+
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    getAddressData()
+  }, [])
 
   return (
-    <LayoutGeneral pageName="NewAddressPage" cartData={cartData}>
+    <LayoutGeneral pageName="EditAddressPage" cartData={cartData}>
       <section className={style.pizzaContainer}></section>
 
       <main className="container my-5">
@@ -94,6 +126,7 @@ function NewAddress({ cartData }) {
                 {...register('zipCode')}
                 onChange={zipCode => setAddress({ ...address, zipCode: zipCode.target.value })}
                 id="zipCode"
+                value={address.zipCode}
               />
               <div className="invalid-feedback">{errors.zipCode?.message}</div>
 
@@ -245,4 +278,4 @@ function NewAddress({ cartData }) {
   )
 }
 
-export default NewAddress
+export default EditAddress

@@ -4,7 +4,7 @@ import style from './Navbar.module.css';
 import localStorage from 'localStorage';
 
 function Navbar({ cartData }) {
-  const [isLoggedIn, setIsLoggedIn] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [linkActive, setLinkActive] = useState('')
   const [dropDownOpened, setDropDownOpened] = useState(false)
@@ -29,7 +29,7 @@ function Navbar({ cartData }) {
       <nav className={style.navbar}>
         <ul className={style.navbarList}>
           <li
-            className={style.navbarListItem, linkActive === 'menu' ? style.linkActive : ''}
+            className={[style.navbarListItem, linkActive === 'menu' ? style.linkActive : ''].join(' ')}
             onClick={() => setLinkActive('menu')}
           >
             <Link href="/menu">
@@ -107,7 +107,7 @@ function Navbar({ cartData }) {
             </div>
           </li>
           <li
-            className={style.navbarListItem, linkActive === 'promotions' ? style.linkActive : ''}
+            className={[style.navbarListItem, linkActive === 'promotions' ? style.linkActive : ''].join(' ')}
             onClick={() => setLinkActive('promotions')}
           >
             <Link href="/promotions">
@@ -115,7 +115,7 @@ function Navbar({ cartData }) {
             </Link>
           </li>
           <li
-            className={style.navbarListItem, linkActive === 'contact' ? style.linkActive : ''}
+            className={[style.navbarListItem, linkActive === 'contact' ? style.linkActive : ''].join(' ')}
             onClick={() => setLinkActive('contact')}
           >
             <Link href="/contact">

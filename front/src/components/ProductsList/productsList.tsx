@@ -34,44 +34,42 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
 
   return <>
     {data?.content?.map((flavor, index) => (
-      <>
-        <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
+      <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
 
-          <div>
-            <Image src={pizzas} width={100} height={100} alt={flavor.name} />
-          </div>
+        <div>
+          <Image src={pizzas} width={100} height={100} alt={flavor.name} />
+        </div>
 
-          <div>
-            {flavor.productType.id === 3 ? <span className="badge bg-info">Promoção</span> : ''}
+        <div>
+          {flavor.productType.id === 3 ? <span className="badge bg-info">Promoção</span> : ''}
 
-            <h3 className="text-uppercase" title={flavor.name}>
-              {flavor.name}
-            </h3>
+          <h3 className="text-uppercase" title={flavor.name}>
+            {flavor.name}
+          </h3>
 
-            <p title={flavor.description}>{flavor.description}</p>
+          <p title={flavor.description}>{flavor.description}</p>
 
-            <p className="price">
-              <CurrencyFormat
-                value={flavor.unitValue}
-                displayType={'text'}
-                decimalSeparator={','}
-                prefix={'R$ '}
-                renderText={value => <span className="badge bg-success">{value}</span>}
-              />
-            </p>
+          <p className="price">
+            <CurrencyFormat
+              value={flavor.unitValue}
+              displayType={'text'}
+              decimalSeparator={','}
+              prefix={'R$ '}
+              renderText={value => <span className="badge bg-success">{value}</span>}
+            />
+          </p>
 
-            <button type="button"
-              className="btn btn-outline-primary"
-              title="Adicionar ao Carrinho"
-              onClick={() => addToCard(flavor)}
-            >
-              <i className="bi bi-cart2"></i> Adicionar ao Carrinho
-            </button>
-
-          </div>
+          <button type="button"
+            className="btn btn-outline-primary"
+            title="Adicionar ao Carrinho"
+            onClick={() => addToCard(flavor)}
+          >
+            <i className="bi bi-cart2"></i> Adicionar ao Carrinho
+          </button>
 
         </div>
-      </>
+
+      </div>
     ))}
   </>
 }

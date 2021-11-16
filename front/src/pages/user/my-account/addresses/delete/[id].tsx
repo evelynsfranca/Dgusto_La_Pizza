@@ -1,44 +1,43 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image';
+import router, { useRouter } from 'next/router';
 import useSWR from 'swr';
-import Link from 'next/link';
-import style from './AddressDeletePage.module.css';
 import { API_URL } from 'src/utils/constants';
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 
-// function ApiAddressDelete({ name, cartData, setCartData, setProductAddedToCart }) {
-//   const fetcher = (url) => fetch(url)
-//     .then(res => res.json())
-//     .catch(e => console.warn(e))
+function ApiAddressDelete(params) {
+  const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Authorization": token
+    }
+  })
+    .then(res => res.json())
+    .catch(e => console.warn(e))
 
-//   const { data, error } = useSWR([`${API_URL}/products/categories/${name}`], fetcher)
+  const { data, error } = useSWR([`${API_URL}/client/addresses/${params.id}`], fetcher)
 
-//   if (error) return <div>failed to load</div>
-//   if (!data) return <div>loading...</div>
+  if (error || data?.status === 500) return <div>failed to load</div>
+  if (!data) return <div></div>
 
-//   return (
-//     <ProductsList
-//       data={data}
-//       cartData={cartData}
-//       setCartData={setCartData}
-//       setProductAddedToCart={setProductAddedToCart}
-//     />
-//   )
-// }
+  if(data.length === undefined || data.status === 404) {
+    router.push('/user/my-account')
+  }
+
+  return (<>carregando...</>)
+}
 
 function AddressDelete({ cartData }) {
   const router = useRouter();
   const { id } = router.query;
-
+  
   return (
     <LayoutGeneral
       pageName="AddressDeletePage"
       cartData={cartData}
     >
-    
+
       <div className="container">
 
-        deleted {id}
+        <ApiAddressDelete id={id} />
 
       </div>
     </LayoutGeneral>

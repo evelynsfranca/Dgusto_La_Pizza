@@ -24,7 +24,7 @@ export function MyPurchasesList() {
 
   const { data, error } = useSWR(`${API_URL}/client/requests`, fetcher)
 
-  if (error) return <>failed to load</>
+  if (error || data?.status === 500) return <>failed to load</>
   if (!data) return <Loading />
 
   if (data.status != 200) {

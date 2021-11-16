@@ -53,17 +53,17 @@ function LoginPage({ cartData }) {
 
     const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
 
-    if (error) return <> (failed to load)</>
+    if (error || data?.status === 500) return <> (failed to load)</>
     if (!data) return <> carregado... </>
 
-    if (data.authorities.includes("ROLE_ADMIN")) {
+    if (data?.authorities?.includes("ROLE_ADMIN")) {
       setIsAdmin(true)
       localStorage.setItem(encryptedLocalStorageStringIsAdmin, 'true');
       router.push('/admin/login')
     } else {
       setIsAdmin(false)
       localStorage.setItem(encryptedLocalStorageStringIsAdmin, 'false');
-      router.push('/user/my-purchases')
+      router.push('/user/my-account')
     }
 
     return <span className="d-none">{data?.authorities.includes("ROLE_ADMIN")}</span>
