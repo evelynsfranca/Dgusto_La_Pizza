@@ -1,16 +1,26 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { getAllProductCategories, getAllProductTypes, saveProduct } from 'api/admin/product';
+import localStorage from 'localStorage';
+import { ApiResponse } from 'model/ApiResponse';
+import { IProduct } from 'model/IProduct';
+import { IProductCategory } from 'model/IProductCategory';
+import { IProductType } from 'model/IProductType';
 import { useRouter } from 'next/dist/client/router';
-import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import { API_URL } from 'src/utils/constants';
+import { useForm } from 'react-hook-form';
 import LayoutAdmin from 'src/components/Layout/layoutAdmin';
+import * as Yup from 'yup';
 
 export default function ProductList() {
 
   const router = useRouter();
+
+  const token = localStorage.getItem('token');
+  const [product, setProduct] = useState<IProduct>({});
+  const [productTypes, setProductTypes] = useState<IProductType[]>([]);
+  const [productCategories, setProductCategories] = useState<IProductCategory[]>([]);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -26,106 +36,41 @@ export default function ProductList() {
     category: Yup.string()
       .required('A Categoria é obrigatório')
   });
+
   const formOptions = { resolver: yupResolver(validationSchema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
 
-  const [token, setToken] = useState('');
-  const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    unitValue: 0,
-    stockQuantity: 0,
-    productType: {
-      id: '',
-      name: ''
-    },
-    productCategory: {
-      id: '',
-      name: ''
-    }
-  });
-
-  const [productTypes, setProductTypes] = useState([{
-    id: '',
-    name: ''
-  }]);
-
-  const [productCategories, setProductCategories] = useState([{
-    id: '',
-    name: ''
-  }]);
-
   async function handleProduct() {
-    const res = await fetch(`${API_URL}/admin/products`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(product)
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProduct> = await saveProduct(product, token);
 
-    const response = await res;
-
-    if (response) {
+    if (response.status === 201) {
       router.push('/admin/products/list')
     }
   }
 
   async function handleGetProductTypes() {
-    const res = await fetch(`${API_URL}/admin/product-types`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token')
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProductType> = await getAllProductTypes(token);
 
-    const response = await res;
-
-    if (response) {
-      setProductTypes(response.content)
-    }
-    else {
-      setProductTypes(response.content = null)
+    if (response.content.content) {
+      setProductTypes(response.content.content)
     }
   }
 
   async function handleGetProductCategories() {
-    const res = await fetch(`${API_URL}/admin/product-categories`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token')
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProductCategory> = await getAllProductCategories(token)
 
-    const response = await res;
-
-    if (response) {
-      setProductCategories(response.content)
-    }
-    else {
-      setProductCategories(response.content = null)
+    if (response.content.content) {
+      setProductCategories(response.content.content)
     }
   }
 
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
+    if (token) {
+      handleGetProductCategories();
+      handleGetProductTypes();
     }
-
-    handleGetProductCategories();
-    handleGetProductTypes();
-  }, [product]);
+  }, [token]);
 
   function selectType(event) {
     setProduct({ ...product, productType: { ...product.productType, id: event.target.value, name: productTypes.find(it => it.id == event.target.value).name } })
@@ -187,7 +132,7 @@ export default function ProductList() {
             type="number"
             min="0"
             {...register('unitValue')} className={`form-control ${errors.unitValue ? 'is-invalid' : ''}`}
-            onChange={unitValue => setProduct({ ...product, unitValue: unitValue.target.value })}
+            onChange={unitValue => setProduct({ ...product, unitValue: Number(unitValue.target.value) })}
           />
           <div className="invalid-feedback">{errors.unitValue?.message}</div>
         </div>
@@ -200,7 +145,7 @@ export default function ProductList() {
             type="number"
             min="0"
             {...register('stockQuantity')} className={`form-control ${errors.stockQuantity ? 'is-invalid' : ''}`}
-            onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
+            onChange={stockQuantity => setProduct({ ...product, stockQuantity: Number(stockQuantity.target.value) })}
           />
           <div className="invalid-feedback">{errors.stockQuantity?.message}</div>
         </div>
@@ -213,13 +158,13 @@ export default function ProductList() {
             <select
               name="type"
               {...register('type')} className={`form-select ${errors.type ? 'is-invalid' : ''}`}
-              value={product?.productType?.id ?? ''}
-              defaultValue={product?.productType?.id ?? ''}
+              value={product?.productType?.id.toString() ?? ''}
+              defaultValue={product?.productType?.id.toString() ?? ''}
               onChange={selectType}
             >
               <option value=""></option>
               {productTypes?.map(type => (
-                <option key={type.id} value={type.id}>{type.name}</option>
+                <option key={type.id.toString()} value={type.id.toString()}>{type.name}</option>
               ))}
             </select>
           )}
@@ -234,13 +179,13 @@ export default function ProductList() {
             <select
               name="category"
               {...register('category')} className={`form-select ${errors.category ? 'is-invalid' : ''}`}
-              value={product?.productCategory?.id ?? ''}
-              defaultValue={product?.productCategory?.id ?? ''}
+              value={product?.productCategory?.id.toString() ?? ''}
+              defaultValue={product?.productCategory?.id.toString() ?? ''}
               onChange={selectCategory}
             >
               <option value=""></option>
               {productCategories?.map(category => (
-                <option key={category.id} value={category.id}>{category.name}</option>
+                <option key={category.id.toString()} value={category.id.toString()}>{category.name}</option>
               ))}
             </select>
           )}

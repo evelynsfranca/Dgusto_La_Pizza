@@ -1,48 +1,27 @@
+import { saveUser } from 'api/admin/user';
+import localStorage from 'localStorage';
+import { IUser } from 'model/IUser';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LayoutAdmin from 'src/components/Layout/layoutAdmin';
-import { API_URL, userAuthorities } from 'src/utils/constants';
+import { userAuthorities } from 'src/utils/constants';
 
 export default function UserList() {
 
   const router = useRouter();
-
-  const [token, setToken] = useState('');
-  const [user, setUser] = useState({
-    name: '',
-    username: '',
-    email: '',
-    password: '',
-    authorities: []
-  });
+  const token = localStorage.getItem('token');
+  
+  const [user, setUser] = useState<IUser>({});
 
   async function handleUser() {
-    const res = await fetch(`${API_URL}/admin/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
-
-    const response = await res;
+    const response = await saveUser(user, token);
 
     if (response) {
       router.push('/admin/users/list')
     }
   }
-
-  useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
-    }
-  }, []);
 
   const handleAuthority = (event) => {
     if(!user.authorities?.includes(event.target.value)){
@@ -136,7 +115,7 @@ export default function UserList() {
           }
         </label>
 
-<button type="button" className="btn btn-secondary" onClick={handleUser}>SALVAR</button>
+      <button type="button" className="btn btn-secondary" onClick={handleUser}>SALVAR</button>
 
       </form>
 

@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
@@ -34,13 +36,13 @@ public class UserAdminResource {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> save(@RequestBody UserToSaveDTO dto) {
+    public ResponseEntity<UserDTO> save(@Valid @RequestBody UserToSaveDTO dto) {
         UserDTO result = userAdminFacade.save(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
-    public ResponseEntity<UserDTO> update(@RequestBody UserToUpdateDTO dto) {
+    public ResponseEntity<UserDTO> update(@Valid @RequestBody UserToUpdateDTO dto) {
         UserDTO result = userAdminFacade.update(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
