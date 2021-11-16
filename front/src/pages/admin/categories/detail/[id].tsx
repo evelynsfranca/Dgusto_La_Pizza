@@ -1,50 +1,35 @@
+import { getProductCategory } from 'api/admin/product-category';
+import localStorage from 'localStorage';
+import { ApiResponse } from 'model/ApiResponse';
+import { IProductCategory } from 'model/IProductCategory';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import LayoutAdmin from 'src/components/Layout/layoutAdmin';
-import { API_URL } from 'src/utils/constants';
-import useSWR from 'swr';
-
-function ApiCategoryDetail({ token }) {
-
-  if (!token) return <></>
-
-  const router = useRouter();
-
-  const { id } = router.query;
-
-  const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
-    .then(res => res.json())
-    .catch(e => console.warn(e))
-
-  const { data, error } = useSWR([`${API_URL}/admin/product-categories/${id}`, token], fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-  return <>
-    <tr>
-      <td>
-        {data.id}
-      </td>
-      <td>
-        {data.name}
-      </td>
-    </tr>
-  </>
-}
 
 
 export default function CategoryDetail() {
 
-  const [token, setToken] = useState('');
+  const router = useRouter();
+  const { id } = router.query;  
+  const token = localStorage.getItem('token');
+
+  const [productCategory, setProductCategory] = useState<IProductCategory>({});
+  
+  async function handleGetProductCategory() {
+    const response: ApiResponse<IProductCategory> = await getProductCategory(id.toString(), token);
+
+    if (response.entity) {
+      setProductCategory(response.entity)
+    }
+  }
 
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
+    if (id && token) {
+      handleGetProductCategory();
     }
-  }, []);
+  }, [id, token]);
 
   return (
     <LayoutAdmin>
@@ -71,7 +56,14 @@ export default function CategoryDetail() {
           </tr>
         </thead>
         <tbody>
-          <ApiCategoryDetail token={token} />
+          <tr>
+            <td>
+              {productCategory.id}
+            </td>
+            <td>
+              {productCategory.name}
+            </td>
+          </tr>
         </tbody>
       </table>
 

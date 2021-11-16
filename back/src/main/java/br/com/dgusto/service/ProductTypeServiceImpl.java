@@ -1,6 +1,8 @@
 package br.com.dgusto.service;
 
+import br.com.dgusto.domain.Product;
 import br.com.dgusto.domain.ProductType;
+import br.com.dgusto.repository.ProductRepository;
 import br.com.dgusto.repository.ProductTypeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +14,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+    private final ProductRepository productRepository;
 
-    public ProductTypeServiceImpl(ProductTypeRepository productTypeRepository) {
+    public ProductTypeServiceImpl(
+      ProductTypeRepository productTypeRepository, 
+      ProductRepository productRepository
+    ) {
         this.productTypeRepository = productTypeRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -47,6 +54,11 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public void delete(Long id) {
         ProductType productType = productTypeRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.productType.notFound"));
+        Page<Product> productList = productRepository.findAllProductCategory(productType.getId(), Pageable.unpaged());
+        productList.forEach(it -> {
+          it.setProductType(null);
+          productRepository.save(it);
+        });
         productTypeRepository.delete(productType);
     }
 }

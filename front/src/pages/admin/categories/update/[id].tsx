@@ -1,70 +1,36 @@
+import { getProductCategory, updateProductCategory } from 'api/admin/product-category';
+import localStorage from 'localStorage';
+import { ApiResponse } from 'model/ApiResponse';
+import { IProductCategory } from 'model/IProductCategory';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import LayoutAdmin from 'src/components/Layout/layoutAdmin';
-import { API_URL } from 'src/utils/constants';
 
 
 export default function CategoryUpdate() {
 
   const router = useRouter();
+  const { id } = router.query;  
+  const token = localStorage.getItem('token');
 
-  const { id } = router.query;
-
-  const [token, setToken] = useState('');
-  const [category, setCategory] = useState({
-    id,
-    name: '',
-  });
+  const [category, setCategory] = useState<IProductCategory>({});
 
   async function handleUpdateCategory() {
-    const res = await fetch(`${API_URL}/admin/product-categories`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(category)
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
-
-    const response = await res;
-
-    if (response) {
-      router.push('/admin/categories/list')
-    }
+    const response = await updateProductCategory(category, token);
+    response.status === 201 && router.push('/admin/categories/list')
   }
 
   async function handleGetCategory() {
-    const res = await fetch(`${API_URL}/admin/product-categories/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
-
-    const response = await res;
-
-    if (response) {
-      setCategory(response)
-    }
+    const response: ApiResponse<IProductCategory> = await getProductCategory(id.toString(), token);
+    response.entity && setCategory(response.entity)
   }
 
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
-    }
-
     if (id && token) {
       handleGetCategory();
     }
-
   }, [id, token]);
 
   return (
@@ -96,7 +62,7 @@ export default function CategoryUpdate() {
           />
         </div>
 
-        <button className="btn btn-secondary" onClick={handleUpdateCategory}>SALVAR</button>
+        <button type="button" className="btn btn-secondary" onClick={handleUpdateCategory}>SALVAR</button>
       </form>
     </LayoutAdmin>
   );

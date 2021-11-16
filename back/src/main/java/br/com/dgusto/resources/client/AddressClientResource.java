@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/client")
 @PreAuthorize("hasRole('CLIENT')")
@@ -34,13 +36,13 @@ public class AddressClientResource {
     }
 
     @PostMapping("/addresses")
-    public ResponseEntity<AddressDTO> save(@RequestBody AddressToSaveDTO dto) {
+    public ResponseEntity<AddressDTO> save(@Valid @RequestBody AddressToSaveDTO dto) {
         AddressDTO result = addressClientFacade.save(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/addresses")
-    public ResponseEntity<AddressDTO> update(@RequestBody AddressToUpdateDTO dto) {
+    public ResponseEntity<AddressDTO> update(@Valid @RequestBody AddressToUpdateDTO dto) {
         AddressDTO result = addressClientFacade.update(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
