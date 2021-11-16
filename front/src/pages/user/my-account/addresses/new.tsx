@@ -85,8 +85,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
-                onChange={zipCode => setAddress({ ...address, zipCode: zipCode.target.value })}
                 {...register('zipCode')}
+                onChange={zipCode => setAddress({ ...address, zipCode: zipCode.target.value })}
                 id="zipCode"
               />
               <div className="invalid-feedback">{errors.zipCode?.message}</div>
@@ -100,8 +100,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.street ? 'is-invalid' : ''}`}
-                onChange={street => setAddress({ ...address, street: street.target.value })}
                 {...register('street')}
+                onChange={street => setAddress({ ...address, street: street.target.value })}
                 id="street" />
               <div className="invalid-feedback">{errors.street?.message}</div>
 
@@ -114,8 +114,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.number ? 'is-invalid' : ''}`}
-                onChange={number => setAddress({ ...address, number: number.target.value })}
                 {...register('number')}
+                onChange={number => setAddress({ ...address, number: number.target.value })}
                 id="number" />
               <div className="invalid-feedback">{errors.number?.message}</div>
 
@@ -128,8 +128,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.complement ? 'is-invalid' : ''}`}
-                onChange={complement => setAddress({ ...address, complement: complement.target.value })}
                 {...register('complement')}
+                onChange={complement => setAddress({ ...address, complement: complement.target.value })}
                 id="complement" />
               <div className="invalid-feedback">{errors.complement?.message}</div>
 
@@ -142,8 +142,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.neighborhood ? 'is-invalid' : ''}`}
-                onChange={neighborhood => setAddress({ ...address, neighborhood: neighborhood.target.value })}
                 {...register('neighborhood')}
+                onChange={neighborhood => setAddress({ ...address, neighborhood: neighborhood.target.value })}
                 id="neighborhood" />
               <div className="invalid-feedback">{errors.neighborhood?.message}</div>
 
@@ -156,8 +156,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.city ? 'is-invalid' : ''}`}
-                onChange={city => setAddress({ ...address, city: city.target.value })}
                 {...register('city')}
+                onChange={city => setAddress({ ...address, city: city.target.value })}
                 id="city" />
               <div className="invalid-feedback">{errors.city?.message}</div>
 
@@ -170,8 +170,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.state ? 'is-invalid' : ''}`}
-                onChange={state => setAddress({ ...address, state: state.target.value })}
                 {...register('state')}
+                onChange={state => setAddress({ ...address, state: state.target.value })}
                 id="state" />
               <div className="invalid-feedback">{errors.state?.message}</div>
 
@@ -184,8 +184,8 @@ function NewAddress({ cartData }) {
               <input
                 type="text"
                 className={`form-control ${errors.reference ? 'is-invalid' : ''}`}
-                onChange={reference => setAddress({ ...address, reference: reference.target.value })}
                 {...register('reference')}
+                onChange={reference => setAddress({ ...address, reference: reference.target.value })}
                 id="reference" />
               <div className="invalid-feedback">{errors.reference?.message}</div>
 
@@ -207,8 +207,8 @@ function NewAddress({ cartData }) {
           <div className="mb-3 form-check">
             <input
               className={`form-check-input ${errors.mainAddress ? 'is-invalid' : ''}`}
-              onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
               {...register('mainAddress')}
+              onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
               type="checkbox" value="" id="mainAddress" defaultChecked={address.mainAddress} />
             <label className="form-check-label" htmlFor="mainAddress">
               Endereço principal

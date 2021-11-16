@@ -17,7 +17,15 @@ export interface IPromotions {
   unitValue: Number
 }
 
-export const UserInfos = (data): any => {
+
+export const handlerDeleteAddress = (id): any => {
+  return (
+    console.log('deletado: ' + id)
+  )
+}
+
+export function UserInfos(data): any {
+
   return (
     _.map(data, account => (
       <div key={account.id}>
@@ -53,7 +61,7 @@ export const UserInfos = (data): any => {
 
                 <h3 className="mb-4">Meus Endereços</h3>
 
-                <Link href="/user/my-account/new-address">
+                <Link href="/user/my-account/addresses/new">
                   <a className="btn btn-link mb-3">
                     Novo endereço
                   </a>
@@ -63,13 +71,27 @@ export const UserInfos = (data): any => {
                   <div className="row">
                     {account.addresses.map((address, index) => {
                       return (
-                        <div className="col">
+                        <div className="col" key={index}>
                           <div className="card mb-3">
                             <div className="card-body">
 
                               {address.street}, {address.number} - {address.neighborhood} - {address.zipCode} <br />
-                              {address.city} - {address.state} <br /><br />
-                              {address.mainAddress ? <span className="badge rounded-pill bg-primary">Endereço principal</span> : ''}
+                              {address.city} - {address.state} <br />
+                              {address.mainAddress ? <><span className="badge rounded-pill bg-primary">Endereço principal</span> <br /></> : ''}
+
+                              <div className="pt-3">
+                                <Link href={"/user/my-account/addresses/edit/" + address.id}>
+                                  <a className="btn btn-link ps-0">
+                                    <i className="bi bi-pencil"></i>
+                                  </a>
+                                </Link>
+
+                                <Link href={"/user/my-account/addresses/delete/" + address.id}>
+                                  <a className="btn btn-link text-danger">
+                                    <i className="bi bi-trash"></i>
+                                  </a>
+                                </Link>
+                              </div>
 
                             </div>
                           </div>
@@ -83,7 +105,7 @@ export const UserInfos = (data): any => {
 
                 <h3 className="mb-4">Meus Telefones</h3>
 
-                <Link href="/user/my-account/new-phone">
+                <Link href="/user/my-account/phones/new">
                   <a className="btn btn-link">
                     Novo endereço
                   </a>
