@@ -1,0 +1,6 @@
+export enum UserAuthorities{
+  ROLE_ADMIN = 'ROLE_ADMIN',
+  ROLE_USER = 'ROLE_USER', 
+  ROLE_EMPLOYEE = 'ROLE_EMPLOYEE', 
+  ROLE_CLIENT = 'ROLE_CLIENT'
+}

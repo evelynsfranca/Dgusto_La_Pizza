@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/employee")
 @PreAuthorize("hasRole('EMPLOYEE')")
@@ -31,7 +33,7 @@ public class RequestEmployeeResource {
     }
 
     @PutMapping("/requests")
-    public ResponseEntity<RequestDTO> update(@RequestBody RequestToEmployeeUpdateDTO dto) {
+    public ResponseEntity<RequestDTO> update(@Valid @RequestBody RequestToEmployeeUpdateDTO dto) {
         RequestDTO result = requestEmployeeFacade.update(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

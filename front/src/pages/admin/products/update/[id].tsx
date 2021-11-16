@@ -1,124 +1,53 @@
+import { getAllProductCategories, getAllProductTypes, getProduct, updateProduct } from 'api/admin/product';
+import localStorage from 'localStorage';
+import { ApiResponse } from 'model/ApiResponse';
+import { IProduct } from 'model/IProduct';
+import { IProductCategory } from 'model/IProductCategory';
+import { IProductType } from 'model/IProductType';
 import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 import LayoutAdmin from 'src/components/Layout/layoutAdmin';
-import { API_URL } from 'src/utils/constants';
 
 export default function ProductUpdate() {
-
   const router = useRouter();
 
   const { id } = router.query;
-
-  const [token, setToken] = useState('');
-  const [product, setProduct] = useState({
-    id,
-    name: '',
-    description: '',
-    unitValue: 0,
-    stockQuantity: '',
-    productType: {
-      id: '',
-      name: ''
-    },
-    productCategory: {
-      id: '',
-      name: ''
-    }
-
-  });
-
-  const [productTypes, setProductTypes] = useState([{
-    id: '',
-    name: ''
-  }]);
-
-  const [productCategories, setProductCategories] = useState([{
-    id: '',
-    name: ''
-  }]);
+  const token = localStorage.getItem('token');
+  
+  const [product, setProduct] = useState<IProduct>({});
+  const [productTypes, setProductTypes] = useState<IProductType[]>([]);
+  const [productCategories, setProductCategories] = useState<IProductCategory[]>([]);
 
   async function handleUpdateProduct() {
-    const res = await fetch(`${API_URL}/admin/products`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(product)
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
-
-    const response = await res;
-
-    if (response) {
-      router.push('/admin/products/list')
-    }
+    const response = await updateProduct(product, token);
+    response.status === 201 && router.push('/admin/products/list')
   }
 
   async function handleGetProduct() {
-    const res = await fetch(`${API_URL}/admin/products/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProduct> = await getProduct(id.toString(), token);
 
-    const response = await res;
-
-    if (response) {
-      setProduct(response)
-    }
+    response.entity && setProduct(response.entity)
   }
-
+  
   async function handleGetProductTypes() {
-    const res = await fetch(`${API_URL}/admin/product-types`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProductType> = await getAllProductTypes(token);
 
-    const response = await res;
-
-    if (response) {
-      setProductTypes(response.content)
+    if (response.content.content) {
+      setProductTypes(response.content.content)
     }
   }
 
   async function handleGetProductCategories() {
-    const res = await fetch(`${API_URL}/admin/product-categories`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e));
+    const response: ApiResponse<IProductCategory> = await getAllProductCategories(token)
 
-    const response = await res;
-
-    if (response) {
-      setProductCategories(response.content)
+    if (response.content.content) {
+      setProductCategories(response.content.content)
     }
   }
 
-
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-
-      setToken(localStorage.getItem('token'))
-    }
-
     if (id && token) {
       handleGetProduct();
       handleGetProductCategories();
@@ -190,7 +119,7 @@ export default function ProductUpdate() {
                   type="number"
                   className="form-control"
                   value={product.unitValue}
-                  onChange={value => setProduct({ ...product, unitValue: value.target.value })}
+                  onChange={value => setProduct({ ...product, unitValue: Number(value.target.value) })}
                 />
               </div>
 
@@ -202,7 +131,7 @@ export default function ProductUpdate() {
                   type="number"
                   className="form-control"
                   value={product.stockQuantity}
-                  onChange={stockQuantity => setProduct({ ...product, stockQuantity: stockQuantity.target.value })}
+                  onChange={stockQuantity => setProduct({ ...product, stockQuantity: Number(stockQuantity.target.value) })}
                 />
               </div>
 
@@ -214,15 +143,15 @@ export default function ProductUpdate() {
                   <select
                     name="type"
                     className="form-select"
-                    value={product?.productType?.id ?? ''}
-                    defaultValue={product?.productType?.id ?? ''}
+                    value={product?.productType?.id.toString() ?? ''}
+                    defaultValue={product?.productType?.id.toString() ?? ''}
                     onChange={selectType}
                     onSelect={selectType}
                   >
                     <option value=""></option>
                     {productTypes?.map(type => (
-                      <React.Fragment key={type.id}>
-                        <option value={type.id}>{type.name}</option>
+                      <React.Fragment key={type.id.toString()}>
+                        <option value={type.id.toString()}>{type.name}</option>
                       </React.Fragment>
                     ))}
                   </select>
@@ -237,22 +166,22 @@ export default function ProductUpdate() {
                   <select
                     className="form-select"
                     name="category"
-                    value={product?.productCategory?.id ?? ''}
-                    defaultValue={product?.productCategory?.id ?? ''}
+                    value={product?.productCategory?.id.toString() ?? ''}
+                    defaultValue={product?.productCategory?.id.toString() ?? ''}
                     onChange={selectCategory}
                     onSelect={selectCategory}
                   >
                     <option value=""></option>
                     {productCategories?.map(category => (
-                      <React.Fragment key={category.id}>
-                        <option value={category.id}>{category.name}</option>
+                      <React.Fragment key={category.id.toString()}>
+                        <option value={category.id.toString()}>{category.name}</option>
                       </React.Fragment>
                     ))}
                   </select>
                 )}
               </div>
 
-              <button className="btn btn-secondary" onClick={handleUpdateProduct}>SALVAR</button>
+              <button type="button" className="btn btn-secondary" onClick={handleUpdateProduct}>SALVAR</button>
 
             </form>
 

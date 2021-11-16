@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/client")
 @PreAuthorize("hasRole('CLIENT')")
@@ -34,13 +36,13 @@ public class PhoneClientResource {
     }
 
     @PostMapping("/phones")
-    public ResponseEntity<PhoneDTO> save(@RequestBody PhoneToSaveDTO dto) {
+    public ResponseEntity<PhoneDTO> save(@Valid @RequestBody PhoneToSaveDTO dto) {
         PhoneDTO result = phoneClientFacade.save(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/phones")
-    public ResponseEntity<PhoneDTO> update(@RequestBody PhoneToUpdateDTO dto) {
+    public ResponseEntity<PhoneDTO> update(@Valid @RequestBody PhoneToUpdateDTO dto) {
         PhoneDTO result = phoneClientFacade.update(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
