@@ -1,16 +1,17 @@
-
 import { yupResolver } from '@hookform/resolvers/yup';
-import { saveAddress } from 'api/client/address';
+import { getAddress, updateAddress } from 'api/client/address';
 import localStorage from 'localStorage';
+import { ApiResponse } from 'model/ApiResponse';
 import { IAddress } from 'model/IAddress';
-import { useRouter } from 'next/router';
-import React, { useState } from "react";
+import { useRouter } from 'next/dist/client/router';
+import Head from 'next/head';
+import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 import * as Yup from 'yup';
-import style from './NewAddress.module.css';
 
-function NewAddress({ cartData }) {  
+
+export default function AddressUpdate({ cartData }) {
   
   const validationSchema = Yup.object().shape({
     zipCode: Yup.string()
@@ -42,21 +43,36 @@ function NewAddress({ cartData }) {
   const token = localStorage.getItem('token');
   const [address, setAddress] = useState<IAddress>({})
 
-  async function handleSaveAddress() {
-    const response = await saveAddress(address, token)
-    
-    if (response.status === 201) {
-      router.push('/user/my-account')
-    }
+  const { id } = router.query;
+  
+  async function handleUpdateAddress() {
+    const response = await updateAddress(address, token);
+    response.status === 201 && router.push('/user/my-account')
   }
 
+  async function handleGetAddress() {
+    const response: ApiResponse<IAddress> = await getAddress(id.toString(), token);
+
+    response.entity && setAddress(response.entity)
+  }
+
+
+  useEffect(() => {
+    if (id && token) {
+      handleGetAddress();
+    }
+  }, [id, token]);
+
   return (
-    <LayoutGeneral pageName="NewAddressPage" cartData={cartData}>
-      <section className={style.pizzaContainer}></section>
+    <LayoutGeneral {...cartData}>
+
+      <Head>
+        <title>Editando telefone</title>
+      </Head>
 
       <main className="container my-5">
 
-        <form className="form" onSubmit={handleSubmit(handleSaveAddress)}>
+        <form className="form">
 
           <div className="mb-3 row">
             <label htmlFor="zipCode" className="col-sm-2 col-form-label">CEP: *</label>
@@ -64,8 +80,8 @@ function NewAddress({ cartData }) {
               <input
                 id="zipCode"
                 type="text"
-                {...register('zipCode')}
-                className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
+                value={address.zipCode}
+                className={`form-control`}
                 onChange={zipCode => setAddress({ ...address, zipCode: zipCode.target.value })}
               />
               <div className="invalid-feedback">{errors.zipCode?.message}</div>
@@ -79,8 +95,8 @@ function NewAddress({ cartData }) {
               <input
                 id="street"
                 type="text"
-                {...register('street')}
-                className={`form-control ${errors.street ? 'is-invalid' : ''}`}
+                value={address.street}
+                className={`form-control`}
                 onChange={street => setAddress({ ...address, street: street.target.value })}
               />
               <div className="invalid-feedback">{errors.street?.message}</div>
@@ -94,8 +110,8 @@ function NewAddress({ cartData }) {
               <input
                 id="number"
                 type="text"
-                {...register('number')}
-                className={`form-control ${errors.number ? 'is-invalid' : ''}`}
+                value={address.number}
+                className={`form-control`}
                 onChange={number => setAddress({ ...address, number: number.target.value })}
               />
               <div className="invalid-feedback">{errors.number?.message}</div>
@@ -109,8 +125,8 @@ function NewAddress({ cartData }) {
               <input
                 id="complement"
                 type="text"
-                {...register('complement')}
-                className={`form-control ${errors.complement ? 'is-invalid' : ''}`}
+                value={address.complement}
+                className={`form-control`}
                 onChange={complement => setAddress({ ...address, complement: complement.target.value })}
               />
               <div className="invalid-feedback">{errors.complement?.message}</div>
@@ -124,8 +140,8 @@ function NewAddress({ cartData }) {
               <input
                 id="neighborhood"
                 type="text"
-                {...register('neighborhood')}
-                className={`form-control ${errors.neighborhood ? 'is-invalid' : ''}`}
+                value={address.neighborhood}
+                className={`form-control`}
                 onChange={neighborhood => setAddress({ ...address, neighborhood: neighborhood.target.value })}
               />
               <div className="invalid-feedback">{errors.neighborhood?.message}</div>
@@ -139,8 +155,8 @@ function NewAddress({ cartData }) {
               <input
                 id="city"
                 type="text"
-                {...register('city')}
-                className={`form-control ${errors.city ? 'is-invalid' : ''}`}
+                value={address.city}
+                className={`form-control`}
                 onChange={city => setAddress({ ...address, city: city.target.value })}
               />
               <div className="invalid-feedback">{errors.city?.message}</div>
@@ -154,8 +170,8 @@ function NewAddress({ cartData }) {
               <input
                 id="state"
                 type="text"
-                {...register('state')}
-                className={`form-control ${errors.state ? 'is-invalid' : ''}`}
+                value={address.state}
+                className={`form-control`}
                 onChange={state => setAddress({ ...address, state: state.target.value })} 
               />
               <div className="invalid-feedback">{errors.state?.message}</div>
@@ -169,8 +185,8 @@ function NewAddress({ cartData }) {
               <input
                 id="reference"
                 type="text"
-                {...register('reference')}
-                className={`form-control ${errors.reference ? 'is-invalid' : ''}`}
+                value={address.reference}
+                className={`form-control`}
                 onChange={reference => setAddress({ ...address, reference: reference.target.value })}
                  />
               <div className="invalid-feedback">{errors.reference?.message}</div>
@@ -178,23 +194,10 @@ function NewAddress({ cartData }) {
             </div>
           </div>
 
-          {/* <div className="mb-3 row">
-            <label htmlFor="country" className="col-sm-2 col-form-label">País</label>
-            <div className="col-sm-10">
-              <input 
-              type="text" 
-              className={`form-control ${errors.country ? 'is-invalid' : ''}`}
-                onChange={country => setAddress({ ...address, country: country.target.value })}
-                {...register('country')}
-                 id="country" />
-            </div>
-          </div> */}
-
           <div className="mb-3 form-check">
             <input
               className={`form-check-input ${errors.mainAddress ? 'is-invalid' : ''}`}
-              {...register('mainAddress')}
-              onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
+              onChange={mainAddress => setAddress({ ...address, mainAddress: mainAddress.target.checked ? true : false })}
               type="checkbox" value="" id="mainAddress" defaultChecked={address.mainAddress} />
             <label className="form-check-label" htmlFor="mainAddress">
               Endereço principal
@@ -202,7 +205,7 @@ function NewAddress({ cartData }) {
           </div>
 
           <div className="d-grid gap-2 mt-5">
-            <button className="btn btn-success" type="submit">
+            <button className="btn btn-success" type="button" onClick={handleUpdateAddress}>
               Adicionar novo endereço
             </button>
           </div>
@@ -210,9 +213,6 @@ function NewAddress({ cartData }) {
         </form>
 
       </main>
-
     </LayoutGeneral>
-  )
+  );
 }
-
-export default NewAddress

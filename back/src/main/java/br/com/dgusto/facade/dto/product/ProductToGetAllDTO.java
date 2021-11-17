@@ -21,6 +21,8 @@ public class ProductToGetAllDTO implements Serializable {
 
     private Integer stockQuantity;
 
+    private String description;
+
     private ProductTypeDTO productType;
 
     private ProductCategoryDTO productCategory;

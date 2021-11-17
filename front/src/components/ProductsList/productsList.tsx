@@ -1,30 +1,16 @@
-import CurrencyFormat from 'react-currency-format';
-import Image from 'next/image';
-import pizzas from '/public/images/products/sample.png';
-import styles from './ProductsList.module.css';
 import localStorage from 'localStorage';
+import { IProduct } from 'model/IProduct';
+import Image from 'next/image';
+import React from 'react';
+import CurrencyFormat from 'react-currency-format';
+import styles from './ProductsList.module.css';
+import pizzas from '/public/images/products/sample.png';
 
-export interface IContentProducts {
-  content: IProducts[];
-}
-
-export interface IProducts {
-  id: Number | any;
-  name: string;
-  description: string;
-  unitValue: Number;
-  productType: IProductType;
-  qty: 1
-}
-
-export interface IProductType {
-  id: Number;
-}
 
 export function ProductsList({ data, cartData, setCartData, setProductAddedToCart }:
-  { data: IContentProducts, cartData: any, setCartData: any, setProductAddedToCart: any }) {
+  { data: IProduct[], cartData: any, setCartData: any, setProductAddedToCart: any }) {
 
-  const addToCard = (product: IProducts) => {
+  const addToCard = (product: IProduct) => {
     setCartData([...cartData, product])
     localStorage.setItem('cart', JSON.stringify([...cartData, product]))
     setProductAddedToCart(true)
@@ -33,7 +19,44 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
   }
 
   return <>
-    {data?.content?.map((flavor, index) => (
+    {Object.values(data)?.map((item, index) => (
+        <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
+
+          <div>
+            <Image src={pizzas} width={100} height={100} alt={item.name} />
+          </div>
+
+          <div>
+            {Number(item.productType?.id) === 3 ? <span className="badge bg-info">Promoção</span> : ''}
+
+            <h3 className="text-uppercase" title={item.name}>
+              {item.name}
+            </h3>
+
+            <p title={item.description}>{item.description}</p>
+
+            <p className="price">
+              <CurrencyFormat
+                value={item.unitValue}
+                displayType={'text'}
+                decimalSeparator={','}
+                prefix={'R$ '}
+                renderText={value => <span className="badge bg-success">{value}</span>}
+              />
+            </p>
+
+            <button type="button"
+              className="btn btn-outline-primary"
+              title="Adicionar ao Carrinho"
+              onClick={() => addToCard(item)}
+            >
+              <i className="bi bi-cart2"></i> Adicionar ao Carrinho
+            </button>
+
+          </div>
+        </div>
+      ))}
+    {data?.map((flavor, index) => (
       <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
 
         <div>
@@ -41,7 +64,7 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
         </div>
 
         <div>
-          {flavor.productType.id === 3 ? <span className="badge bg-info">Promoção</span> : ''}
+          {Number(flavor.productType.id) === 3 ? <span className="badge bg-info">Promoção</span> : ''}
 
           <h3 className="text-uppercase" title={flavor.name}>
             {flavor.name}

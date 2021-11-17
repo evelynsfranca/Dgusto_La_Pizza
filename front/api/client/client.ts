@@ -3,7 +3,6 @@ import { IClient } from "model/IClient";
 import { API_URL } from "src/utils/constants";
 
 export const updateClient = async (updatedClient: IClient, token: string): Promise<ApiResponse<IClient>> => {
-
  
   const apiResponse: ApiResponse<IClient> = {}
 
@@ -26,7 +25,7 @@ export const updateClient = async (updatedClient: IClient, token: string): Promi
   return apiResponse
 }
 
-export const getClient = async (id: string, token: string): Promise<ApiResponse<IClient>> => {
+export const getClient = async (token: string): Promise<ApiResponse<IClient>> => {
 
  
   const apiResponse: ApiResponse<IClient> = {}
