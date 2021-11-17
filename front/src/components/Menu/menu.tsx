@@ -1,30 +1,32 @@
-import { API_URL } from 'src/utils/constants';
-import useSWR from 'swr';
+import { getAllProducts } from 'api/product';
+import { IProduct } from 'model/IProduct';
+import { useEffect, useState } from 'react';
 import CategoriesList from '../CategoryList/categoryList';
-import Loading from '../Loading/loading';
 import ProductsList from '../ProductsList/productsList';
 
 export function Menu({ cartData, setCartData, setProductAddedToCart }): any {
+  
+  const [products, setProducts] = useState<IProduct[]>([])
 
-  const fetcher = (url, token = localStorage.getItem('token')) => fetch(url, { headers: { "Authorization": token } })
-    .then(res => res.json())
-    .catch(e => console.warn(e))
+  async function handleGetAllUsers() {
+    const response = await getAllProducts();
+    response.content.content && setProducts(response.content.content)
+  }
 
-  const { data, error } = useSWR(`${API_URL}/products`, fetcher)
-
-  if (error) return <>failed to load</>
-  if (!data) return <Loading />
+  useEffect(() => {
+    handleGetAllUsers();
+  }, []);
 
   return (
     <>
       <ul className="nav nav-pills flex-column flex-sm-row">
-        <CategoriesList data={data} />
+        <CategoriesList data={products} />
       </ul>
 
       <div className="container">
         <div className="row my-5 py-5">
           <ProductsList
-            data={data}
+            data={products}
             cartData={cartData}
             setCartData={setCartData}
             setProductAddedToCart={setProductAddedToCart}

@@ -1,54 +1,75 @@
-import Link from 'next/link';
-import LayoutGeneral from 'src/components/Layout/layoutGeneral';
-import Image from 'next/image';
-import pizzas from '/public/images/products/sample.png';
-import CurrencyFormat from 'react-currency-format';
-import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import { getClient } from 'api/client/client';
+import { saveRequest } from 'api/client/request';
 import localStorage from 'localStorage';
+import _ from 'lodash';
+import { PaymentMethod } from 'model/enum/PaymentMethod';
+import { IClient } from 'model/IClient';
+import { IProduct } from 'model/IProduct';
+import { IRequest } from 'model/IRequest';
+import { IRequestItem } from 'model/IRequestItem';
+import Image from 'next/image';
+import Link from 'next/link';
+import router from 'next/router';
+import React, { useEffect, useState } from 'react';
+import LayoutGeneral from 'src/components/Layout/layoutGeneral';
+import { paymentMethods, phoneTypes } from 'src/utils/constants';
+import pizzas from '/public/images/products/sample.png';
 
-export interface IProducts {
-  id: Number | any;
-  name: string;
-  description: string;
-  unitValue: number;
-  productType: IProductType;
-  qty: number;
-  total: number;
-}
-
-export interface IProductType {
-  id: Number;
-}
 
 function CartPage({ cartData, setCartData }) {
-  const [newArrayProducts, setNewArrayProducts] = useState(null);
+  const token = localStorage.getItem('token');
+  const [userData, setUserData] = useState<IClient>({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isErrored, setIsErrored] = useState('')
+
+  async function getData() {
+    setIsLoading(true)
+
+    const response = await getClient(token)
+
+    if (response.entity) {
+      setUserData(response.entity)
+      setRequest({...request, address: {...request.address}, client: response.entity })
+    } else {
+      setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.');
+    }
+
+    setIsLoading(false)
+
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const [newArrayProducts, setNewArrayProducts] = useState<IRequestItem[]>([]);
   const [cartSubTotal, setCartSubTotal] = useState(0);
   const [cartShipping, setCartShipping] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [request, setRequest] = useState<IRequest>({});
 
   let groupedCartData = _.groupBy(cartData, 'id')
 
   const calculateCart = () => {
     let localNewArrayProducts = [];
     let subTotal = 0;
-    _.map(groupedCartData, (it: IProducts[]) => {
+    _.map(groupedCartData, (it: IProduct[]) => {
       _.map(it, (e, i) => {
         if (i >= 1) {
           return
         } else {
-          localNewArrayProducts.push({ product: e, qty: it.length, total: (e.unitValue * it.length) })
+          localNewArrayProducts.push({ product: e, quantity: it.length, totalValue: (e.unitValue * it.length) })
         }
       })
     })
 
-    _.map(localNewArrayProducts, (product: IProducts) => {
-      subTotal = subTotal + product.total;
+    _.map(localNewArrayProducts, (request: IRequest) => {
+      subTotal = Number(subTotal) + Number(request.totalValue);
     })
 
-    setCartSubTotal(subTotal);
+    setCartSubTotal(Number(subTotal));
     setCartShipping(0)
-    setCartTotal(subTotal + cartShipping)
+    setCartTotal(Number(subTotal) + Number(cartShipping))
     setNewArrayProducts(localNewArrayProducts);
   };
 
@@ -74,6 +95,33 @@ function CartPage({ cartData, setCartData }) {
     calculateCart()
   }, []);
 
+  async function handleRequest() {
+    setRequest({...request, address: {...request.address}, client: userData })
+    const response = await saveRequest(request, token)
+    if(response.status === 201) {
+      router.push("user/my-purchases")
+    }
+  }
+  const address = userData.addresses?.filter((address) => address.mainAddress)[0];
+  const phone = userData.phones?.filter((phone) => phone.mainPhone)[0];
+
+  useEffect(() => {
+    setRequest({...request, address: {...request.address}, client: userData })
+  }, [userData])
+
+  useEffect(() => {
+    setRequest({...request, client: { ...request.client }, address: address })
+  }, [address])
+  
+  useEffect(() => {
+    console.log(request)
+  }, [request])
+
+  useEffect(() => {
+    setRequest({...request, client: { ...request.client }, requestItems: newArrayProducts})
+  }, [newArrayProducts])
+
+  
   return (
     <LayoutGeneral pageName="CartPage" cartData={cartData}>
 
@@ -118,7 +166,7 @@ function CartPage({ cartData, setCartData }) {
                         </thead>
                         <tbody>
 
-                          {_.map(newArrayProducts, (productItem, index) => (
+                          {_.map(newArrayProducts, (item, index) => (
                             <tr key={index}>
                               <th scope="row">
                                 {index + 1}
@@ -127,10 +175,10 @@ function CartPage({ cartData, setCartData }) {
                                 <Link href="/">
                                   <div className="d-flex justify-content-start align-items-center">
                                     <div className="me-3">
-                                      <Image src={pizzas} width={50} height={50} alt={productItem.product.name} />
+                                      <Image src={pizzas} width={50} height={50} alt={item.product.name} />
                                     </div>
                                     <div>
-                                      {productItem.product.name}
+                                      {item.product.name}
                                     </div>
                                   </div>
                                 </Link>
@@ -138,28 +186,28 @@ function CartPage({ cartData, setCartData }) {
                               <td>
                                 <div className="form-group mb-0 d-flex justify-content-between align-items-center">
                                   <div className="me-2">
-                                    {productItem.qty}x
+                                    {item.quantity}x
                                   </div>
 
                                   <div className="buttons">
-                                    {productItem.qty > 1 &&
+                                    {item.quantity > 1 &&
                                       <button type="button" className="btn btn-secondary me-2"
-                                        onClick={() => decrease(productItem.product.id)}
+                                        onClick={() => decrease(item.product.id)}
                                       >
                                         <i className="bi bi-dash-circle"></i>
                                       </button>
                                     }
 
-                                    {productItem.qty === 1 &&
+                                    {item.quantity === 1 &&
                                       <button type="button" className="btn btn-danger me-2"
-                                        onClick={() => removeProduct(productItem.product.id)}
+                                        onClick={() => removeProduct(item.product.id)}
                                       >
                                         <i className="bi bi-trash"></i>
                                       </button>
                                     }
 
                                     <button type="button" className="btn btn-primary me-2"
-                                      onClick={() => increase(productItem.product.id)}
+                                      onClick={() => increase(item.product.id)}
                                     >
                                       <i className="bi bi-plus-circle"></i>
                                     </button>
@@ -167,22 +215,26 @@ function CartPage({ cartData, setCartData }) {
                                 </div>
                               </td>
                               <td>
-                                <CurrencyFormat
-                                  value={productItem.product.unitValue}
-                                  displayType={'text'}
-                                  decimalSeparator={','}
-                                  prefix={'R$ '}
-                                  renderText={value => <>{value}</>}
-                                />
+                                  {Number(item.product.unitValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                               </td>
                               <td className="text-end">
-                                <CurrencyFormat
-                                  value={productItem.total}
-                                  displayType={'text'}
-                                  decimalSeparator={','}
-                                  prefix={'R$ '}
-                                  renderText={value => <>{value}</>}
-                                />
+                                  {(Number(item.product.unitValue) * Number(item.quantity)).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                              </td>
+                              <td>
+
+                              <select 
+                                id="type" 
+                                name="type" 
+                                onChange={it => setRequest({...request, paymentMethod: PaymentMethod[it.target.value] })}
+                              >
+                                {Object.values(PaymentMethod).map((type, index) => (
+                                  <React.Fragment key={index}>
+                                    {PaymentMethod[type] === index && (
+                                      <option selected={PaymentMethod[index] === request?.paymentMethod?.toString()} value={PaymentMethod[type]}>{paymentMethods[PaymentMethod[index]]}</option>
+                                    )}
+                                  </React.Fragment>
+                                ))}
+                              </select>
                               </td>
                             </tr>
                           ))}
@@ -196,16 +248,6 @@ function CartPage({ cartData, setCartData }) {
                       <div className="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
                         <div className="order-note">
                           <form>
-                            <div className="form-group mb-4">
-                              <div className="input-group">
-                                <input type="search" className="form-control" placeholder="Eu tenho um desconto" aria-label="Search" aria-describedby="button-addonTags" />
-                                <div className="input-group-append">
-                                  <button className="input-group-text" type="button" id="button-addonTags">
-                                    Aplicar!
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
                             <div className="form-group mb-4">
                               <label htmlFor="specialNotes">
                                 Deixe aqui seu recado:
@@ -222,25 +264,13 @@ function CartPage({ cartData, setCartData }) {
                               <tr>
                                 <td>Sub Total:</td>
                                 <td>
-                                  <CurrencyFormat
-                                    value={cartSubTotal}
-                                    displayType={'text'}
-                                    decimalSeparator={','}
-                                    prefix={'R$ '}
-                                    renderText={value => <>{value}</>}
-                                  />
+                                  {cartSubTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                                 </td>
                               </tr>
                               <tr>
                                 <td>Frete:</td>
                                 <td>
-                                  <CurrencyFormat
-                                    value={cartShipping}
-                                    displayType={'text'}
-                                    decimalSeparator={','}
-                                    prefix={'R$ '}
-                                    renderText={value => <>{value}</>}
-                                  />
+                                  {cartShipping.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                                 </td>
                               </tr>
                               <tr>
@@ -249,13 +279,7 @@ function CartPage({ cartData, setCartData }) {
                                 </td>
                                 <td className="f-w-7 font-18">
                                   <h4>
-                                    <CurrencyFormat
-                                      value={cartTotal}
-                                      displayType={'text'}
-                                      decimalSeparator={','}
-                                      prefix={'R$ '}
-                                      renderText={value => <>{value}</>}
-                                    />
+                                  {cartTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                                   </h4>
                                 </td>
                               </tr>
@@ -264,16 +288,38 @@ function CartPage({ cartData, setCartData }) {
                         </div>
                       </div>
                     </div>
+                {address && (
+                    <div className="row">
+                      <div className="col">
+                        <div className="card mb-3">
+                          <div className="card-body">
+
+                            {address?.street}, {address?.number} - {address?.neighborhood} - {address?.zipCode} <br />
+                            {address?.city} - {address?.state} <br /><br />
+                            {address?.mainAddress ? <span className="badge rounded-pill bg-primary">Endereço principal</span> : ''}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                <hr />
+
+                <h3 className="mb-4">Telefone</h3>
+                    <>
+                    <div>{`(${phone?.areaCode}) ${phone?.number}`}</div>
+                    <div>{`${phoneTypes[phone?.type] ?? ''}`}</div>
+                    {phone?.mainPhone ? <span className="badge rounded-pill bg-primary">Telefone principal</span> : ''}
+                    </>
+
 
                     <div className="row">
                       <div className="col-xs-12 col-md-6">
                       </div>
                       <div className="col-xs-12 col-md-6">
-                        <Link href="/checkout">
-                          <a className="btn btn-lg btn-success w-100 my-1">
-                            Finalizar Compra <i className="ri-arrow-right-line ml-2"></i>
-                          </a>
-                        </Link>
+                        <button type="button" onClick={handleRequest}>
+                            Finalizar Compra 
+                        </button>
                       </div>
                     </div>
                   </>

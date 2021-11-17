@@ -1,10 +1,14 @@
-import useSWR from 'swr'
-import { API_URL } from '../../utils/constants'
-import CurrencyFormat from 'react-currency-format'
-import Loading from '../Loading/loading'
-import { ReactElement, useEffect, useState } from 'react'
-import Link from 'next/link'
-import _, { add } from 'lodash'
+import { deleteAddress } from 'api/client/address';
+import { getClient } from 'api/client/client';
+import { deletePhone } from 'api/client/phone';
+import localStorage from 'localStorage';
+import _ from 'lodash';
+import { IClient } from 'model/IClient';
+import Link from 'next/link';
+import router from 'next/router';
+import React, { useEffect, useState } from 'react';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { phoneTypes } from '../../utils/constants';
 
 export interface IContentPromotions {
   content: IPromotions[]
@@ -18,6 +22,42 @@ export interface IPromotions {
 }
 
 export const UserInfos = (data): any => {
+
+  const token = localStorage?.getItem('token');
+  
+  const [showDeleteAddressModal, setShowDeleteAddressModal] = useState(false);
+  const [showDeletePhoneModal, setShowDeletePhoneModal] = useState(false);
+  const [addressToDeleteModal, setAddressToDeleteModal] = useState('');
+  const [phoneToDeleteModal, setPhoneToDeleteModal] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  function openModalDeleteAddress(id) {
+    setAddressToDeleteModal(id)
+    setShowDeleteAddressModal(true)
+  }
+  function openModalDeletePhone(id) {
+    setPhoneToDeleteModal(id)
+    setShowDeletePhoneModal(true)
+  }
+
+  async function confirmAddressDelete() {
+    const response = await deleteAddress(addressToDeleteModal, token);
+
+    if (response.status) {
+      setShowDeleteAddressModal(false)
+      location.reload();
+    }
+  }
+
+  async function confirmPhoneDelete() {
+    const response = await deletePhone(phoneToDeleteModal, token);
+
+    if (response.status) {
+      setShowDeletePhoneModal(false)
+      location.reload();
+    }
+  }
+
   return (
     _.map(data, account => (
       <div key={account.id}>
@@ -71,6 +111,12 @@ export const UserInfos = (data): any => {
                               {address.city} - {address.state} <br /><br />
                               {address.mainAddress ? <span className="badge rounded-pill bg-primary">Endereço principal</span> : ''}
 
+                              <button type="button" className="badge rounded-pill bg-primary" style={{ border: 0 }} onClick={() => router.push(`/user/my-account/edit-address/${address.id}`)}>
+                                Editar
+                              </button>
+                              <button type="button" className="badge rounded-pill bg-danger" style={{ border: 0 }} onClick={() => openModalDeleteAddress(address.id)}>
+                                Remover
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -85,13 +131,29 @@ export const UserInfos = (data): any => {
 
                 <Link href="/user/my-account/new-phone">
                   <a className="btn btn-link">
-                    Novo endereço
+                    Novo telefone
                   </a>
                 </Link>
 
-                {account?.phones?.length > 0 &&
-                  <p>telefones: {account.phones}</p>
-                }
+                {account?.phones?.length > 0 && (
+                  <>
+                  <p>telefones:</p>
+                  {account.phones.map((phone, index) => (
+                    <>
+                    <div>{`(${phone.areaCode}) ${phone.number}`}</div>
+                    <div>{`${phoneTypes[phone.type] ?? ''}`}</div>
+                    {phone.mainPhone ? <span className="badge rounded-pill bg-primary">Telefone principal</span> : ''}
+
+                    <button type="button" className="badge rounded-pill bg-primary" style={{ border: 0 }} onClick={() => router.push(`/user/my-account/edit-phone/${phone.id}`)}>
+                      Editar
+                    </button>
+                    <button type="button" className="badge rounded-pill bg-danger" style={{ border: 0 }} onClick={() => openModalDeletePhone(phone.id)}>
+                      Remover
+                    </button>
+                    </>
+                  ))}
+                  </>
+                )}
 
               </div>
             </div>
@@ -100,33 +162,53 @@ export const UserInfos = (data): any => {
 
         </div>
 
+        <SweetAlert
+          show={showDeleteAddressModal}
+          warning
+          showCancel
+          cancelBtnText="Cancelar"
+          confirmBtnText="Deletar"
+          confirmBtnBsStyle="danger"
+          title="Deseja mesmo deletar?"
+          onConfirm={() => confirmAddressDelete()}
+          onCancel={() => setShowDeleteAddressModal(false)}
+          focusCancelBtn
+        >
+          Ao confirmar, você irá deletar o endereço, esta ação não poderá ser revertida.
+        </SweetAlert>
+
+        <SweetAlert
+          show={showDeletePhoneModal}
+          warning
+          showCancel
+          cancelBtnText="Cancelar"
+          confirmBtnText="Deletar"
+          confirmBtnBsStyle="danger"
+          title="Deseja mesmo deletar?"
+          onConfirm={() => confirmPhoneDelete()}
+          onCancel={() => setShowDeletePhoneModal(false)}
+          focusCancelBtn
+        >
+          Ao confirmar, você irá deletar o telefone, esta ação não poderá ser revertida.
+        </SweetAlert>
       </div>
     ))
   )
 }
 
 export function MyAccountData() {
-  const [userData, setUserData] = useState([])
+  const token = localStorage.getItem('token');
+  const [userData, setUserData] = useState<IClient>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState('')
 
   async function getData() {
     setIsLoading(true)
 
-    const res = await fetch(`${API_URL}/client/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token')
-      }
-    })
-      .then(res => res.json())
-      .catch(e => console.warn(e))
+    const response = await getClient(token)
 
-    const response = await res
-
-    if (!!response) {
-      setUserData(response)
+    if (response.entity) {
+      setUserData(response.entity)
     } else {
       setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.');
     }
@@ -156,6 +238,7 @@ export function MyAccountData() {
 
         </div>
       </div>
+
     </>
   )
 }
