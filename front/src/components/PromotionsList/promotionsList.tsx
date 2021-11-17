@@ -22,7 +22,7 @@ export function PromotionsList() {
 
   const { data, error } = useSWR(`${API_URL}/products/types/promocao`, fetcher)
 
-  if (error) return <>failed to load</>
+  if (error || data?.status === 500) return <>failed to load</>
   if (!data) return <Loading />
 
   return (

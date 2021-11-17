@@ -10,7 +10,6 @@ import LayoutGeneral from 'src/components/Layout/layoutGeneral';
 import * as Yup from 'yup';
 import style from './NewAddress.module.css';
 
-
 function NewAddress({ cartData }) {  
   
   const validationSchema = Yup.object().shape({
@@ -194,8 +193,8 @@ function NewAddress({ cartData }) {
           <div className="mb-3 form-check">
             <input
               className={`form-check-input ${errors.mainAddress ? 'is-invalid' : ''}`}
-              onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
               {...register('mainAddress')}
+              onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
               type="checkbox" value="" id="mainAddress" defaultChecked={address.mainAddress} />
             <label className="form-check-label" htmlFor="mainAddress">
               Endereço principal

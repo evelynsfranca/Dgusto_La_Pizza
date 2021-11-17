@@ -15,7 +15,7 @@ function ApiMenuDetail({ name, cartData, setCartData, setProductAddedToCart }) {
 
   const { data, error } = useSWR([`${API_URL}/products/categories/${name}`], fetcher)
 
-  if (error) return <div>failed to load</div>
+  if (error || data?.status === 500) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
   return (

@@ -234,7 +234,9 @@ export function MyAccountData() {
             </>
           }
 
-          {!isLoading && !!userData && <UserInfos data={userData} />}
+          {!isLoading && !!userData &&
+            <UserInfos data={userData} />
+          }
 
         </div>
       </div>

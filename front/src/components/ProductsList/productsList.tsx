@@ -20,7 +20,6 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
 
   return <>
     {Object.values(data)?.map((item, index) => (
-      <React.Fragment key={index}>
         <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
 
           <div>
@@ -55,9 +54,45 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
             </button>
 
           </div>
+        </div>
+      ))}
+    {data?.map((flavor, index) => (
+      <div key={index} className={[styles.productsContainer, "col-xs-12 col-md-6 mb-5"].join(' ')}>
+
+        <div>
+          <Image src={pizzas} width={100} height={100} alt={flavor.name} />
+        </div>
+
+        <div>
+          {Number(flavor.productType.id) === 3 ? <span className="badge bg-info">Promoção</span> : ''}
+
+          <h3 className="text-uppercase" title={flavor.name}>
+            {flavor.name}
+          </h3>
+
+          <p title={flavor.description}>{flavor.description}</p>
+
+          <p className="price">
+            <CurrencyFormat
+              value={flavor.unitValue}
+              displayType={'text'}
+              decimalSeparator={','}
+              prefix={'R$ '}
+              renderText={value => <span className="badge bg-success">{value}</span>}
+            />
+          </p>
+
+          <button type="button"
+            className="btn btn-outline-primary"
+            title="Adicionar ao Carrinho"
+            onClick={() => addToCard(flavor)}
+          >
+            <i className="bi bi-cart2"></i> Adicionar ao Carrinho
+          </button>
 
         </div>
-      </React.Fragment>
+
+      </div>
     ))}
   </>
 }

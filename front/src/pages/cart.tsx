@@ -149,7 +149,7 @@ function CartPage({ cartData, setCartData }) {
                     <div className="table-responsive mb-4">
 
                       <div className="text-end">
-                        <a className="btn btn-link mb-3" href="#" onClick={() => clearCartData()}>
+                        <a className="btn btn-link mb-3 pe-0" href="#" onClick={() => clearCartData()}>
                           Limpar carrinho <i className="bi bi-trash"></i>
                         </a>
                       </div>
@@ -172,7 +172,6 @@ function CartPage({ cartData, setCartData }) {
                                 {index + 1}
                               </th>
                               <td>
-                                <Link href="/">
                                   <div className="d-flex justify-content-start align-items-center">
                                     <div className="me-3">
                                       <Image src={pizzas} width={50} height={50} alt={item.product.name} />
@@ -181,7 +180,6 @@ function CartPage({ cartData, setCartData }) {
                                       {item.product.name}
                                     </div>
                                   </div>
-                                </Link>
                               </td>
                               <td>
                                 <div className="form-group mb-0 d-flex justify-content-between align-items-center">
