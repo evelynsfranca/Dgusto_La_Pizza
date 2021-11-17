@@ -2,15 +2,32 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from 'react-hook-form'
 import localStorage from 'localStorage'
+import Link from 'next/link';
 
 import LayoutGeneral from 'src/components/Layout/layoutGeneral'
-import style from './EditAddress.module.css'
+import style from './EditAddressPage.module.css'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { API_URL } from "src/utils/constants"
-import router, { useRouter } from "next/router"
+import { useRouter } from "next/router"
 
-function EditAddress({ cartData }) {
+export interface IAddresses {
+  id?: number
+  zipCode: string
+  street: string
+  number: string
+  complement: string
+  neighborhood: string
+  city: string
+  state: string
+  country: string
+  reference: string
+  mainAddress: boolean
+}
+
+function EditAddressPage({ cartData }) {
+  const router = useRouter()
+  const { id } = router.query
 
   const validationSchema = Yup.object().shape({
     zipCode: Yup.string()
@@ -40,7 +57,7 @@ function EditAddress({ cartData }) {
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState('')
 
-  const [address, setAddress] = useState({
+  const [address, setAddress] = useState<IAddresses>({
     zipCode: '',
     street: '',
     number: '',
@@ -55,7 +72,7 @@ function EditAddress({ cartData }) {
 
   async function handleAddress() {
     setIsLoading(true)
-    
+
     const res = await fetch(`${API_URL}/client/addresses`, {
       method: "POST",
       headers: {
@@ -68,7 +85,7 @@ function EditAddress({ cartData }) {
       .catch(e => console.warn(e))
 
     const response = await res
-    
+
     if (response?.status) {
       setIsLoading(false)
     }
@@ -77,11 +94,8 @@ function EditAddress({ cartData }) {
       router.push('/user/my-account')
     }
   }
-  
-  async function getAddressData() {
-    const router = useRouter()
-    const { id } = router.query
 
+  async function getAddressData(id) {
     setIsLoading(true)
 
     const res = await fetch(`${API_URL}/client/addresses/${id}`, {
@@ -96,21 +110,23 @@ function EditAddress({ cartData }) {
 
     const response = await res
 
-    if (!!response) {
-      setAddress(response)
-    } else {
-      setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.')
-    }
+    response && setAddress(response)
+
+    // if (!!response) {
+    //   setAddress(response)
+    // } else {
+    //   setIsErrored('Erro ao tentar carregar seus dados, tente novamente mais tarde.')
+    // }
 
     setIsLoading(false)
   }
 
   useEffect(() => {
-    getAddressData()
-  }, [])
+    getAddressData(id);
+  }, []);
 
   return (
-    <LayoutGeneral pageName="EditAddressPage" cartData={cartData}>
+    <LayoutGeneral pageName="EditAddressPagePage" cartData={cartData}>
       <section className={style.pizzaContainer}></section>
 
       <main className="container my-5">
@@ -141,6 +157,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.street ? 'is-invalid' : ''}`}
                 {...register('street')}
                 onChange={street => setAddress({ ...address, street: street.target.value })}
+                value={address.street}
                 id="street" />
               <div className="invalid-feedback">{errors.street?.message}</div>
 
@@ -155,6 +172,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.number ? 'is-invalid' : ''}`}
                 {...register('number')}
                 onChange={number => setAddress({ ...address, number: number.target.value })}
+                value={address.number}
                 id="number" />
               <div className="invalid-feedback">{errors.number?.message}</div>
 
@@ -169,6 +187,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.complement ? 'is-invalid' : ''}`}
                 {...register('complement')}
                 onChange={complement => setAddress({ ...address, complement: complement.target.value })}
+                value={address.complement}
                 id="complement" />
               <div className="invalid-feedback">{errors.complement?.message}</div>
 
@@ -183,6 +202,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.neighborhood ? 'is-invalid' : ''}`}
                 {...register('neighborhood')}
                 onChange={neighborhood => setAddress({ ...address, neighborhood: neighborhood.target.value })}
+                value={address.neighborhood}
                 id="neighborhood" />
               <div className="invalid-feedback">{errors.neighborhood?.message}</div>
 
@@ -197,6 +217,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.city ? 'is-invalid' : ''}`}
                 {...register('city')}
                 onChange={city => setAddress({ ...address, city: city.target.value })}
+                value={address.city}
                 id="city" />
               <div className="invalid-feedback">{errors.city?.message}</div>
 
@@ -211,6 +232,7 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.state ? 'is-invalid' : ''}`}
                 {...register('state')}
                 onChange={state => setAddress({ ...address, state: state.target.value })}
+                value={address.state}
                 id="state" />
               <div className="invalid-feedback">{errors.state?.message}</div>
 
@@ -225,49 +247,50 @@ function EditAddress({ cartData }) {
                 className={`form-control ${errors.reference ? 'is-invalid' : ''}`}
                 {...register('reference')}
                 onChange={reference => setAddress({ ...address, reference: reference.target.value })}
+                value={address.reference}
                 id="reference" />
               <div className="invalid-feedback">{errors.reference?.message}</div>
 
             </div>
           </div>
 
-          {/* <div className="mb-3 row">
-            <label htmlFor="country" className="col-sm-2 col-form-label">País</label>
-            <div className="col-sm-10">
-              <input 
-              type="text" 
-              className={`form-control ${errors.country ? 'is-invalid' : ''}`}
-                onChange={country => setAddress({ ...address, country: country.target.value })}
-                {...register('country')}
-                 id="country" />
-            </div>
-          </div> */}
-
           <div className="mb-3 form-check">
             <input
               className={`form-check-input ${errors.mainAddress ? 'is-invalid' : ''}`}
               {...register('mainAddress')}
               onChange={mainAddress => setAddress({ ...address, mainAddress: !!mainAddress.target.value })}
-              type="checkbox" value="" id="mainAddress" defaultChecked={address.mainAddress} />
+              type="checkbox"
+              id="mainAddress"
+              defaultChecked={address.mainAddress}
+              checked={address.mainAddress}
+            />
             <label className="form-check-label" htmlFor="mainAddress">
               Endereço principal
             </label>
           </div>
 
-          <div className="d-grid gap-2 mt-5">
-            <button className="btn btn-success" type="submit" disabled={isLoading}>
-              {!isLoading &&
-                <>
-                  Adicionar novo endereço
-                </>
-              }
-
-              {isLoading &&
-                <>
-                  Carregando...
-                </>
-              }
-            </button>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6">
+              <Link href="/user/my-account">
+              <a className="btn btn-link w-100">
+                Voltar
+              </a>
+              </Link>
+            </div>
+            <div className="col-xs-12 col-sm-6">
+              <button className="btn btn-success w-100" type="submit" disabled={isLoading}>
+                {!isLoading &&
+                  <>
+                    Alterar Endereço
+                  </>
+                }
+                {isLoading &&
+                  <>
+                    Carregando...
+                  </>
+                }
+              </button>
+            </div>
           </div>
 
         </form>
@@ -278,4 +301,4 @@ function EditAddress({ cartData }) {
   )
 }
 
-export default EditAddress
+export default EditAddressPage

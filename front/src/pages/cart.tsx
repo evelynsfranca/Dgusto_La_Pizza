@@ -67,7 +67,6 @@ function CartPage({ cartData, setCartData }) {
   const clearCartData = () => {
     setCartData([])
     localStorage.setItem('cart', JSON.stringify([]))
-
   }
 
   useEffect(() => {

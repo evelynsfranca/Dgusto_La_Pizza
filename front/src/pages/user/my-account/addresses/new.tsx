@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from 'react-hook-form'
 import localStorage from 'localStorage'
+import Link from 'next/link';
 
 import LayoutGeneral from 'src/components/Layout/layoutGeneral'
 import style from './NewAddress.module.css'
@@ -198,18 +199,6 @@ function NewAddress({ cartData }) {
             </div>
           </div>
 
-          {/* <div className="mb-3 row">
-            <label htmlFor="country" className="col-sm-2 col-form-label">País</label>
-            <div className="col-sm-10">
-              <input 
-              type="text" 
-              className={`form-control ${errors.country ? 'is-invalid' : ''}`}
-                onChange={country => setAddress({ ...address, country: country.target.value })}
-                {...register('country')}
-                 id="country" />
-            </div>
-          </div> */}
-
           <div className="mb-3 form-check">
             <input
               className={`form-check-input ${errors.mainAddress ? 'is-invalid' : ''}`}
@@ -221,20 +210,29 @@ function NewAddress({ cartData }) {
             </label>
           </div>
 
-          <div className="d-grid gap-2 mt-5">
-            <button className="btn btn-success" type="submit" disabled={isLoading}>
-              {!isLoading &&
-                <>
-                  Adicionar novo endereço
-                </>
-              }
 
-              {isLoading &&
-                <>
-                  Carregando...
-                </>
-              }
-            </button>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6">
+              <Link href="/user/my-account">
+              <a className="btn btn-link w-100">
+                Voltar
+              </a>
+              </Link>
+            </div>
+            <div className="col-xs-12 col-sm-6">
+              <button className="btn btn-success w-100" type="submit" disabled={isLoading}>
+                {!isLoading &&
+                  <>
+                    Adicionar novo endereço
+                  </>
+                }
+                {isLoading &&
+                  <>
+                    Carregando...
+                  </>
+                }
+              </button>
+            </div>
           </div>
 
         </form>
