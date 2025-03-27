@@ -1,18 +1,15 @@
 package br.com.dgusto.facade.mapper;
 
+import org.mapstruct.Mapper;
+
 import br.com.dgusto.domain.ProductCategory;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryDTO;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryToGetAllDTO;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryToGetDTO;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryToSaveDTO;
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryToUpdateDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(
-    componentModel = "spring",
-    unmappedTargetPolicy = ReportingPolicy.IGNORE
-)
+@Mapper(componentModel = "spring")
 public interface ProductCategoryMapper {
 
     ProductCategoryDTO toDto(ProductCategory entity);
