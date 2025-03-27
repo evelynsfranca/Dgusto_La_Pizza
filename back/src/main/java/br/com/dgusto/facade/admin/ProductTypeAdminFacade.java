@@ -1,5 +1,10 @@
 package br.com.dgusto.facade.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.dgusto.domain.ProductType;
 import br.com.dgusto.facade.dto.producttype.ProductTypeDTO;
 import br.com.dgusto.facade.dto.producttype.ProductTypeToGetAllDTO;
@@ -8,10 +13,6 @@ import br.com.dgusto.facade.dto.producttype.ProductTypeToSaveDTO;
 import br.com.dgusto.facade.dto.producttype.ProductTypeToUpdateDTO;
 import br.com.dgusto.facade.mapper.ProductTypeMapper;
 import br.com.dgusto.service.ProductTypeService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductTypeAdminFacade {
@@ -20,9 +21,8 @@ public class ProductTypeAdminFacade {
     private final ProductTypeMapper productTypeMapper;
 
     public ProductTypeAdminFacade(
-        ProductTypeService productTypeService,
-        ProductTypeMapper productTypeMapper
-    ) {
+            ProductTypeService productTypeService,
+            ProductTypeMapper productTypeMapper) {
         this.productTypeService = productTypeService;
         this.productTypeMapper = productTypeMapper;
     }
@@ -50,7 +50,7 @@ public class ProductTypeAdminFacade {
     @Transactional(readOnly = true)
     public Page<ProductTypeToGetAllDTO> getAll(Pageable pageable) {
         return productTypeService.getAll(pageable)
-            .map(productTypeMapper::toGetAllDto);
+                .map(productTypeMapper::toGetAllDto);
     }
 
     @Transactional

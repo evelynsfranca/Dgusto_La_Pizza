@@ -1,5 +1,10 @@
 package br.com.dgusto.facade.client;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.dgusto.domain.Address;
 import br.com.dgusto.domain.Client;
 import br.com.dgusto.facade.dto.address.AddressDTO;
@@ -11,10 +16,6 @@ import br.com.dgusto.facade.mapper.AddressMapper;
 import br.com.dgusto.security.SecurityUtils;
 import br.com.dgusto.service.AddressService;
 import br.com.dgusto.service.ClientService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddressClientFacade {
@@ -23,12 +24,10 @@ public class AddressClientFacade {
     private final AddressMapper addressMapper;
     private final ClientService clientService;
 
-
     public AddressClientFacade(
-        AddressService addressService,
-        AddressMapper addressMapper,
-        ClientService clientService
-    ) {
+            AddressService addressService,
+            AddressMapper addressMapper,
+            ClientService clientService) {
         this.addressService = addressService;
         this.addressMapper = addressMapper;
         this.clientService = clientService;
@@ -75,7 +74,7 @@ public class AddressClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         return addressService.clientGetAll(client.getId(), pageable)
-            .map(addressMapper::toGetAllDto);
+                .map(addressMapper::toGetAllDto);
     }
 
     @Transactional

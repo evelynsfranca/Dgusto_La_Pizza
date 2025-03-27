@@ -1,5 +1,10 @@
 package br.com.dgusto.facade.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.dgusto.domain.Request;
 import br.com.dgusto.facade.dto.request.RequestDTO;
 import br.com.dgusto.facade.dto.request.RequestToAdminUpdateDTO;
@@ -7,10 +12,6 @@ import br.com.dgusto.facade.dto.request.RequestToGetAllDTO;
 import br.com.dgusto.facade.dto.request.RequestToGetDTO;
 import br.com.dgusto.facade.mapper.RequestMapper;
 import br.com.dgusto.service.RequestService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RequestAdminFacade {
@@ -19,9 +20,8 @@ public class RequestAdminFacade {
     private final RequestMapper requestMapper;
 
     public RequestAdminFacade(
-        RequestService requestService,
-        RequestMapper requestMapper
-    ) {
+            RequestService requestService,
+            RequestMapper requestMapper) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
     }

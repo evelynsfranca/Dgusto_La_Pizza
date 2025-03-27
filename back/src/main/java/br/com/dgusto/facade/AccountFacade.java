@@ -1,5 +1,17 @@
 package br.com.dgusto.facade;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import br.com.dgusto.domain.Authority;
 import br.com.dgusto.domain.Client;
 import br.com.dgusto.domain.User;
@@ -14,17 +26,6 @@ import br.com.dgusto.security.SecurityUtils;
 import br.com.dgusto.service.AuthorityService;
 import br.com.dgusto.service.ClientService;
 import br.com.dgusto.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountFacade {
@@ -38,12 +39,11 @@ public class AccountFacade {
     private final ClientService clientService;
 
     public AccountFacade(
-        AuthorityService authorityService,
-        UserMapper userMapper,
-        UserService userService,
-        ClientMapper clientMapper,
-        ClientService clientService
-    ) {
+            AuthorityService authorityService,
+            UserMapper userMapper,
+            UserService userService,
+            ClientMapper clientMapper,
+            ClientService clientService) {
         this.authorityService = authorityService;
         this.userMapper = userMapper;
         this.userService = userService;
@@ -56,8 +56,8 @@ public class AccountFacade {
         BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
         User entity = userService.findByUsername(dto.getUsername());
 
-        if(crypt.matches(dto.getPassword(), entity.getPassword())) {
-           return userMapper.toDto(entity);
+        if (crypt.matches(dto.getPassword(), entity.getPassword())) {
+            return userMapper.toDto(entity);
         } else {
             return null;
         }
@@ -72,10 +72,8 @@ public class AccountFacade {
 
         Client entity = clientMapper.toSaveEntity(dto);
 
-        Authority userAuthority =
-            authorityService.findById(AuthoritiesConstants.USER);
-        Authority clientAuthority =
-            authorityService.findById(AuthoritiesConstants.CLIENT);
+        Authority userAuthority = authorityService.findById(AuthoritiesConstants.USER);
+        Authority clientAuthority = authorityService.findById(AuthoritiesConstants.CLIENT);
         entity.getUser().setAuthorities(Set.of(userAuthority, clientAuthority));
 
         User savedUser = userService.clientSignup(entity.getUser());

@@ -1,5 +1,16 @@
 package br.com.dgusto.facade.client;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.dgusto.domain.Address;
 import br.com.dgusto.domain.Client;
 import br.com.dgusto.domain.Product;
@@ -17,16 +28,6 @@ import br.com.dgusto.service.ClientService;
 import br.com.dgusto.service.ProductService;
 import br.com.dgusto.service.RequestItemService;
 import br.com.dgusto.service.RequestService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class RequestClientFacade {
@@ -40,13 +41,12 @@ public class RequestClientFacade {
     private final ProductService productService;
 
     public RequestClientFacade(
-        RequestService requestService,
-        RequestMapper requestMapper,
-        ClientService clientService,
-        AddressService addressService,
-        RequestItemService requestItemService,
-        ProductService productService
-    ) {
+            RequestService requestService,
+            RequestMapper requestMapper,
+            ClientService clientService,
+            AddressService addressService,
+            RequestItemService requestItemService,
+            ProductService productService) {
         this.requestService = requestService;
         this.requestMapper = requestMapper;
         this.clientService = clientService;
@@ -60,23 +60,24 @@ public class RequestClientFacade {
         Request entity = requestMapper.toClientSaveEntity(dto);
 
         Address address = entity.getAddress().getId() != null
-            ? addressService.get(entity.getAddress().getId())
-            : addressService.save(entity.getAddress());
+                ? addressService.get(entity.getAddress().getId())
+                : addressService.save(entity.getAddress());
 
         Client client = clientService.findById(entity.getClient().getId());
 
         Set<RequestItem> requestedItems = entity.getRequestItems().stream()
-            .peek(it -> {
-                Product product = productService.get(it.getProduct().getId());
-                it.setProduct(product);
-                it.setUnitValue(product.getUnitValue());
-                it.setTotalValue(product.getUnitValue().multiply(BigDecimal.valueOf(it.getQuantity())));
-            }).collect(Collectors.toSet());
+                .peek(it -> {
+                    Product product = productService.get(it.getProduct().getId());
+                    it.setProduct(product);
+                    it.setUnitValue(product.getUnitValue());
+                    it.setTotalValue(product.getUnitValue().multiply(BigDecimal.valueOf(it.getQuantity())));
+                }).collect(Collectors.toSet());
 
         entity.setStatus(RequestStatus.REQUESTED);
         entity.setOrderDate(LocalDateTime.now());
         entity.setOrderNumber(getOrderNumber());
-        entity.setTotalValue(requestedItems.stream().map(RequestItem::getTotalValue).reduce(BigDecimal.ZERO, BigDecimal::add));
+        entity.setTotalValue(
+                requestedItems.stream().map(RequestItem::getTotalValue).reduce(BigDecimal.ZERO, BigDecimal::add));
         entity.setAddress(address);
         entity.setClient(client);
 
@@ -117,7 +118,7 @@ public class RequestClientFacade {
         Client client = clientService.findByUserLogin(userLogin);
 
         return requestService.clientGetAll(client.getId(), pageable)
-            .map(requestMapper::toGetAllDto);
+                .map(requestMapper::toGetAllDto);
     }
 
     private String getOrderNumber() {
@@ -127,9 +128,9 @@ public class RequestClientFacade {
         Random random = new Random();
 
         return random.ints(leftLimit, rightLimit + 1)
-            .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-            .limit(targetStringLength)
-            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-            .toString();
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }

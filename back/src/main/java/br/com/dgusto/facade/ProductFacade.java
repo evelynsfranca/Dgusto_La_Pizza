@@ -1,14 +1,15 @@
 package br.com.dgusto.facade;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.dgusto.domain.Product;
 import br.com.dgusto.facade.dto.product.ProductToGetAllDTO;
 import br.com.dgusto.facade.dto.product.ProductToGetDTO;
 import br.com.dgusto.facade.mapper.ProductMapper;
 import br.com.dgusto.service.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductFacade {
@@ -17,9 +18,8 @@ public class ProductFacade {
     private final ProductMapper productMapper;
 
     public ProductFacade(
-        ProductService productService,
-        ProductMapper productMapper
-    ) {
+            ProductService productService,
+            ProductMapper productMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
     }
@@ -33,7 +33,7 @@ public class ProductFacade {
     @Transactional(readOnly = true)
     public Page<ProductToGetAllDTO> getAll(Pageable pageable) {
         return productService.getAll(pageable)
-            .map(productMapper::toGetAllDto);
+                .map(productMapper::toGetAllDto);
     }
 
     @Transactional(readOnly = true)
