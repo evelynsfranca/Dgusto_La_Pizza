@@ -1,11 +1,11 @@
 package br.com.dgusto.facade.dto.request;
 
+import java.io.Serializable;
+
 import br.com.dgusto.domain.enumeration.RequestStatus;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

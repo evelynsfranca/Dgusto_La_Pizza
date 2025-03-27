@@ -1,11 +1,11 @@
 package br.com.dgusto.facade.dto.phone;
 
+import java.io.Serializable;
+
 import br.com.dgusto.domain.enumeration.PhoneType;
 import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

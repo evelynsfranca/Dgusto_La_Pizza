@@ -1,12 +1,12 @@
 package br.com.dgusto.facade.dto.request;
 
-import br.com.dgusto.domain.enumeration.RequestStatus;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import br.com.dgusto.domain.enumeration.RequestStatus;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

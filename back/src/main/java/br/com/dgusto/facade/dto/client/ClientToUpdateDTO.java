@@ -1,13 +1,13 @@
 package br.com.dgusto.facade.dto.client;
 
+import java.io.Serializable;
+
 import br.com.dgusto.facade.dto.user.UserToClientUpdateDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

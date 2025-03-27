@@ -1,14 +1,14 @@
 package br.com.dgusto.facade.dto.product;
 
-import br.com.dgusto.facade.dto.productcategory.ProductCategoryIdDTO;
-import br.com.dgusto.facade.dto.producttype.ProductTypeIdDTO;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import br.com.dgusto.facade.dto.productcategory.ProductCategoryIdDTO;
+import br.com.dgusto.facade.dto.producttype.ProductTypeIdDTO;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

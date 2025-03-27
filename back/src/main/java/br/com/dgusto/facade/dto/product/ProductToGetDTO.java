@@ -1,13 +1,13 @@
 package br.com.dgusto.facade.dto.product;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import br.com.dgusto.facade.dto.productcategory.ProductCategoryDTO;
 import br.com.dgusto.facade.dto.producttype.ProductTypeDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor

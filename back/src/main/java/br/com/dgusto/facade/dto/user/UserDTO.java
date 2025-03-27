@@ -1,11 +1,11 @@
 package br.com.dgusto.facade.dto.user;
 
+import java.io.Serializable;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

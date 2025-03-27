@@ -1,12 +1,12 @@
 package br.com.dgusto.facade.dto.phone;
 
+import java.io.Serializable;
+
 import br.com.dgusto.domain.enumeration.PhoneType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

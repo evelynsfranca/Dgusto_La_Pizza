@@ -4,8 +4,8 @@ import br.com.dgusto.facade.dto.product.ProductToRequestSaveDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
