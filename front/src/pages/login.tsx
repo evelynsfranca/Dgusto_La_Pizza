@@ -142,14 +142,12 @@ function LoginPage({ cartData }) {
         },
         body: JSON.stringify(login)
       })
-        .then(res => {
-          if (res.status === 200) {
-            let token = res.headers.get("Authorization");
-            localStorage.setItem("token", token);
-            setToken(token)
-          }
-
-          return res
+        .then(res => res.json())
+        .then(data => {
+          let tk = `Bearer ${data.token}`
+          setToken(tk)
+          localStorage.setItem("token", tk);
+          return {ok:true};
         })
         .catch(e => {
           console.warn(e)

@@ -10,6 +10,7 @@ export interface IAccount {
 }
 
 export interface IUser {
+  id?: number;
   name: string;
   email: string;
   password: string;
@@ -206,6 +207,7 @@ function CreateAccountPage({ cartData }) {
 
     } else {
 
+      user.id = (Math.random() * (99999999999999999 - 3) + 3);      
       account.user = user;
 
       const res = await fetch(`${API_URL}/signup`, {
