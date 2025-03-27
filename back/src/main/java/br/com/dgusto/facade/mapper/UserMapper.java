@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import br.com.dgusto.domain.Authority;
 import br.com.dgusto.domain.User;
@@ -13,7 +14,7 @@ import br.com.dgusto.facade.dto.user.UserToGetDTO;
 import br.com.dgusto.facade.dto.user.UserToSaveDTO;
 import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
     UserDTO toDto(User entity);

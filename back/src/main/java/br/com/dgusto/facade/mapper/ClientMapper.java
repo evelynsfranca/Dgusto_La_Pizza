@@ -2,6 +2,7 @@ package br.com.dgusto.facade.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import br.com.dgusto.domain.Client;
 import br.com.dgusto.facade.dto.client.ClientDTO;
@@ -11,7 +12,8 @@ import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
 import br.com.dgusto.facade.dto.client.ClientToSimpleDTO;
 import br.com.dgusto.facade.dto.client.ClientToUpdateDTO;
 
-@Mapper(componentModel = "spring", uses = { PhoneMapper.class, AddressMapper.class, UserMapper.class })
+@Mapper(componentModel = "spring", uses = { PhoneMapper.class, AddressMapper.class,
+        UserMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ClientMapper {
 
     ClientDTO toDto(Client entity);

@@ -1,6 +1,7 @@
 package br.com.dgusto.facade.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import br.com.dgusto.domain.Address;
 import br.com.dgusto.facade.dto.address.AddressDTO;
@@ -10,7 +11,7 @@ import br.com.dgusto.facade.dto.address.AddressToRequestSaveDTO;
 import br.com.dgusto.facade.dto.address.AddressToSaveDTO;
 import br.com.dgusto.facade.dto.address.AddressToUpdateDTO;
 
-@Mapper(componentModel = "spring", uses = { ClientMapper.class })
+@Mapper(componentModel = "spring", uses = { ClientMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AddressMapper {
 
     AddressDTO toDto(Address entity);

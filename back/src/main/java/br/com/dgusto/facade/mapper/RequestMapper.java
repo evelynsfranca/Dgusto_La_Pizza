@@ -1,6 +1,7 @@
 package br.com.dgusto.facade.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import br.com.dgusto.domain.Request;
 import br.com.dgusto.facade.dto.request.RequestDTO;
@@ -10,7 +11,8 @@ import br.com.dgusto.facade.dto.request.RequestToEmployeeUpdateDTO;
 import br.com.dgusto.facade.dto.request.RequestToGetAllDTO;
 import br.com.dgusto.facade.dto.request.RequestToGetDTO;
 
-@Mapper(componentModel = "spring", uses = { AddressMapper.class, ClientMapper.class, RequestItemMapper.class })
+@Mapper(componentModel = "spring", uses = { AddressMapper.class, ClientMapper.class,
+        RequestItemMapper.class }, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RequestMapper {
 
     RequestDTO toDto(Request entity);

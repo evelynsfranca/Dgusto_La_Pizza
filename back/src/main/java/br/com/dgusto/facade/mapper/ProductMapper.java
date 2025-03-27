@@ -1,6 +1,7 @@
 package br.com.dgusto.facade.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import br.com.dgusto.domain.Product;
 import br.com.dgusto.facade.dto.product.ProductDTO;
@@ -11,7 +12,7 @@ import br.com.dgusto.facade.dto.product.ProductToRequestSaveDTO;
 import br.com.dgusto.facade.dto.product.ProductToSaveDTO;
 import br.com.dgusto.facade.dto.product.ProductToUpdateDTO;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
     ProductDTO toDto(Product entity);
