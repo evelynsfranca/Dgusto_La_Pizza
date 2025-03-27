@@ -1,9 +1,5 @@
 package br.com.dgusto.resources;
 
-import br.com.dgusto.facade.AccountFacade;
-import br.com.dgusto.facade.dto.client.ClientDTO;
-import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
-import br.com.dgusto.facade.dto.user.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import br.com.dgusto.facade.AccountFacade;
+import br.com.dgusto.facade.dto.client.ClientDTO;
+import br.com.dgusto.facade.dto.client.ClientToSaveDTO;
+import br.com.dgusto.facade.dto.user.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api")

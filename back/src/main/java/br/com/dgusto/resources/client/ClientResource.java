@@ -1,9 +1,5 @@
 package br.com.dgusto.resources.client;
 
-import br.com.dgusto.facade.client.ClientFacade;
-import br.com.dgusto.facade.dto.client.ClientDTO;
-import br.com.dgusto.facade.dto.client.ClientToGetDTO;
-import br.com.dgusto.facade.dto.client.ClientToUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +8,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.dgusto.facade.client.ClientFacade;
+import br.com.dgusto.facade.dto.client.ClientDTO;
+import br.com.dgusto.facade.dto.client.ClientToGetDTO;
+import br.com.dgusto.facade.dto.client.ClientToUpdateDTO;
 
 @RestController
 @RequestMapping("/api/client")

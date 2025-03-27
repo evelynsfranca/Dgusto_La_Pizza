@@ -1,9 +1,5 @@
 package br.com.dgusto.resources;
 
-import br.com.dgusto.facade.ProductFacade;
-import br.com.dgusto.facade.dto.product.ProductToGetAllDTO;
-import br.com.dgusto.facade.dto.product.ProductToGetDTO;
-import br.com.dgusto.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.dgusto.facade.ProductFacade;
+import br.com.dgusto.facade.dto.product.ProductToGetAllDTO;
+import br.com.dgusto.facade.dto.product.ProductToGetDTO;
+import br.com.dgusto.util.PaginationUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +39,8 @@ public class ProductResource {
     }
 
     @GetMapping("/products/categories/{categoryName}")
-    public ResponseEntity<Page<ProductToGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName, Pageable pageable) {
+    public ResponseEntity<Page<ProductToGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName,
+            Pageable pageable) {
         Page<ProductToGetAllDTO> page = productFacade.getAllProductCategories(categoryName, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/products/categories");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);

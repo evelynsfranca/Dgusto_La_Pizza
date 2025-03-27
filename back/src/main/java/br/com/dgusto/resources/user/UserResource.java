@@ -1,10 +1,5 @@
 package br.com.dgusto.resources.user;
 
-import br.com.dgusto.facade.admin.UserAdminFacade;
-import br.com.dgusto.facade.dto.user.UserDTO;
-import br.com.dgusto.facade.dto.user.UserToGetDTO;
-import br.com.dgusto.facade.dto.user.UserToSaveDTO;
-import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.dgusto.facade.admin.UserAdminFacade;
+import br.com.dgusto.facade.dto.user.UserDTO;
+import br.com.dgusto.facade.dto.user.UserToGetDTO;
+import br.com.dgusto.facade.dto.user.UserToSaveDTO;
+import br.com.dgusto.facade.dto.user.UserToUpdateDTO;
 
 @RestController
 @RequestMapping("/api/user")
@@ -26,6 +26,7 @@ public class UserResource {
     public UserResource(UserAdminFacade userFacade) {
         this.userFacade = userFacade;
     }
+
     @PostMapping("/users")
     public UserDTO save(@RequestBody UserToSaveDTO dto) {
         return userFacade.save(dto);

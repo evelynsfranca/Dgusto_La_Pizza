@@ -1,12 +1,5 @@
 package br.com.dgusto.resources.client;
 
-import br.com.dgusto.facade.client.PhoneClientFacade;
-import br.com.dgusto.facade.dto.phone.PhoneDTO;
-import br.com.dgusto.facade.dto.phone.PhoneToGetAllDTO;
-import br.com.dgusto.facade.dto.phone.PhoneToGetDTO;
-import br.com.dgusto.facade.dto.phone.PhoneToSaveDTO;
-import br.com.dgusto.facade.dto.phone.PhoneToUpdateDTO;
-import br.com.dgusto.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import br.com.dgusto.facade.client.PhoneClientFacade;
+import br.com.dgusto.facade.dto.phone.PhoneDTO;
+import br.com.dgusto.facade.dto.phone.PhoneToGetAllDTO;
+import br.com.dgusto.facade.dto.phone.PhoneToGetDTO;
+import br.com.dgusto.facade.dto.phone.PhoneToSaveDTO;
+import br.com.dgusto.facade.dto.phone.PhoneToUpdateDTO;
+import br.com.dgusto.util.PaginationUtil;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/client")

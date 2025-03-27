@@ -1,12 +1,5 @@
 package br.com.dgusto.resources.admin;
 
-import br.com.dgusto.facade.admin.ProductAdminFacade;
-import br.com.dgusto.facade.dto.product.ProductDTO;
-import br.com.dgusto.facade.dto.product.ProductToAdminGetAllDTO;
-import br.com.dgusto.facade.dto.product.ProductToGetDTO;
-import br.com.dgusto.facade.dto.product.ProductToSaveDTO;
-import br.com.dgusto.facade.dto.product.ProductToUpdateDTO;
-import br.com.dgusto.util.PaginationUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import br.com.dgusto.facade.admin.ProductAdminFacade;
+import br.com.dgusto.facade.dto.product.ProductDTO;
+import br.com.dgusto.facade.dto.product.ProductToAdminGetAllDTO;
+import br.com.dgusto.facade.dto.product.ProductToGetDTO;
+import br.com.dgusto.facade.dto.product.ProductToSaveDTO;
+import br.com.dgusto.facade.dto.product.ProductToUpdateDTO;
+import br.com.dgusto.util.PaginationUtil;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -67,14 +67,16 @@ public class ProductAdminResource {
     }
 
     @GetMapping("/products/categories/{categoryName}")
-    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName, Pageable pageable) {
+    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaFlavors(@PathVariable String categoryName,
+            Pageable pageable) {
         Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductCategories(categoryName, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/categories");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
 
     @GetMapping("/products/types/{typeName}")
-    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaTypes(@PathVariable String typeName, Pageable pageable) {
+    public ResponseEntity<Page<ProductToAdminGetAllDTO>> getAllPizzaTypes(@PathVariable String typeName,
+            Pageable pageable) {
         Page<ProductToAdminGetAllDTO> page = productAdminFacade.getAllProductTypes(typeName, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/admin/products/types");
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
