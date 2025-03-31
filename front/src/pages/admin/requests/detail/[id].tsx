@@ -43,9 +43,9 @@ export default function RequestDetail() {
       <>
         <h1 className="title">
           <Link href="/admin/requests/list">
-            <a title="Voltar para listagem de pedidos" className="btn-back">
+            <span title="Voltar para listagem de pedidos" className="btn-back">
               &#8249;
-            </a>
+            </span>
           </Link>
           {' '}
           Detalhes do pedido

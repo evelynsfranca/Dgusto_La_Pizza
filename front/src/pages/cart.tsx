@@ -149,9 +149,9 @@ function CartPage({ cartData, setCartData }) {
                     <div className="table-responsive mb-4">
 
                       <div className="text-end">
-                        <a className="btn btn-link mb-3 pe-0" href="#" onClick={() => clearCartData()}>
+                        <Link className="btn btn-link mb-3 pe-0" href="#" onClick={() => clearCartData()}>
                           Limpar carrinho <i className="bi bi-trash"></i>
-                        </a>
+                        </Link>
                       </div>
 
                       <table className="table table-borderless">

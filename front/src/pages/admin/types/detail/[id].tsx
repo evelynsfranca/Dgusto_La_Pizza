@@ -16,8 +16,8 @@ export default function TypeDetail() {
 
   const [productType, setProductType] = useState<IProductType>({});
   
-  async function handleGetProductType() {
-    const response: ApiResponse<IProductType> = await getProductType(id.toString(), token);
+  async function handleGetProductType(id: string) {
+    const response: ApiResponse<IProductType> = await getProductType(id, token);
 
     if (response.entity) {
       setProductType(response.entity)
@@ -26,7 +26,7 @@ export default function TypeDetail() {
 
   useEffect(() => {
     if (id && token) {
-      handleGetProductType();
+      handleGetProductType(id.toString());
     }
   }, [id, token]);
 
@@ -39,9 +39,9 @@ export default function TypeDetail() {
 
       <h1 className="title">
         <Link href="/admin/types/list">
-          <a title="Voltar para listagem de tipos" className="btn-back">
+          <span title="Voltar para listagem de tipos" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Detalhes do tipo
@@ -57,7 +57,7 @@ export default function TypeDetail() {
         <tbody>
           <tr>
             <td>
-              {productType.id}
+              {productType?.id?.toString() ?? ''}
             </td>
             <td>
               {productType.name}

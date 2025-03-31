@@ -6,4 +6,13 @@
   align-items: center;
   background-color: #ffe728;
   height: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.map {
+  display: flex;
+  object-fit: none;
+  height: auto;
+  width: 100%;
 }

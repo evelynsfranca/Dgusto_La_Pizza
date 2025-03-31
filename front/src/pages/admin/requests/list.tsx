@@ -60,7 +60,7 @@ export default function RequestsList() {
           {requestList && requestList.length ? requestList.map((request, index) => (
             <tr key={index}>
               <td>
-                {request.id}
+                {request.id.toString()}
               </td>
               <td>
                 {request.orderNumber}

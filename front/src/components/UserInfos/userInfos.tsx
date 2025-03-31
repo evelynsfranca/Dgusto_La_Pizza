@@ -36,9 +36,9 @@ export function UserInfos(data): any {
 
 
                 <Link href={"/user/my-account/addresses/delete/" + account?.id}>
-                  <a className="btn btn-primary">
+                  <span className="btn btn-primary">
                     Alterar minhas informações
-                  </a>
+                  </span>
                 </Link>
 
                 <hr />
@@ -46,9 +46,9 @@ export function UserInfos(data): any {
                 <h3 className="mb-4">Meus Endereços</h3>
 
                 <Link href="/user/my-account/addresses/new">
-                  <a className="btn btn-link mb-3">
+                  <span className="btn btn-link mb-3">
                     Novo endereço
-                  </a>
+                  </span>
                 </Link>
 
                 {account?.addresses?.length > 0 &&
@@ -65,15 +65,15 @@ export function UserInfos(data): any {
 
                               <div className="pt-3">
                                 <Link href={"/user/my-account/addresses/edit/" + address.id}>
-                                  <a className="btn btn-link ps-0">
+                                  <span className="btn btn-link ps-0">
                                     <i className="bi bi-pencil"></i>
-                                  </a>
+                                  </span>
                                 </Link>
 
                                 <Link href={"/user/my-account/addresses/delete/" + address.id}>
-                                  <a className="btn btn-link text-danger">
+                                  <span className="btn btn-link text-danger">
                                     <i className="bi bi-trash"></i>
-                                  </a>
+                                  </span>
                                 </Link>
                               </div>
 
@@ -90,9 +90,9 @@ export function UserInfos(data): any {
                 <h3 className="mb-4">Meus Telefones</h3>
 
                 <Link href="/user/my-account/phones/new">
-                  <a className="btn btn-link">
+                  <span className="btn btn-link">
                     Novo endereço
-                  </a>
+                  </span>
                 </Link>
 
                 {account?.phones?.length > 0 &&
@@ -101,11 +101,8 @@ export function UserInfos(data): any {
 
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
     ))
   )

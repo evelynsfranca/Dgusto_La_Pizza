@@ -6,4 +6,6 @@
   align-items: center;
   background-color: #ffe728;
   height: 60px;
+  position: relative;
+  z-index: 1;
 }

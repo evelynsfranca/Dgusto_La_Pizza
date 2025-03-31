@@ -41,9 +41,9 @@ export default function CategoryUpdate() {
 
       <h1 className="title">
         <Link href="/admin/categories/list">
-          <a title="Voltar para listagem de categoria" className="btn-back">
+          <span title="Voltar para listagem de categoria" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Editando categoria

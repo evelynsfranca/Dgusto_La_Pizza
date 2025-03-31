@@ -17,8 +17,8 @@ export default function CategoryDetail() {
 
   const [productCategory, setProductCategory] = useState<IProductCategory>({});
   
-  async function handleGetProductCategory() {
-    const response: ApiResponse<IProductCategory> = await getProductCategory(id.toString(), token);
+  async function handleGetProductCategory(id: string) {
+    const response: ApiResponse<IProductCategory> = await getProductCategory(id, token);
 
     if (response.entity) {
       setProductCategory(response.entity)
@@ -27,7 +27,7 @@ export default function CategoryDetail() {
 
   useEffect(() => {
     if (id && token) {
-      handleGetProductCategory();
+      handleGetProductCategory(id.toString());
     }
   }, [id, token]);
 
@@ -40,9 +40,9 @@ export default function CategoryDetail() {
 
       <h1 className="title">
         <Link href="/admin/categories/list">
-          <a title="Voltar para listagem de categorias" className="btn-back">
+          <span title="Voltar para listagem de categorias" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Detalhes da categoria
@@ -58,10 +58,10 @@ export default function CategoryDetail() {
         <tbody>
           <tr>
             <td>
-              {productCategory.id}
+              {productCategory?.id?.toString()}
             </td>
             <td>
-              {productCategory.name}
+              {productCategory?.name}
             </td>
           </tr>
         </tbody>

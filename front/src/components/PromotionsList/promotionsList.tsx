@@ -1,7 +1,7 @@
 import useSWR from 'swr';
-import CurrencyFormat from 'react-currency-format';
 import { API_URL } from 'src/utils/constants';
 import Loading from '../Loading/loading';
+import { NumberFormatBase } from 'react-number-format';
 
 export interface IContentPromotions {
   content: IPromotions[];
@@ -33,10 +33,17 @@ export function PromotionsList() {
           {data?.content?.map(promotion => (
             <div key={promotion.id}>
               <h1>{promotion.name}</h1>
-              <CurrencyFormat
+              <NumberFormatBase
+                format={(numStr) => {
+                  if (numStr === '') return '';
+                  return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    maximumFractionDigits: 2,
+                  }).format(Number(numStr))
+                }}
                 value={promotion.unitValue}
                 displayType={'text'}
-                decimalSeparator={','}
                 prefix={'R$ '}
                 renderText={value => <p>{value}</p>}
               />

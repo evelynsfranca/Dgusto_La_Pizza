@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 import { API_URL } from '../../utils/constants';
-import CurrencyFormat from 'react-currency-format';
 import Loading from '../Loading/loading';
 import { ReactElement, useState } from 'react';
 import Link from 'next/link';
@@ -36,9 +35,7 @@ export function MyPurchasesList() {
         Acesse o nosso 
         {' '}
         <Link href="/menu">
-          <a>
-          menu
-          </a>
+          <span>menu</span>
         </Link>
         {' '}
         e peça sua pizza!

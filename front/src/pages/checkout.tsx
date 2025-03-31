@@ -1,10 +1,7 @@
-import Link from 'next/link';
 import LayoutGeneral from 'src/components/Layout/layoutGeneral';
-import Image from 'next/image';
-import pizzas from '/public/images/products/sample.png';
-import CurrencyFormat from 'react-currency-format';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
+import { NumberFormatBase } from 'react-number-format';
 
 export interface IProducts {
   id: Number | any;
@@ -90,10 +87,17 @@ function CheckoutPage({ cartData, setCartData }) {
                     </small>
                   </div>
                   <span className="text-muted">
-                    <CurrencyFormat
+                    <NumberFormatBase
+                      format={(numStr) => {
+                        if (numStr === '') return '';
+                        return new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                          maximumFractionDigits: 2,
+                        }).format(Number(numStr))
+                      }}
                       value={productItem.product.unitValue}
                       displayType={'text'}
-                      decimalSeparator={','}
                       prefix={'R$ '}
                       renderText={value => <>{value}</>}
                     />
@@ -105,25 +109,23 @@ function CheckoutPage({ cartData, setCartData }) {
               <li className="list-group-item d-flex justify-content-between">
                 <span>Total</span>
                 <strong>
-                  <CurrencyFormat
+                  <NumberFormatBase
+                    format={(numStr) => {
+                      if (numStr === '') return '';
+                      return new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                        maximumFractionDigits: 2,
+                      }).format(Number(numStr))
+                    }}
                     value={cartTotal}
                     displayType={'text'}
-                    decimalSeparator={','}
                     prefix={'R$ '}
                     renderText={value => <>{value}</>}
                   />
                 </strong>
               </li>
             </ul>
-
-            {/* <form className="card p-2">
-              <div className="input-group">
-                <input type="text" className="form-control" placeholder="Promo code"
-                  onChange={handleChange}
-                />
-                <button type="submit" className="btn btn-secondary">Redeem</button>
-              </div>
-            </form> */}
 
             <div className="my-5">
               <button className="w-100 btn btn-primary btn-lg">
@@ -210,44 +212,7 @@ function CheckoutPage({ cartData, setCartData }) {
                   />
                 </div>
 
-                {/* <div className="col-md-5">
-                  <label htmlFor="country" className="form-label">Country</label>
-                  <select className="form-select" id="country" required>
-                    <option value="">Escolha...</option>
-                    <option>Brasil</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div> */}
-
-                {/* <div className="col-md-4">
-                  <label htmlFor="state" className="form-label">State</label>
-                  <select className="form-select" id="state" required>
-                    <option value="">Escolha...</option>
-                    <option>Paraná</option>
-                    <option>Minas Gerais</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div> */}
-
               </div>
-
-              {/* <div className="form-check">
-                <input type="checkbox" className="form-check-input" id="same-address"
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
-              </div>
-
-              <div className="form-check">
-                <input type="checkbox" className="form-check-input" id="save-info"
-                  onChange={handleChange}
-                />
-                <label className="form-check-label" htmlFor="save-info">Save this information for next time</label>
-              </div> */}
 
               <h4 className="mt-5 mb-3">Payment</h4>
 

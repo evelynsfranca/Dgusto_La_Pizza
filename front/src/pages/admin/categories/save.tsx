@@ -33,9 +33,9 @@ export default function ProductCategoriesAdd() {
 
       <h1 className="title">
         <Link href="/admin/categories/list">
-          <a title="Voltar para listagem de categorias" className="btn-back">
+          <span title="Voltar para listagem de categorias" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Adicionar Nova Categorias
@@ -50,7 +50,7 @@ export default function ProductCategoriesAdd() {
             type="text"
             className="form-control"
             value={category.name}
-            onChange={category => setCategory({ ...category, name: category.target.value })}
+            onChange={event => setCategory({ ...category, name: event.target.value })}
           />
         </div>
         

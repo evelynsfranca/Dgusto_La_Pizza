@@ -14,7 +14,7 @@ function MenuPage({ cartData, setCartData, productAddedToCart, setProductAddedTo
       productAddedToCart={productAddedToCart}
     >
       <section className={style.pizzaContainer}>
-        <Image src={pizza} width={384} height={221} />
+        <Image alt="" src={pizza} width={384} height={221} />
       </section>
 
       <section className="container pt-5 my-5">

@@ -17,8 +17,8 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState<IProduct>({});
   
-  async function handleGetProduct() {
-    const response: ApiResponse<IProduct> = await getProduct(id.toString(), token);
+  async function handleGetProduct(id: string) {
+    const response: ApiResponse<IProduct> = await getProduct(id, token);
 
     if (response.entity) {
       setProduct(response.entity)
@@ -27,7 +27,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (id && token) {
-      handleGetProduct();
+      handleGetProduct(id.toString());
     }
   }, [id, token]);
 
@@ -42,9 +42,9 @@ export default function ProductDetail() {
       <>
         <h1 className="title">
           <Link href="/admin/products/list">
-            <a title="Voltar para listagem de produtos" className="btn-back">
+            <span title="Voltar para listagem de produtos" className="btn-back">
               &#8249;
-            </a>
+            </span>
           </Link>
           {' '}
           Detalhes do produto
@@ -65,19 +65,19 @@ export default function ProductDetail() {
           <tbody>
             <tr>
               <td>
-                {product.id}
+                {product?.id?.toString() ?? ''}
               </td>
               <td>
-                {product.name}
+                {product?.name}
               </td>
               <td>
-                {product.description}
+                {product?.description}
               </td>
               <td>
-                {product.unitValue?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                {product?.unitValue?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
               </td>
               <td>
-                {product.stockQuantity}
+                {product?.stockQuantity}
               </td>
               <td>
                 {product?.productType?.name ?? ''}

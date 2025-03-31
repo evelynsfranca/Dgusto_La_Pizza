@@ -20,7 +20,7 @@ function ApiMenuDetail({ name, cartData, setCartData, setProductAddedToCart }) {
 
   return (
     <ProductsList
-      data={data}
+      data={data.content}
       cartData={cartData}
       setCartData={setCartData}
       setProductAddedToCart={setProductAddedToCart}
@@ -39,7 +39,7 @@ function MenuDetail({ cartData, setCartData, productAddedToCart, setProductAdded
       productAddedToCart={productAddedToCart}
     >
       <section className={style.pizzaContainer}>
-        <Image src={pizza} width={384} height={221} />
+        <Image alt="" src={pizza} width={384} height={221} />
       </section>
 
       <div className="container">
@@ -48,9 +48,9 @@ function MenuDetail({ cartData, setCartData, productAddedToCart, setProductAdded
           <div className="col">
             <h1 className="display-1 text-capitalize">
               <Link href="/menu">
-                <a className={style.customLink} title="Voltar">
+                <span className={style.customLink} title="Voltar">
                   <i className="bi bi-chevron-left"></i>
-                </a>
+                </span>
               </Link>
               {' '}
               {name}

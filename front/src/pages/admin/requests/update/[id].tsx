@@ -41,9 +41,9 @@ export default function RequestUpdate() {
     
       <h1 className="title">
         <Link href="/admin/requests/list">
-          <a title="Voltar para listagem de pedidos" className="btn-back">
+          <span title="Voltar para listagem de pedidos" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Editando pedido

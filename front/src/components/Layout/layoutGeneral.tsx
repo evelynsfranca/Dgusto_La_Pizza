@@ -12,70 +12,29 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    if (typeof window !== undefined && localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token'))
-    }
-
+    typeof window !== undefined 
+      && localStorage.getItem('token')
+      && setToken(localStorage.getItem('token'))
   }, []);
 
   return (
     <>
       <Head>
         <title>
-          {pageName === 'HomePage' ?
-            'Início'
-            : ''}
-
-          {pageName === 'MenuPage' ?
-            'Cardápio'
-            : ''}
-
-          {pageName === 'MenuDetailPage' ?
-            'Cardápio'
-            : ''}
-
-          {pageName === 'MyPurchasesPage' ?
-            'Meus Pedidos'
-            : ''}
-
-          {pageName === 'PromotionsPage' ?
-            'Promoções'
-            : ''}
-
-          {pageName === 'ContactPage' ?
-            'Contato'
-            : ''}
-
-          {pageName === 'LoginPage' ?
-            'Login'
-            : ''}
-
-          {pageName === 'CreateAccountPage' ?
-            'Criar Conta'
-            : ''}
-
-          {pageName === 'NotFoundPage' ?
-            'Não encontramos esta página'
-            : ''}
-
-          {pageName === 'CartPage' ?
-            'Carrinho'
-            : ''}
-
-          {pageName === 'CheckoutPage' ?
-            'Finalizar Compra'
-            : ''}
-
-          {pageName === 'MyAccountPage' ?
-            'Minha Conta'
-            : ''}
-
-          {pageName === 'NewAddressPage' ?
-            'Novo endereço'
-            : ''}
-
+          {pageName === 'HomePage' ? 'Início' : ''}
+          {pageName === 'MenuPage' ? 'Cardápio' : ''}
+          {pageName === 'MenuDetailPage' ? 'Cardápio' : ''}
+          {pageName === 'MyPurchasesPage' ? 'Meus Pedidos' : ''}
+          {pageName === 'PromotionsPage' ? 'Promoções' : ''}
+          {pageName === 'ContactPage' ? 'Contato' : ''}
+          {pageName === 'LoginPage' ? 'Login' : ''}
+          {pageName === 'CreateAccountPage' ? 'Criar Conta' : ''}
+          {pageName === 'NotFoundPage' ? 'Não encontramos esta página' : ''}
+          {pageName === 'CartPage' ? 'Carrinho' : ''}
+          {pageName === 'CheckoutPage' ? 'Finalizar Compra' : ''}
+          {pageName === 'MyAccountPage' ? 'Minha Conta' : ''}
+          {pageName === 'NewAddressPage' ? 'Novo endereço' : ''}
           {' '}
-
           - D'Gusto La Pizza
         </title>
       </Head>
@@ -86,9 +45,16 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
           <RequestToday pageName={pageName} />
 
           <Link href="/">
-            <a className={style.logo}>
-              <Image src={logo} width={479} height={436} className={style.logoImage} layout="responsive" />
-            </a>
+            <span className={style.logo}>
+              <Image 
+                alt="Dgusto La Pizza - logo" 
+                src={logo} 
+                width={479} 
+                height={436} 
+                className={style.logoImage} 
+                layout="responsive"
+              />
+            </span>
           </Link>
 
           <section>
@@ -105,125 +71,60 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
       {pageName !== "HomePage" && pageName !== "NotFoundPage" &&
 
         <main>
-
           <section className={style.containerLogo}>
+
             <div className={style.sectionLogo}>
 
               <RequestToday pageName={pageName} />
 
               <Link href="/">
-                <a>
-                  <Image src={logo} width={165} height={150} />
-                </a>
+                <span>
+                  <Image
+                    alt="Logo Dgusto La Pizza"
+                    src={logo}
+                    width={165}
+                    height={150}
+                  />
+                </span>
               </Link>
 
             </div>
 
             <Navbar cartData={cartData} />
 
-            <section className={["positionRelactive text-center", pageName === "MenuPage" || pageName === "ContactPage" ? "pb-5" : "pb-2"].join(' ')}>
+            <section
+              className={
+                ["positionRelactive text-center",
+                  pageName === "MenuPage" || pageName === "ContactPage"
+                    ? "pb-5"
+                    : "pb-2"
+                ].join(' ')}
+            >
               <h1 className="display-1 text-light">
-                {pageName === 'MenuPage' &&
-                  <span>
-                    Cardápio
-                  </span>
-                }
-
-                {pageName === 'MenuDetailPage' &&
-                  <span>
-                    Cardápio
-                  </span>
-                }
-
-                {pageName === 'MyPurchasesPage' &&
-                  <span>
-                    Meus Pedidos
-                  </span>
-                }
-
-                {pageName === 'PromotionsPage' &&
-                  <span>
-                    Promoções
-                  </span>
-                }
-
-                {pageName === 'ContactPage' &&
-                  <span>
-                    Contato
-                  </span>
-                }
-
-                {pageName === 'LoginPage' &&
-                  <span>
-                    Login
-                  </span>
-                }
-
-                {pageName === 'CreateAccountPage' &&
-                  <span>
-                    Criar Conta
-                  </span>
-                }
-
-                {pageName === 'CartPage' &&
-                  <span>
-                    Carrinho
-                  </span>
-                }
-
-                {pageName === 'CheckoutPage' &&
-                  <span>
-                    Finalizar Compra
-                  </span>
-                }
-
-                {pageName === 'MyAccountPage' &&
-                  <span>
-                    Minha Conta
-                  </span>
-                }
-
-                {pageName === 'NewAddressPage' &&
-                  <span>
-                    Novo endereço
-                  </span>
-                }
-
+                {pageName === 'MenuPage' && <span>Cardápio</span>}
+                {pageName === 'MenuDetailPage' && <span>Cardápio</span>}
+                {pageName === 'MyPurchasesPage' && <span>Meus Pedidos</span>}
+                {pageName === 'PromotionsPage' && <span>Promoções</span>}
+                {pageName === 'ContactPage' && <span>Contato</span>}
+                {pageName === 'LoginPage' && <span>Login</span>}
+                {pageName === 'CreateAccountPage' && <span>Criar Conta</span>}
+                {pageName === 'CartPage' && <span>Carrinho</span>}
+                {pageName === 'CheckoutPage' && <span>Finalizar Compra</span>}
+                {pageName === 'MyAccountPage' && <span>Minha Conta</span>}
+                {pageName === 'NewAddressPage' && <span>Novo endereço</span>}
               </h1>
 
               <p className="text-light mb-5">
-                {pageName === 'MenuPage' &&
-                  <span>
-                    O sabor que conquistou os Curitibanos!
-                  </span>
-                }
-
-                {pageName === 'MenuDetailPage' &&
-                  <span>
-                    O sabor que conquistou os Curitibanos!
-                  </span>
-                }
-
-                {pageName === 'PromotionsPage' &&
-                  <span>
-                    Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!
-                  </span>
-                }
-
-                {pageName === "MyAccountPage" &&
-                  <span>
-                    {">"} Meus Dados
-                  </span>
-                }
-
+                {pageName === 'MenuPage' && <span>O sabor que conquistou os Curitibanos!</span>}
+                {pageName === 'MenuDetailPage' && <span>O sabor que conquistou os Curitibanos!</span>}
+                {pageName === 'PromotionsPage' && <span>Aproveite as promoções da D’Gusto! A cada pedaço uma experiência única!</span>}
+                {pageName === "MyAccountPage" && <span>{">"} Meus Dados</span>}
               </p>
 
             </section>
-
           </section>
 
           {children}
-
         </main>
 
       }
@@ -231,18 +132,22 @@ function LayoutGeneral({ children, pageName, cartData, productAddedToCart = fals
       {pageName === "NotFoundPage" &&
 
         <main className={style.bannerContainer}>
-
           <section className={style.notFoundContainer}>
             {children}
           </section>
-
         </main>
 
       }
 
       {productAddedToCart &&
         <div className="position-fixed top-0 end-0 p-3">
-          <div id="liveToast" className="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+          <div 
+            id="liveToast" 
+            className="toast show" 
+            role="alert" 
+            aria-live="assertive" 
+            aria-atomic="true"
+          >
             <div className="toast-header">
               <strong className="me-auto">Produto Adicionado</strong>
             </div>

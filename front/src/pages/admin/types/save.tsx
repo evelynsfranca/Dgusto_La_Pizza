@@ -34,9 +34,9 @@ export default function ProductTypesAdd() {
 
       <h1 className="title">
         <Link href="/admin/productTypes/list">
-          <a title="Voltar para listagem de tipos" className="btn-back">
+          <span title="Voltar para listagem de tipos" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Adicionar Novo Tipo

@@ -47,11 +47,11 @@ function LoginPage({ cartData }) {
   }
 
   function ApiAccount(): any {
-    const fetcher = (url, token) => fetch(url, { headers: { "Authorization": token } })
+    const fetcher = (url) => fetch(url, { headers: { "Authorization": token } })
       .then(res => res.json())
       .catch(e => console.warn(e))
 
-    const { data, error } = useSWR([`${API_URL}/account`, token], fetcher)
+    const { data, error } = useSWR(`${API_URL}/account`, fetcher)
 
     if (error || data?.status === 500) return <> (failed to load)</>
     if (!data) return <> carregado... </>
@@ -155,7 +155,7 @@ function LoginPage({ cartData }) {
 
       const responseLogin: any = await resLogin;
 
-      if (responseLogin.ok) {
+      if (responseLogin?.ok) {
         setIsLoggedIn(true)
       } else {
         setIsLoggedIn(false)
@@ -229,9 +229,9 @@ function LoginPage({ cartData }) {
               </button>
 
               <Link href="/create-account">
-                <a className="btn btn-link ps-0">
+                <span className="btn btn-link ps-0">
                   Criar Conta
-                </a>
+                </span>
               </Link>
 
             </form>

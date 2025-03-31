@@ -41,9 +41,9 @@ export default function UserUpdate() {
 
       <h1 className="title">
         <Link href="/admin/users/list">
-          <a title="Voltar para listagem de usuario" className="btn-back">
+          <span title="Voltar para listagem de usuario" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Editando usuário

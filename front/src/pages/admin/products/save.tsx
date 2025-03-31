@@ -77,7 +77,9 @@ export default function ProductList() {
   }
 
   function selectCategory(event) {
-    setProduct({ ...product, productCategory: { ...product.productCategory, id: event.target.value, name: productCategories.find(it => it.id == event.target.value).name } });
+    event != undefined
+      ? setProduct({ ...product, productCategory: { ...product.productCategory, id: event.target.value, name: productCategories.find(it => it.id == event.target.value).name } })
+      : setProduct({...product});
   }
 
 
@@ -90,9 +92,9 @@ export default function ProductList() {
 
       <h1 className="title">
         <Link href="/admin/products/list">
-          <a title="Voltar para listagem de produtos" className="btn-back">
+          <span title="Voltar para listagem de produtos" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Adicionar Novo Produto
@@ -109,7 +111,7 @@ export default function ProductList() {
             {...register('name')} className={`form-control ${errors.name ? 'is-invalid' : ''}`}
             onChange={name => setProduct({ ...product, name: name.target.value })}
           />
-          <div className="invalid-feedback">{errors.name?.message}</div>
+          <div className="invalid-feedback">{errors.name?.message.toString()}</div>
         </div>
 
         <div className="mb-3">
@@ -121,7 +123,7 @@ export default function ProductList() {
             {...register('description')} className={`form-control ${errors.description ? 'is-invalid' : ''}`}
             onChange={description => setProduct({ ...product, description: description.target.value })}
           />
-          <div className="invalid-feedback">{errors.description?.message}</div>
+          <div className="invalid-feedback">{errors.description?.message.toString()}</div>
         </div>
 
         <div className="mb-3">
@@ -134,7 +136,7 @@ export default function ProductList() {
             {...register('unitValue')} className={`form-control ${errors.unitValue ? 'is-invalid' : ''}`}
             onChange={unitValue => setProduct({ ...product, unitValue: Number(unitValue.target.value) })}
           />
-          <div className="invalid-feedback">{errors.unitValue?.message}</div>
+          <div className="invalid-feedback">{errors.unitValue?.message.toString()}</div>
         </div>
 
         <div className="mb-3">
@@ -147,7 +149,7 @@ export default function ProductList() {
             {...register('stockQuantity')} className={`form-control ${errors.stockQuantity ? 'is-invalid' : ''}`}
             onChange={stockQuantity => setProduct({ ...product, stockQuantity: Number(stockQuantity.target.value) })}
           />
-          <div className="invalid-feedback">{errors.stockQuantity?.message}</div>
+          <div className="invalid-feedback">{errors.stockQuantity?.message.toString()}</div>
         </div>
 
         <div className="mb-3">
@@ -168,7 +170,7 @@ export default function ProductList() {
               ))}
             </select>
           )}
-          <div className="invalid-feedback">{errors.type?.message}</div>
+          <div className="invalid-feedback">{errors.type?.message.toString()}</div>
         </div>
 
         <div className="mb-3">
@@ -189,7 +191,7 @@ export default function ProductList() {
               ))}
             </select>
           )}
-          <div className="invalid-feedback">{errors.category?.message}</div>
+          <div className="invalid-feedback">{errors.category?.message.toString()}</div>
         </div>
 
 

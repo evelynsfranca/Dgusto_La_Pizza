@@ -111,10 +111,9 @@ export default function CategoriesList() {
         title="Deseja mesmo deletar?"
         onConfirm={() => confirmDelete()}
         onCancel={() => setShowDeleteModal(false)}
+        placeholder='Ao confirmar, você irá deletar a categoria, esta ação não poderá ser revertida.'
         focusCancelBtn
-      >
-        Ao confirmar, você irá deletar a categoria, esta ação não poderá ser revertida.
-      </SweetAlert>
+      />
     </LayoutAdmin>
   );
 }

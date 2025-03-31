@@ -1,14 +1,14 @@
 import { deleteAddress } from 'api/client/address';
 import { getClient } from 'api/client/client';
 import { deletePhone } from 'api/client/phone';
-import localStorage from 'localStorage';
 import _ from 'lodash';
 import { IClient } from 'model/IClient';
 import Link from 'next/link';
 import router from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { phoneTypes } from '../../utils/constants';
+import localStorage from 'localStorage';
 
 export interface IContentPromotions {
   content: IPromotions[]
@@ -24,7 +24,7 @@ export interface IPromotions {
 export const UserInfos = (data): any => {
 
   const token = localStorage?.getItem('token');
-  
+
   const [showDeleteAddressModal, setShowDeleteAddressModal] = useState(false);
   const [showDeletePhoneModal, setShowDeletePhoneModal] = useState(false);
   const [addressToDeleteModal, setAddressToDeleteModal] = useState('');
@@ -35,6 +35,7 @@ export const UserInfos = (data): any => {
     setAddressToDeleteModal(id)
     setShowDeleteAddressModal(true)
   }
+
   function openModalDeletePhone(id) {
     setPhoneToDeleteModal(id)
     setShowDeletePhoneModal(true)
@@ -60,6 +61,7 @@ export const UserInfos = (data): any => {
 
   return (
     _.map(data, account => (
+
       <div key={account.id}>
         <div className="row">
           <div className="col">
@@ -93,35 +95,50 @@ export const UserInfos = (data): any => {
 
                 <h3 className="mb-4">Meus Endereços</h3>
 
-                <Link href="/user/my-account/new-address">
-                  <a className="btn btn-link mb-3">
-                    Novo endereço
-                  </a>
+                <Link
+                  href="/user/my-account/new-address"
+                  className="btn btn-link mb-3"
+                >
+                  <span>Novo endereço</span>
                 </Link>
 
                 {account?.addresses?.length > 0 &&
+
                   <div className="row">
-                    {account.addresses.map((address, index) => {
-                      return (
-                        <div className="col">
-                          <div className="card mb-3">
-                            <div className="card-body">
+                    {account.addresses
+                      .map((address, index) => {
+                        return (
+                          <div className="col">
+                            <div className="card mb-3">
+                              <div className="card-body">
 
-                              {address.street}, {address.number} - {address.neighborhood} - {address.zipCode} <br />
-                              {address.city} - {address.state} <br /><br />
-                              {address.mainAddress ? <span className="badge rounded-pill bg-primary">Endereço principal</span> : ''}
+                                {address.street}, {address.number} - {address.neighborhood} - {address.zipCode} <br />
+                                {address.city} - {address.state} <br /><br />
+                                {address.mainAddress
+                                  ? <span className="badge rounded-pill bg-primary">Endereço principal</span>
+                                  : ''}
 
-                              <button type="button" className="badge rounded-pill bg-primary" style={{ border: 0 }} onClick={() => router.push(`/user/my-account/edit-address/${address.id}`)}>
-                                Editar
-                              </button>
-                              <button type="button" className="badge rounded-pill bg-danger" style={{ border: 0 }} onClick={() => openModalDeleteAddress(address.id)}>
-                                Remover
-                              </button>
+                                <button
+                                  type="button"
+                                  className="badge rounded-pill bg-primary" style={{ border: 0 }}
+                                  onClick={() => router.push(`/user/my-account/edit-address/${address.id}`)}
+                                >
+                                  Editar
+                                </button>
+
+                                <button
+                                  type="button"
+                                  className="badge rounded-pill bg-danger"
+                                  style={{ border: 0 }}
+                                  onClick={() => openModalDeleteAddress(address.id)}
+                                >
+                                  Remover
+                                </button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })}
                   </div>
                 }
 
@@ -129,37 +146,49 @@ export const UserInfos = (data): any => {
 
                 <h3 className="mb-4">Meus Telefones</h3>
 
-                <Link href="/user/my-account/new-phone">
-                  <a className="btn btn-link">
-                    Novo telefone
-                  </a>
+                <Link
+                  href="/user/my-account/new-phone"
+                  className="btn btn-link"
+                >
+                  <span>Novo telefone</span>
                 </Link>
 
                 {account?.phones?.length > 0 && (
-                  <>
-                  <p>telefones:</p>
-                  {account.phones.map((phone, index) => (
-                    <>
-                    <div>{`(${phone.areaCode}) ${phone.number}`}</div>
-                    <div>{`${phoneTypes[phone.type] ?? ''}`}</div>
-                    {phone.mainPhone ? <span className="badge rounded-pill bg-primary">Telefone principal</span> : ''}
 
-                    <button type="button" className="badge rounded-pill bg-primary" style={{ border: 0 }} onClick={() => router.push(`/user/my-account/edit-phone/${phone.id}`)}>
-                      Editar
-                    </button>
-                    <button type="button" className="badge rounded-pill bg-danger" style={{ border: 0 }} onClick={() => openModalDeletePhone(phone.id)}>
-                      Remover
-                    </button>
-                    </>
-                  ))}
+                  <>
+                    <p>telefones:</p>
+                    {account.phones
+                      .map((phone, index) => (
+                        <>
+                          <div>{`(${phone.areaCode}) ${phone.number}`}</div>
+                          <div>{`${phoneTypes[phone.type] ?? ''}`}</div>
+                          {phone.mainPhone
+                            ? <span className="badge rounded-pill bg-primary">Telefone principal</span>
+                            : ''}
+
+                          <button
+                            type="button"
+                            className="badge rounded-pill bg-primary"
+                            style={{ border: 0 }}
+                            onClick={() => router.push(`/user/my-account/edit-phone/${phone.id}`)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            type="button"
+                            className="badge rounded-pill bg-danger"
+                            style={{ border: 0 }}
+                            onClick={() => openModalDeletePhone(phone.id)}
+                          >
+                            Remover
+                          </button>
+                        </>
+                      ))}
                   </>
                 )}
-
               </div>
             </div>
-
           </div>
-
         </div>
 
         <SweetAlert
@@ -170,12 +199,13 @@ export const UserInfos = (data): any => {
           confirmBtnText="Deletar"
           confirmBtnBsStyle="danger"
           title="Deseja mesmo deletar?"
+          placeholder='Ao confirmar, você irá deletar o endereço, esta ação não poderá ser revertida.'
           onConfirm={() => confirmAddressDelete()}
           onCancel={() => setShowDeleteAddressModal(false)}
           focusCancelBtn
-        >
-          Ao confirmar, você irá deletar o endereço, esta ação não poderá ser revertida.
-        </SweetAlert>
+        />
+        {/* Ao confirmar, você irá deletar o endereço, esta ação não poderá ser revertida.
+        </SweetAlert> */}
 
         <SweetAlert
           show={showDeletePhoneModal}
@@ -184,19 +214,21 @@ export const UserInfos = (data): any => {
           cancelBtnText="Cancelar"
           confirmBtnText="Deletar"
           confirmBtnBsStyle="danger"
-          title="Deseja mesmo deletar?"
+          title="Deseja mesmo deletar? Ao confirmar, você irá deletar o telefone, esta ação não poderá ser revertida."
           onConfirm={() => confirmPhoneDelete()}
           onCancel={() => setShowDeletePhoneModal(false)}
           focusCancelBtn
-        >
-          Ao confirmar, você irá deletar o telefone, esta ação não poderá ser revertida.
-        </SweetAlert>
+          placeholder='Ao confirmar, você irá deletar o telefone, esta ação não poderá ser revertida.'
+        />
+        {/* Ao confirmar, você irá deletar o telefone, esta ação não poderá ser revertida.
+        </SweetAlert> */}
       </div>
     ))
   )
 }
 
 export function MyAccountData() {
+
   const token = localStorage.getItem('token');
   const [userData, setUserData] = useState<IClient>({})
   const [isLoading, setIsLoading] = useState(false)
@@ -214,35 +246,27 @@ export function MyAccountData() {
     }
 
     setIsLoading(false)
-
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  useEffect(() => { getData() }, []);
 
   return (
-    <>
-      <div className="container">
-        <div className="row">
+    <div className="container">
+      <div className="row">
 
-          {!isLoading && isErrored &&
-            <>
-              <div className="alert alert-danger" role="alert">
-                Erro ao tentar carregar seus dados, tente novamente mais tarde.
-              </div>
-            </>
-          }
+        {!isLoading && isErrored &&
+          <div className="alert alert-danger" role="alert">
+            Erro ao tentar carregar seus dados, tente novamente mais tarde.
+          </div>
+        }
 
-          {!isLoading && !!userData &&
-            <UserInfos data={userData} />
-          }
+        {!isLoading && !!userData &&
+          <UserInfos data={userData} />
+        }
 
-        </div>
       </div>
-
-    </>
+    </div>
   )
 }
 
-export default MyAccountData
+export default MyAccountData;

@@ -86,7 +86,7 @@ export default function UserList() {
           )}          
           {userList && userList?.length ? userList.map((user, index) => (
             <tr key={index}>
-              <td>{user.id}</td>
+              <td>{user.id.toString()}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
@@ -113,12 +113,11 @@ export default function UserList() {
         confirmBtnText="Deletar"
         confirmBtnBsStyle="danger"
         title="Deseja mesmo deletar?"
+        placeholder='Ao confirmar, você irá deletar o usuário, esta ação não poderá ser revertida.'
         onConfirm={handlDeleteUser}
         onCancel={() => setShowDeleteModal(false)}
         focusCancelBtn
-      >
-        Ao confirmar, você irá deletar o usuário, esta ação não poderá ser revertida.
-      </SweetAlert>
+      />
     </LayoutAdmin>
   );
 }

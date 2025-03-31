@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import style from './RequestToday.module.css';
 
 const RequestToday = ({ pageName }) => (
   <>
-    <a href="https://wa.me/+5541999999999" target="_blank" className={['bannerCard', pageName].join(' ')}>
+    <Link href="https://wa.me/+5541999999999" target="_blank" className={['bannerCard', pageName].join(' ')}>
+    <>
       <span className={style.bannerCardText}>
         Peça hoje mesmo!
         </span>
@@ -12,7 +14,8 @@ const RequestToday = ({ pageName }) => (
       <span className={style.bannerCardTextGreen}>
         Estamos abertos
       </span>
-    </a>
+      </>
+    </Link>
   </>
 );
 

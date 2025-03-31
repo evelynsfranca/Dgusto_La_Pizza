@@ -128,7 +128,7 @@ function EditAddress({ cartData }) {
                 id="zipCode"
                 value={address.zipCode}
               />
-              <div className="invalid-feedback">{errors.zipCode?.message}</div>
+              <div className="invalid-feedback">{errors.zipCode?.message.toString()}</div>
 
             </div>
           </div>
@@ -142,7 +142,7 @@ function EditAddress({ cartData }) {
                 {...register('street')}
                 onChange={street => setAddress({ ...address, street: street.target.value })}
                 id="street" />
-              <div className="invalid-feedback">{errors.street?.message}</div>
+              <div className="invalid-feedback">{errors.street?.message.toString()}</div>
 
             </div>
           </div>
@@ -156,7 +156,7 @@ function EditAddress({ cartData }) {
                 {...register('number')}
                 onChange={number => setAddress({ ...address, number: number.target.value })}
                 id="number" />
-              <div className="invalid-feedback">{errors.number?.message}</div>
+              <div className="invalid-feedback">{errors.number?.message.toString()}</div>
 
             </div>
           </div>
@@ -170,7 +170,7 @@ function EditAddress({ cartData }) {
                 {...register('complement')}
                 onChange={complement => setAddress({ ...address, complement: complement.target.value })}
                 id="complement" />
-              <div className="invalid-feedback">{errors.complement?.message}</div>
+              <div className="invalid-feedback">{errors.complement?.message.toString()}</div>
 
             </div>
           </div>
@@ -184,7 +184,7 @@ function EditAddress({ cartData }) {
                 {...register('neighborhood')}
                 onChange={neighborhood => setAddress({ ...address, neighborhood: neighborhood.target.value })}
                 id="neighborhood" />
-              <div className="invalid-feedback">{errors.neighborhood?.message}</div>
+              <div className="invalid-feedback">{errors.neighborhood?.message.toString()}</div>
 
             </div>
           </div>
@@ -198,7 +198,7 @@ function EditAddress({ cartData }) {
                 {...register('city')}
                 onChange={city => setAddress({ ...address, city: city.target.value })}
                 id="city" />
-              <div className="invalid-feedback">{errors.city?.message}</div>
+              <div className="invalid-feedback">{errors.city?.message.toString()}</div>
 
             </div>
           </div>
@@ -212,7 +212,7 @@ function EditAddress({ cartData }) {
                 {...register('state')}
                 onChange={state => setAddress({ ...address, state: state.target.value })}
                 id="state" />
-              <div className="invalid-feedback">{errors.state?.message}</div>
+              <div className="invalid-feedback">{errors.state?.message.toString()}</div>
 
             </div>
           </div>
@@ -226,7 +226,7 @@ function EditAddress({ cartData }) {
                 {...register('reference')}
                 onChange={reference => setAddress({ ...address, reference: reference.target.value })}
                 id="reference" />
-              <div className="invalid-feedback">{errors.reference?.message}</div>
+              <div className="invalid-feedback">{errors.reference?.message.toString()}</div>
 
             </div>
           </div>

@@ -63,9 +63,9 @@ function LoginAdminPage() {
       <main className="text-center">
 
         <Link href="/">
-          <a>
-            <Image src={logo} width={150} height={137} />
-          </a>
+          <span>
+            <Image alt="" src={logo} width={150} height={137} />
+          </span>
         </Link>
 
         <section className={style.formsignin}>

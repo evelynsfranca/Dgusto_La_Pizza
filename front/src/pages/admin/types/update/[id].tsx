@@ -42,9 +42,9 @@ export default function TypeUpdate() {
 
       <h1 className="title">
         <Link href="/admin/types/list">
-          <a title="Voltar para listagem de tipos" className="btn-back">
+          <span title="Voltar para listagem de tipos" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Editando Tipo

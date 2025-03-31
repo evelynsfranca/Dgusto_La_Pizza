@@ -58,7 +58,7 @@ function NewPhone({ cartData }) {
                 className={`form-control ${errors.areaCode ? 'is-invalid' : ''}`}
                 onChange={event => setPhone({ ...phone, areaCode: event.target.value })}
               />
-              <div className="invalid-feedback">{errors.areaCode?.message}</div>
+              <div className="invalid-feedback">{errors.areaCode?.message.toString()}</div>
 
             </div>
           </div>
@@ -73,7 +73,7 @@ function NewPhone({ cartData }) {
                 className={`form-control ${errors.number ? 'is-invalid' : ''}`}
                 onChange={event => setPhone({ ...phone, number: event.target.value })}
               />
-              <div className="invalid-feedback">{errors.number?.message}</div>
+              <div className="invalid-feedback">{errors.number?.message.toString()}</div>
 
             </div>
           </div>
@@ -86,7 +86,7 @@ function NewPhone({ cartData }) {
               {Object.values(PhoneType).map((type, index) => (
                 <React.Fragment key={index}>
                   {PhoneType[type] === index && (
-                    <option selected={(PhoneType[index] === phone.type?.toString()) ?? index == 0} value={PhoneType[type]}>{phoneTypes[PhoneType[index]]}</option>
+                    <option selected={(PhoneType[index] === phone.type?.toString())} value={PhoneType[type]}>{phoneTypes[PhoneType[index]]}</option>
                   )}
                 </React.Fragment>
               ))}

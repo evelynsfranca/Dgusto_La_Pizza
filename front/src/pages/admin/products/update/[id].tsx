@@ -74,9 +74,9 @@ export default function ProductUpdate() {
 
         <h1 className="title">
           <Link href="/admin/products/list">
-            <a title="Voltar para listagem de produtos" className="btn-back">
+            <span title="Voltar para listagem de produtos" className="btn-back">
               &#8249;
-            </a>
+            </span>
           </Link>
           {' '}
           Editando produto

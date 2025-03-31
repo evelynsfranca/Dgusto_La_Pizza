@@ -108,12 +108,11 @@ export default function TypesList() {
         confirmBtnText="Deletar"
         confirmBtnBsStyle="danger"
         title="Deseja mesmo deletar?"
+        placeholder='Ao confirmar, você irá deletar o tipo, esta ação não poderá ser revertida.'
         onConfirm={() => confirmDelete()}
         onCancel={() => setShowDeleteModal(false)}
         focusCancelBtn
-      >
-        Ao confirmar, você irá deletar o tipo, esta ação não poderá ser revertida.
-      </SweetAlert>
+      />
       
     </LayoutAdmin>
   );

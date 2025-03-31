@@ -10,9 +10,9 @@ function NotFoundPage() {
         <p className="text-white">Tente acessar esta página novamente mais tarde, no momento estamos preparando ela =/</p>
 
         <Link href="/">
-          <a className="btn btn-outline-light">
+          <span className="btn btn-outline-light">
             Voltar ao site
-          </a>
+          </span>
         </Link>
 
       </main>

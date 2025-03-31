@@ -17,8 +17,8 @@ export default function UserDetail() {
 
   const [user, setUser] = useState<IUser>({});
   
-  async function handleGetUser() {
-    const response: ApiResponse<IUser> = await getUser(id.toString(), token);
+  async function handleGetUser(id: string) {
+    const response: ApiResponse<IUser> = await getUser(id, token);
 
     if (response.entity) {
       setUser(response.entity)
@@ -27,7 +27,7 @@ export default function UserDetail() {
 
   useEffect(() => {
     if (id && token) {
-      handleGetUser();
+      handleGetUser(id.toString());
     }
   }, [id, token]);
 
@@ -41,9 +41,9 @@ export default function UserDetail() {
 
       <h1 className="title">
         <Link href="/admin/users/list">
-          <a title="Voltar para listagem de usuario" className="btn-back">
+          <span title="Voltar para listagem de usuario" className="btn-back">
             &#8249;
-          </a>
+          </span>
         </Link>
         {' '}
         Detalhes do usuário
@@ -59,7 +59,7 @@ export default function UserDetail() {
         </thead>
         <tbody>
           <tr>
-            <td>{user.id}</td>
+            <td>{user?.id?.toString() ?? ''}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
           </tr>

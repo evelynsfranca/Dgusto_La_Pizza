@@ -15,7 +15,7 @@ export default function PhoneUpdate({ cartData }) {
 
   const { id } = router.query;
   const token = localStorage.getItem('token');
-  
+
   const [phone, setPhone] = useState<IPhone>({});
 
   async function handleUpdatePhone() {
@@ -23,18 +23,17 @@ export default function PhoneUpdate({ cartData }) {
     response.status === 201 && router.push('/user/my-account')
   }
 
-  async function handleGetPhone() {
-    const response: ApiResponse<IPhone> = await getPhone(id.toString(), token);
-
+  async function handleGetPhone(id: string) {
+    const response: ApiResponse<IPhone> = await getPhone(id, token);
     response.entity && setPhone(response.entity)
   }
-  
+
   useEffect(() => {
     if (id && token) {
-      handleGetPhone();
+      handleGetPhone(id?.toString());
     }
   }, [id, token]);
-  
+
   return (
     <LayoutGeneral {...cartData}>
 
@@ -43,15 +42,16 @@ export default function PhoneUpdate({ cartData }) {
       </Head>
 
       <>
-
         <h1 className="title">
+
           <Link href="/user/my-account">
-            <a title="Voltar para meus dados" className="btn-back">
+            <span title="Voltar para meus dados" className="btn-back">
               &#8249;
-            </a>
+            </span>
           </Link>
           {' '}
           Editando telefone
+
         </h1>
 
         <div className="row">
@@ -60,21 +60,17 @@ export default function PhoneUpdate({ cartData }) {
             <form className="form">
 
               <div className="mb-3">
-                <label>
-                  DDD
-                </label>
+                <label>DDD</label>
                 <input
                   type="text"
                   value={phone.areaCode}
                   className="form-control"
                   onChange={event => setPhone({ ...phone, areaCode: event.target.value })}
-                />
+                />                
               </div>
 
               <div className="mb-3">
-                <label>
-                  Número
-                </label>
+                <label>Número</label>
                 <input
                   type="text"
                   className="form-control"
@@ -84,45 +80,63 @@ export default function PhoneUpdate({ cartData }) {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <select 
-                  id="type" 
-                  name="type" 
-                  onChange={it => setPhone({...phone, type: PhoneType[it.target.value] })}
+                <select
+                  id="type"
+                  name="type"
+                  onChange={it => setPhone({ ...phone, type: PhoneType[it.target.value] })}
                 >
+
                   {Object.values(PhoneType).map((type, index) => (
                     <React.Fragment key={index}>
+
                       {PhoneType[type] === index && (
-                        <option selected={PhoneType[index] === phone.type.toString()} value={PhoneType[type]}>{phoneTypes[PhoneType[index]]}</option>
+                        <option 
+                          selected={PhoneType[index] === phone?.type?.toString()} 
+                          value={PhoneType[type]}
+                        >
+                          {phoneTypes[PhoneType[index]]}
+                        </option>
                       )}
+
                     </React.Fragment>
                   ))}
+
                 </select>
               </div>
-              
 
-          <div className="mb-3 form-check">
-            <input
-              id="mainPhone" 
-              className={`form-check-input`}
-              onChange={event => setPhone({ ...phone, mainPhone: event.target.checked ? true : false })}
-              type="checkbox" 
-              value="" 
-              defaultChecked={phone.mainPhone} 
-            />
-            <label className="form-check-label" htmlFor="mainPhone">
-              Telefone principal
-            </label>
-          </div>
 
-              <button type="button" className="btn btn-secondary" onClick={handleUpdatePhone}>SALVAR</button>
+              <div className="mb-3 form-check">
+
+                <input
+                  id="mainPhone"
+                  className={`form-check-input`}
+                  onChange={event => setPhone({ ...phone, mainPhone: event.target.checked ? true : false })}
+                  type="checkbox"
+                  value=""
+                  defaultChecked={phone.mainPhone}
+                />
+
+                <label 
+                  className="form-check-label" 
+                  htmlFor="mainPhone"
+                >
+                  Telefone principal
+                </label>
+
+              </div>
+
+              <button 
+                type="button" 
+                className="btn btn-secondary" 
+                onClick={handleUpdatePhone}
+              >
+                SALVAR
+              </button>
 
             </form>
-
           </div>
         </div>
-
       </>
-
     </LayoutGeneral>
   );
 }
