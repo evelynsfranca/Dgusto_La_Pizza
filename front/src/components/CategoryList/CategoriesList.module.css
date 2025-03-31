@@ -9,3 +9,10 @@
   text-decoration: none;
   color: #000;
 }
+
+@media screen and (max-width: 768px) {
+  .listItem {
+    font-size: 2rem;
+    text-align: center;
+  }
+}

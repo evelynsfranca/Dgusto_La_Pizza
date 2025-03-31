@@ -30,9 +30,7 @@ function Navbar({ cartData }) {
             </Link>
           </li>
           
-          <li
-            className={style.navbarListItem}
-          >
+          <li className={style.navbarListItem}>
             <Link  href="/cart">
               <span className={style.navbarListItemLink} title="Meu carrinho">
                 <i className="bi bi-cart2"></i>
@@ -43,7 +41,7 @@ function Navbar({ cartData }) {
             </Link>
           </li>
 
-          <li>
+          <li className={style.navbarListItem}>
             <div className="dropdown">
               <a 
                 className={[style.navbarListItemLink, " dropdown-toggle", dropDownOpened ? " show " : ""].join(' ')}

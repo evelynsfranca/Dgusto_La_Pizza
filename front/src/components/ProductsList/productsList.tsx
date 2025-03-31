@@ -35,7 +35,7 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
 
           <p title={item.description}>{item.description}</p>
 
-          <p className="price">
+          <p className={styles.price}>
             <NumberFormatBase
               format={(numStr) => {
                 if (numStr === '') return '';
@@ -53,7 +53,7 @@ export function ProductsList({ data, cartData, setCartData, setProductAddedToCar
           </p>
 
           <button type="button"
-            className="btn btn-outline-primary"
+            className={[styles.button, "btn btn-outline-primary"].join(' ')}
             title="Adicionar ao Carrinho"
             onClick={() => addToCard(item)}
           >
