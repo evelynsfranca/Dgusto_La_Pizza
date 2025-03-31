@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    @Query(value = "SELECT * FROM client c INNER JOIN user u on c.user_id = u.id WHERE u.username = :userLogin", nativeQuery = true)
+    @Query(value = "SELECT * FROM client c JOIN (SELECT u.id AS userId, username FROM user u WHERE u.username = :userLogin) AS u ON c.user_id = u.userId", nativeQuery = true)
     Optional<Client> findByUserLogin(String userLogin);
 }

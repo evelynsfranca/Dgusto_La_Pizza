@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: dgustolapizza
+    dockerfilePath: ./Dockerfile
+    startCommand: ./load-env.sh java -jar app.jar

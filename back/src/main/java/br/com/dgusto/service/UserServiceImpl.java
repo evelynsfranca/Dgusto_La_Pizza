@@ -1,8 +1,7 @@
 package br.com.dgusto.service;
 
-import br.com.dgusto.domain.User;
-import br.com.dgusto.repository.UserRepository;
-import br.com.dgusto.security.AuthoritiesConstants;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -10,8 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
+import br.com.dgusto.domain.User;
+import br.com.dgusto.repository.UserRepository;
+import br.com.dgusto.security.AuthoritiesConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,20 +45,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
         return userRepository.findById(user.getId())
-            .map(it -> {
-                it.setName(user.getName());
-                it.setEmail(user.getEmail());
-                it.setAuthorities(user.getAuthorities());
-                return it;
-            })
-            .map(userRepository::save)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
+                .map(it -> {
+                    it.setName(user.getName());
+                    it.setEmail(user.getEmail());
+                    it.setAuthorities(user.getAuthorities());
+                    return it;
+                })
+                .map(userRepository::save)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
     }
 
     @Override
     public User get(Long id) {
         return userRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
         user.getAuthorities().forEach(it -> it.getUser().remove(user));
         userRepository.delete(user);
     }
@@ -94,7 +94,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User clientSignup(User user) {
 
-        if (userRepository.findOneByUsername(user.getEmail()).isPresent()){ return null; }
+        if (userRepository.findOneByUsername(user.getEmail()).isPresent()) {
+            return null;
+        }
 
         user.setPassword(encodePassword(user.getPassword()));
         user.setUsername(user.getEmail());
@@ -105,13 +107,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User clientUpdate(User user) {
         return userRepository.findById(user.getId())
-            .map(it -> {
-                it.setName(user.getName());
-                it.setEmail(user.getEmail());
-                it.setUsername(user.getEmail());
-                return it;
-            }).map(userRepository::save)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
+                .map(it -> {
+                    it.setName(user.getName());
+                    it.setEmail(user.getEmail());
+                    it.setUsername(user.getEmail());
+                    return it;
+                }).map(userRepository::save)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "error.user.notFound"));
     }
 
     // Util
